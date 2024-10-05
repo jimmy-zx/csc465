@@ -14,14 +14,6 @@ class Operator(Expression):
     def eval_var(self, table: dict[str, "Expression"]) -> "Expression":
         return type(self)(*(op.eval_var(table) for op in self.operands))
 
-    def rule_table(self) -> Constant:
-        raise NotImplementedError()
-
-    def list_rule(self) -> dict[str, Callable[[], Expression]]:
-        return {
-            k: getattr(self, k) for k in dir(self) if k.startswith("rule_")
-        }
-
     def is_constant(self) -> bool:
         return all(isinstance(op, Constant) for op in self.operands)
 
