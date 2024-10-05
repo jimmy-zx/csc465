@@ -9,20 +9,31 @@ class Flip(BinaryOperator):
     def __init__(self, operand: Expression) -> None:
         BinaryOperator.__init__(self, operand)
         assert isinstance(operand, BinaryExpression)
+        self.op = operand
+
+    def __str__(self) -> str:
+        return f"¬(" + str(self.op) + ")"
 
     def rule_table(self) -> Constant:
         assert self.is_constant()
-        if self.operands[0] == TRUE:
+        if self.op == TRUE:
             return FALSE
         return TRUE
 
     def rule_unequality(self) -> Expression:
-        op = self.operands[0]
-        assert isinstance(op, Equals)
-        return NotEquals(*op.operands).copy()
+        assert isinstance(self.op, Equals)
+        return NotEquals(*self.op.operands).copy()
 
-    def __str__(self) -> str:
-        return f"¬(" + str(self.operands[0]) + ")"
+    def rule_double_negation(self) -> Expression:
+        assert isinstance(self.op, Flip)
+        return self.op.op.copy()
+
+    def rule_duality(self) -> Expression:
+        if isinstance(self.op, And):
+            return Or(Flip(self.op.lhs), Flip(self.op.rhs)).copy()
+        if isinstance(self.op, Or):
+            return And(Flip(self.op.lhs), Flip(self.op.rhs)).copy()
+        assert False
 
 
 class And(BinaryOperator2WithBinaryOperands):
@@ -32,14 +43,27 @@ class And(BinaryOperator2WithBinaryOperands):
             return TRUE
         return FALSE
 
+    def __str__(self) -> str:
+        return "({})∧({})".format(str(self.lhs), str(self.rhs))
+
     def rule_transitivity(self) -> Expression:
         assert isinstance(self.lhs, Equals)
         assert isinstance(self.rhs, Equals)
         assert self.lhs.operands[1] == self.rhs.operands[0]
         return Equals(self.lhs.operands[0], self.rhs.operands[1]).copy()
 
-    def __str__(self) -> str:
-        return "({})∧({})".format(str(self.lhs), str(self.rhs))
+    def rule_noncontradiction(self) -> Expression:
+        assert isinstance(self.rhs, Flip)
+        assert self.lhs == self.rhs.operands[0]
+        return FALSE
+
+    def rule_base(self) -> Expression:
+        if self.rhs == FALSE:
+            return FALSE
+        assert False
+
+    def rule_duality(self) -> Expression:
+        pass
 
 
 class Or(BinaryOperator2WithBinaryOperands):
@@ -52,30 +76,56 @@ class Or(BinaryOperator2WithBinaryOperands):
     def __str__(self) -> str:
         return "({})∨({})".format(str(self.lhs), str(self.rhs))
 
+    def rule_excluded_middle(self) -> Expression:
+        assert isinstance(self.rhs, Flip)
+        assert self.lhs == self.rhs.operands[0]
+        return TRUE
+
+    def rule_base(self) -> Expression:
+        if self.rhs == TRUE:
+            return TRUE
+        assert False
+
 
 class Implies(BinaryOperator2WithBinaryOperands):
+    def __str__(self) -> str:
+        return "({})⇒({})".format(str(self.lhs), str(self.rhs))
+
     def rule_table(self) -> Constant:
         assert self.is_constant()
         if self.operands[0] == FALSE or self.operands[1] == TRUE:
             return TRUE
         return FALSE
 
-    def __str__(self) -> str:
-        return "({})⇒({})".format(str(self.lhs), str(self.rhs))
+    def rule_base(self) -> Expression:
+        if self.rhs == TRUE:
+            return TRUE
+        if self.lhs == FALSE:
+            return TRUE
+        assert False
+
+    def rule_mirror(self) -> Expression:
+        return ImpliedBy(self.rhs, self.lhs).copy()
 
 
 class ImpliedBy(BinaryOperator2WithBinaryOperands):
+    def __str__(self) -> str:
+        return "({})⇐({})".format(str(self.lhs), str(self.rhs))
+
     def rule_table(self) -> Constant:
         assert self.is_constant()
         if self.operands[0] == TRUE or self.operands[1] == FALSE:
             return TRUE
         return FALSE
-    
-    def __str__(self) -> str:
-        return "({})⇐({})".format(str(self.lhs), str(self.rhs))
+
+    def rule_mirror(self) -> Expression:
+        return Implies(self.rhs, self.lhs).copy()
 
 
 class Equals(BinaryOperator2WithBinaryOperands):
+    def __str__(self) -> str:
+        return "({})=({})".format(str(self.lhs), str(self.rhs))
+
     def rule_table(self) -> Constant:
         assert self.is_constant()
         if self.operands[0] == self.operands[1]:
@@ -89,11 +139,11 @@ class Equals(BinaryOperator2WithBinaryOperands):
     def rule_symmetry(self) -> Expression:
         return Equals(*self.operands[::-1]).copy()
 
-    def __str__(self) -> str:
-        return "({})=({})".format(str(self.lhs), str(self.rhs))
-
 
 class NotEquals(BinaryOperator2WithBinaryOperands):
+    def __str__(self) -> str:
+        return "({})⧧({})".format(str(self.lhs), str(self.rhs))
+
     def rule_table(self) -> Constant:
         assert self.is_constant()
         if self.operands[0] != self.operands[1]:
@@ -103,9 +153,6 @@ class NotEquals(BinaryOperator2WithBinaryOperands):
     def rule_unequality(self) -> Expression:
         return Flip(Equals(self.lhs, self.rhs)).copy()
 
-    def __str__(self) -> str:
-        return "({})⧧({})".format(str(self.lhs), str(self.rhs))
-
 
 class Ternary(BinaryOperator):
     def __init__(self, if_: Expression, then: Expression, else_: Expression) -> None:
@@ -113,6 +160,9 @@ class Ternary(BinaryOperator):
         assert isinstance(if_, BinaryExpression)
         assert isinstance(then, BinaryExpression)
         assert isinstance(else_, BinaryExpression)
+
+    def __str__(self) -> str:
+        return "if {} then {} else {} fi".format(*map(str, self.operands))
 
     def rule_table(self) -> Constant:
         assert self.is_constant()
@@ -136,6 +186,3 @@ class Ternary(BinaryOperator):
 
     def rule_case_reversal(self) -> Expression:
         return Ternary(Flip(self.operands[0]), self.operands[2], self.operands[1])
-
-    def __str__(self) -> str:
-        return "if {} then {} else {} fi".format(*map(str, self.operands))
