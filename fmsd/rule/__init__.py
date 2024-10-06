@@ -11,7 +11,7 @@ class Rule(ABC):
 
 
 class MatchRule(Rule):
-    def __init__(self, pattern: Expression, repl: Expression, equiv: bool = False) -> None:
+    def __init__(self, pattern: Expression, repl: Expression, equiv: bool = True) -> None:
         self.pattern = pattern
         self.repl = repl
         self.equiv = equiv
