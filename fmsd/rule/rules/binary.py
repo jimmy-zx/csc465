@@ -134,7 +134,7 @@ rule_distributive_implies_or = helper_distributive(Implies, Or)
 rule_distributive_implies_implies = helper_distributive(Implies, Implies)
 rule_distributive_implies_equals = helper_distributive(Implies, Equals)
 
-rule_generalization = MatchRule(a, Implies(a, b))
+rule_generalization = MatchRule(Or(a, b), a)
 
 rule_antidistributive_and = MatchRule(Implies(And(a, b), c), Or(Implies(a, c), Implies(b, c)))
 rule_antidistributive_or = MatchRule(Implies(Or(a, b), c), And(Implies(a, c), Implies(b, c)))

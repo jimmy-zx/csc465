@@ -18,7 +18,7 @@ class MatchRule(Rule):
 
     def __call__(self, exp: Expression, table: VarTable | None = None) -> Expression:
         table = table or {}
-        if (m := exp.match(self.pattern, table)) is not None:
+        if not table and (m := exp.match(self.pattern, table)) is not None:
             return self.repl.eval_var(m)
         if self.equiv and (m := exp.match(self.repl, table)) is not None:
             return self.pattern.eval_var(m)

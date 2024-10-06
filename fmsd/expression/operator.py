@@ -6,7 +6,7 @@ from fmsd.expression.constant import Constant
 
 class Operator(Expression):
     def __init__(self, *operands: Expression) -> None:
-        self.operands = operands
+        self.operands = list(operands)
 
     def copy(self) -> "Expression":
         return type(self)(*self.operands)
@@ -29,6 +29,26 @@ class Operator(Expression):
 
     def is_constant(self) -> bool:
         return all(isinstance(op, Constant) for op in self.operands)
+
+    def get(self, index: list[int]) -> Expression:
+        if not index:
+            return self
+        target = self.operands[index[0]]
+        next_index = index[1:]
+        if not isinstance(target, Operator):
+            assert not next_index
+            return target
+        return target.get(next_index)
+
+    def set(self, index: list[int], repl: Expression) -> None:
+        assert index
+        next_index = index[1:]
+        if not next_index:
+            self.operands[index[0]] = repl
+            return
+        target = self.operands[index[0]]
+        assert isinstance(target, Operator)
+        return target.set(next_index, repl)
 
     def __eq__(self, other) -> bool:
         if type(self) != type(other):
