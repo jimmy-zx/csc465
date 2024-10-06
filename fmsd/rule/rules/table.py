@@ -2,7 +2,7 @@ from fmsd.expression import Expression
 from fmsd.expression.constants import TRUE, FALSE
 from fmsd.expression.operators import BinaryOperator
 from fmsd.expression.operators.binary import Flip, And, Or, Implies, ImpliedBy, Equals, NotEquals, Ternary
-from fmsd.expression.rules import FunctionRule
+from fmsd.rule import FunctionRule
 
 
 def func_rule_table(exp: Expression) -> Expression:

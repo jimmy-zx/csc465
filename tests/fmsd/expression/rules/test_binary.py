@@ -1,8 +1,8 @@
 from fmsd.expression.constants import TRUE as T, FALSE as F
 from fmsd.expression.operators.binary import *
-from fmsd.expression.rules.binary import rule_excluded_middle, rule_noncontradiction, rule_base, rule_mirror, \
+from fmsd.rule.rules.binary import rule_excluded_middle, rule_noncontradiction, rule_base, rule_mirror, \
     rule_double_negation, rule_duality, rule_exclusion, rule_material_implication, rule_inclusion_and, rule_inclusion_or
-from fmsd.expression.rules.table import rule_table
+from fmsd.rule.rules.table import rule_table
 from fmsd.expression.variables import BinaryVariable
 
 a = BinaryVariable("a")

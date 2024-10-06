@@ -3,7 +3,7 @@ import pytest
 from fmsd.expression.constants import TRUE as T, FALSE as F
 from fmsd.expression.operators.binary import Flip, And, Or, Implies, ImpliedBy, Equals, NotEquals, Ternary
 from fmsd.expression.types import BinaryExpression
-from fmsd.expression.rules.table import rule_table
+from fmsd.rule.rules.table import rule_table
 
 
 @pytest.mark.parametrize(
