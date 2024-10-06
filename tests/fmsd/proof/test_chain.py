@@ -88,4 +88,12 @@ def test_simple_chain():
 
     proof = EquivChainProof(src, dst, [step1_eqv, step2_eqv, step3_eqv, step4_eqv, step5_eqv])
     assert proof.verify()
-    print(proof)
+    print(proof)  # outputs something like
+    """
+        ((a=(b⇒a))=(a∨b))       ['symmetry', 'symmetry', 'symmetry']
+=       ((a∨b)=(a=(b⇒a)))       ['associative_equals']
+=       (((a∨b)=a)=(b⇒a))       ['commutative_or']
+=       (((b∨a)=a)=(b⇒a))       ['inclusion_or']
+=       ((b⇒a)=(b⇒a))   ['reflexive_equals']
+=       ⊤
+    """
