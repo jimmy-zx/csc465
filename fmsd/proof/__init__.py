@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Sequence
 
 from fmsd.expression import Expression
 
@@ -28,7 +29,7 @@ class EquivProof(Proof):
 
 
 class ChainProof(Proof):
-    def __init__(self, src: Expression, dst: Expression, proofs: list[Proof]) -> None:
+    def __init__(self, src: Expression, dst: Expression, proofs: Sequence[Proof]) -> None:
         Proof.__init__(self, src, dst)
         self.proofs = proofs
 
@@ -43,7 +44,7 @@ class ChainProof(Proof):
 
 
 class EquivChainProof(EquivProof, ChainProof):
-    def __init__(self, src: Expression, dst: Expression, proofs: list[EquivProof]) -> None:
+    def __init__(self, src: Expression, dst: Expression, proofs: Sequence[EquivProof]) -> None:
         ChainProof.__init__(self, src, dst, proofs)
 
     def verify(self) -> bool:

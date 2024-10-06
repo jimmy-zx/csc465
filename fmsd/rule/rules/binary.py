@@ -90,13 +90,13 @@ rule_discharge_and = MatchRule(And(a, Implies(a, b)), And(a, b))
 
 rule_discharge_implies = MatchRule(Implies(a, And(a, b)), Implies(a, b))
 
-rule_antomonotonic = MatchRule(Implies(a, b), Implies(Implies(b, c), Implies(a, c)))
+rule_antomonotonic = MatchRule(Implies(Implies(b, c), Implies(a, c)), Implies(a, b))
 
-rule_monotonic_and = MatchRule(Implies(a, b), Implies(And(a, c), And(b, c)))
+rule_monotonic_and = MatchRule(Implies(And(a, c), And(b, c)), Implies(a, b))
 
-rule_monotonic_or = MatchRule(Implies(a, b), Implies(Or(a, c), Or(b, c)))
+rule_monotonic_or = MatchRule(Implies(Or(a, c), Or(b, c)), Implies(a, b))
 
-rule_monotonic_implies = MatchRule(Implies(a, b), Implies(Implies(c, a), Implies(c, b)))
+rule_monotonic_implies = MatchRule(Implies(Implies(c, a), Implies(c, b)), Implies(a, b))
 
 rule_absorption_and = MatchRule(And(a, Or(a, b)), a)
 
@@ -153,9 +153,9 @@ rule_resolution_from = MatchRule(And(a, c), And(Or(a, b), Or(Flip(b), c)), equiv
 rule_resolution_equiv = MatchRule(And(Or(a, b), Or(Flip(b), c)), Or(And(a, Flip(b)), And(b, c)))
 rule_resolution_to = MatchRule(Or(And(a, Flip(b)), And(b, c)), Or(a, c), equiv=False)
 
-rule_case_creation_implies = MatchRule(a, Ternary(b, Implies(b, a), Implies(Flip(b), a)))
-rule_case_creation_and = MatchRule(a, Ternary(b, And(b, a), And(Flip(b), a)))
-rule_case_creation_equals = MatchRule(a, Ternary(b, Equals(b, a), NotEquals(b, a)))
+rule_case_creation_implies = MatchRule(Ternary(b, Implies(b, a), Implies(Flip(b), a)), a)
+rule_case_creation_and = MatchRule(Ternary(b, And(b, a), And(Flip(b), a)), a)
+rule_case_creation_equals = MatchRule(Ternary(b, Equals(b, a), NotEquals(b, a)), a)
 
 rule_case_absorption_then_and = MatchRule(Ternary(a, b, c), Ternary(a, And(a, b), c))
 rule_case_absorption_then_implies = MatchRule(Ternary(a, b, c), Ternary(a, Implies(a, b), c))

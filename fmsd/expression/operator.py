@@ -14,6 +14,15 @@ class Operator(Expression):
     def eval_var(self, table: dict[str, "Expression"]) -> "Expression":
         return type(self)(*(op.eval_var(table) for op in self.operands))
 
+    def variables(self) -> set[str]:
+        vars = set()
+        for op in self.operands:
+            if isinstance(op, Variable):
+                vars.add(op.name)
+            elif isinstance(op, Operator):
+                vars.update(op.variables())
+        return vars
+
     def match(self, pattern: "Expression", matched: dict[str, "Expression"]) -> dict[str, "Expression"] | None:
         if isinstance(pattern, Variable):
             return Expression.match(self, pattern, matched)

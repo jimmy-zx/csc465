@@ -48,7 +48,23 @@ def test_multi_step_proof():
         Step([], rule_portation),
         Step([0], rule_commutative_and),
         Step([0], rule_noncontradiction),
-        Step([], rule_base_implies_false)
+        Step([], rule_base_implies_false),
+    ]
+    proof = StepProof(src, dst, steps)
+    assert proof.verify()
+
+
+def test_multi_step_proof_rev():
+    """
+    Exercise 6c
+    """
+    src = TRUE
+    dst = Implies(Flip(a), Implies(a, b))
+    steps = [
+        Step([], rule_base_implies_false, {"a": b}),
+        Step([0], rule_noncontradiction, {"a": a}),
+        Step([0], rule_commutative_and),
+        Step([], rule_portation),
     ]
     proof = StepProof(src, dst, steps)
     assert proof.verify()

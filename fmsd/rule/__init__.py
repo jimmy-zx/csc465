@@ -15,12 +15,17 @@ class MatchRule(Rule):
         self.pattern = pattern
         self.repl = repl
         self.equiv = equiv
+        # assert repl.variables().issubset(pattern.variables())
 
-    def __call__(self, exp: Expression, table: VarTable | None = None) -> Expression:
+    def __call__(self, exp: Expression, table: VarTable | None = None, rev: bool = False) -> Expression:
         table = table or {}
-        if not table and (m := exp.match(self.pattern, table)) is not None:
+        if not rev and (m := exp.match(self.pattern, table)) is not None:
+            assert self.pattern.variables().issubset(m)
+            assert self.repl.variables().issubset(m)
             return self.repl.eval_var(m)
         if self.equiv and (m := exp.match(self.repl, table)) is not None:
+            assert self.pattern.variables().issubset(m)
+            assert self.repl.variables().issubset(m)
             return self.pattern.eval_var(m)
         assert False
 

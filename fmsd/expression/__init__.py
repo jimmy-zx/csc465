@@ -8,6 +8,9 @@ class Expression:
     def eval_var(self, table: VarTable) -> "Expression":
         return self
 
+    def variables(self) -> set[str]:
+        return set()
+
     def match(self, pattern: "Expression", matched: VarTable) -> VarTable | None:
         if isinstance(pattern, Variable):
             if pattern.name in matched:
@@ -28,6 +31,9 @@ class Expression:
 
 
 class Variable(Expression):
+    def __hash__(self):
+        return hash(self.name)
+
     def __init__(self, name: str) -> None:
         self.name = name
 
