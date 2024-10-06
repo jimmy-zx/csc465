@@ -9,7 +9,7 @@ class Operator(Expression):
         self.operands = list(operands)
 
     def copy(self) -> "Expression":
-        return type(self)(*self.operands)
+        return type(self)(*(op.copy() for op in self.operands))
 
     def eval_var(self, table: dict[str, "Expression"]) -> "Expression":
         return type(self)(*(op.eval_var(table) for op in self.operands))

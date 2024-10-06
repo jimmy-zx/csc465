@@ -13,7 +13,7 @@ for module in rulelist:
         if not rule_name.startswith("rule_"):
             continue
         rule = getattr(module, rule_name)
-        print(rule)
+        rule.name = rule_name.replace("rule_", "", 1)
         if rule_name in ruleset:
             raise Exception(f"Duplicate rule {rule_name}: {ruleset[rule_name]}, {rule}")
         ruleset[rule_name] = rule

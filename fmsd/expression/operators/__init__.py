@@ -12,5 +12,11 @@ class BinaryOperator2WithBinaryOperands(BinaryOperator):
             BinaryOperator.__init__(self, lhs, rhs)
             assert isinstance(lhs, BinaryExpression)
             assert isinstance(rhs, BinaryExpression)
-            self.lhs = lhs
-            self.rhs = rhs
+
+        @property
+        def lhs(self) -> Expression:
+            return self.operands[0]
+
+        @property
+        def rhs(self) -> Expression:
+            return self.operands[1]

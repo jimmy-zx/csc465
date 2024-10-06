@@ -7,7 +7,10 @@ class Flip(BinaryOperator):
     def __init__(self, operand: Expression) -> None:
         BinaryOperator.__init__(self, operand)
         assert isinstance(operand, BinaryExpression)
-        self.op = operand
+
+    @property
+    def op(self) -> Expression:
+        return self.operands[0]
 
     def __str__(self) -> str:
         return f"¬" + str(self.op)

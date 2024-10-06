@@ -22,11 +22,22 @@ class Step:
 
 class StepProof(Proof):
     def __init__(self, src: Expression, dst: Expression, steps: list[Step]) -> None:
-        Proof.__init__(self, src, dst)
+        Proof.__init__(self, src, dst, str([step.rule.name for step in steps]))
         self.steps = steps
 
-    def verify(self) -> bool:
+    def verify(self, debug: bool = False) -> bool:
         exp = self.src
+        if debug:
+            print("    orig:", exp)
         for step in self.steps:
             exp = step.apply(exp)
+            if debug:
+                print("    step:", exp)
+        if debug:
+            print("     got:", exp)
+            print("expected:", self.dst)
         return exp == self.dst
+
+    def __str__(self) -> str:
+        return str(self.dst)
+

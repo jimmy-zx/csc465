@@ -5,25 +5,30 @@ from fmsd.expression import Expression, VarTable
 
 
 class Rule(ABC):
+    def __init__(self, name: str = "") -> None:
+        self.name = name
+
     @abstractmethod
     def __call__(self, exp: Expression, table: VarTable | None = None) -> Expression:
         ...
 
 
 class MatchRule(Rule):
-    def __init__(self, pattern: Expression, repl: Expression, equiv: bool = True) -> None:
+    def __init__(self, pattern: Expression, repl: Expression, equiv: bool = True, name: str = "") -> None:
+        Rule.__init__(self, name)
         self.pattern = pattern
         self.repl = repl
         self.equiv = equiv
         # assert repl.variables().issubset(pattern.variables())
 
     def __call__(self, exp: Expression, table: VarTable | None = None, rev: bool = False) -> Expression:
-        table = table or {}
-        if not rev and (m := exp.match(self.pattern, table)) is not None:
+        table_cpy = table.copy() if table else {}
+        if not rev and (m := exp.match(self.pattern, table_cpy)) is not None:
             assert self.pattern.variables().issubset(m)
             assert self.repl.variables().issubset(m)
             return self.repl.eval_var(m)
-        if self.equiv and (m := exp.match(self.repl, table)) is not None:
+        table_cpy = table.copy() if table else {}
+        if self.equiv and (m := exp.match(self.repl, table_cpy)) is not None:
             assert self.pattern.variables().issubset(m)
             assert self.repl.variables().issubset(m)
             return self.pattern.eval_var(m)
@@ -37,7 +42,8 @@ class MatchRule(Rule):
 
 
 class FunctionRule(Rule):
-    def __init__(self, func: Callable[[Expression, VarTable | None], Expression]) -> None:
+    def __init__(self, func: Callable[[Expression, VarTable | None], Expression], name: str = "") -> None:
+        Rule.__init__(self, name)
         self.func = func
 
     def __call__(self, exp: Expression, table: VarTable | None = None) -> Expression:
