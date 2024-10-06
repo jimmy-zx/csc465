@@ -1,6 +1,6 @@
 from fmsd.expression.constants import TRUE, FALSE
 from fmsd.expression.variables import BinaryVariable
-from fmsd.expression.operators.binary import And, Or
+from fmsd.expression.operators.binary import And, Or, Equals
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")
@@ -20,3 +20,8 @@ def test_basic():
 def test_recursion():
     pattern = And(a, Or(b, c))
     assert And(TRUE, Or(FALSE, TRUE)).match(pattern, {}) == {"a": TRUE, "b": FALSE, "c": TRUE}
+
+
+def test_case():
+    pattern = Equals(a, b)
+    assert Equals(b, c).match(pattern, {}) == {"a": b, "b": c}

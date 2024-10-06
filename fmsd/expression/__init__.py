@@ -1,11 +1,14 @@
+VarTable = dict[str, "Expression"]
+
+
 class Expression:
     def copy(self) -> "Expression":
         return self
 
-    def eval_var(self, table: dict[str, "Expression"]) -> "Expression":
+    def eval_var(self, table: VarTable) -> "Expression":
         return self
 
-    def match(self, pattern: "Expression", matched: dict[str, "Expression"]) -> dict[str, "Expression"] | None:
+    def match(self, pattern: "Expression", matched: VarTable) -> VarTable | None:
         if isinstance(pattern, Variable):
             if pattern.name in matched:
                 if self != matched[pattern.name]:
@@ -34,7 +37,7 @@ class Variable(Expression):
                 return True
         return False
 
-    def eval_var(self, table: dict[str, "Expression"]) -> "Expression":
+    def eval_var(self, table: VarTable) -> "Expression":
         return table.get(self.name, self)
 
     def __str__(self) -> str:

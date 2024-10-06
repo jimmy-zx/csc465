@@ -1,7 +1,7 @@
 from fmsd.expression.constants import TRUE as T, FALSE as F
 from fmsd.expression.operators.binary import *
 from fmsd.rule.rules.generic import rule_reflexivity, rule_symmetry, rule_transitivity, rule_unequality, \
-    rule_case_base, rule_case_idempotent, rule_case_reversal
+    rule_case_idempotent, rule_case_reversal, rule_case_base_true, rule_case_base_false
 from fmsd.expression.variables import BinaryVariable
 
 a = BinaryVariable("a")
@@ -12,11 +12,12 @@ z = BinaryVariable("z")
 
 def test_reflexivity():
     assert rule_reflexivity(Equals(x, x)) == T
-    assert rule_reflexivity(T, x) == Equals(x, x)
+    assert rule_reflexivity(T, {"x": x}) == Equals(x, x)
 
 
 def test_symmetry():
     assert rule_symmetry(Equals(x, y)) == Equals(y, x)
+    assert rule_symmetry(Equals(y, x)) == Equals(x, y)
 
 
 def test_transitivity():
@@ -29,8 +30,8 @@ def test_unequality():
 
 
 def test_case_base():
-    assert rule_case_base(Ternary(T, x, y)) == x
-    assert rule_case_base(Ternary(F, x, y)) == y
+    assert rule_case_base_true(Ternary(T, x, y)) == x
+    assert rule_case_base_false(Ternary(F, x, y)) == y
 
 
 def test_case_idopotent():
