@@ -1,4 +1,3 @@
-from fmsd.expression import Expression
 from fmsd.expression.constants import TRUE, FALSE
 from fmsd.expression.operators.binary import Equals, And, NotEquals, Flip, Ternary
 from fmsd.rule import MatchRule
