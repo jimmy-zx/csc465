@@ -1,6 +1,6 @@
 from typing import Callable
 
-from fmsd.expression import Expression
+from fmsd.expression import Expression, Variable
 from fmsd.expression.constant import Constant
 
 
@@ -13,6 +13,19 @@ class Operator(Expression):
 
     def eval_var(self, table: dict[str, "Expression"]) -> "Expression":
         return type(self)(*(op.eval_var(table) for op in self.operands))
+
+    def match(self, pattern: "Expression", matched: dict[str, "Expression"]) -> dict[str, "Expression"] | None:
+        if isinstance(pattern, Variable):
+            return Expression.match(self, pattern, matched)
+        if not isinstance(pattern, Operator):
+            return None
+        if type(self) != type(pattern):
+            return None
+        for lhs, rhs in zip(self.operands, pattern.operands):
+            matched = lhs.match(rhs, matched)
+            if matched is None:
+                return None
+        return matched
 
     def is_constant(self) -> bool:
         return all(isinstance(op, Constant) for op in self.operands)
