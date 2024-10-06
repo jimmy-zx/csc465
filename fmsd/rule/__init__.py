@@ -24,6 +24,12 @@ class MatchRule(Rule):
             return self.pattern.eval_var(m)
         assert False
 
+    def __repr__(self) -> str:
+        if self.equiv:
+            return str(self.pattern) + " === " + str(self.repl)
+        else:
+            return str(self.pattern) + " ==> " + str(self.repl)
+
 
 class FunctionRule(Rule):
     def __init__(self, func: Callable[[Expression, VarTable | None], Expression]) -> None:

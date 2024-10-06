@@ -190,7 +190,7 @@ rule_case_distributive_single_implied_by = helper_case_distributive_single(Impli
 
 
 def helper_case_distributive_multiple(op) -> MatchRule:
-    return MatchRule(op(Ternary(a, op(b, c), op(d, e))), op(Ternary(a, b, d), Ternary(a, c, e)))
+    return MatchRule(Ternary(a, op(b, c), op(d, e)), op(Ternary(a, b, d), Ternary(a, c, e)))
 
 
 rule_case_distributive_multiple_and = helper_case_distributive_multiple(And)
