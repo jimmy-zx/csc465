@@ -14,8 +14,8 @@ z = BinaryVariable("z")
 
 def test_binary():
     assert T == T
-    assert rule_table(Flip(F)) == T
-    assert rule_table(NotEquals(T, F)) == T
+    assert rule_table.apply(Flip(F)) == T
+    assert rule_table.apply(NotEquals(T, F)) == T
 
 
 def test_excluded_middle():

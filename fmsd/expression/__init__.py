@@ -3,7 +3,7 @@ class Expression:
         return self
 
     def eval_var(self, table: dict[str, "Expression"]) -> "Expression":
-        return self.copy()
+        return self
 
     def match(self, pattern: "Expression", matched: dict[str, "Expression"]) -> dict[str, "Expression"] | None:
         if isinstance(pattern, Variable):
@@ -16,6 +16,9 @@ class Expression:
         if self == pattern:
             return matched
         return None
+
+    def __eq__(self, other) -> bool:
+        raise NotImplementedError()
 
     def __repr__(self) -> str:
         return str(self)
@@ -32,7 +35,7 @@ class Variable(Expression):
         return False
 
     def eval_var(self, table: dict[str, "Expression"]) -> "Expression":
-        return table.get(self.name, self).copy()
+        return table.get(self.name, self)
 
     def __str__(self) -> str:
         return self.name

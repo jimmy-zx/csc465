@@ -46,4 +46,4 @@ from fmsd.expression.rules.table import rule_table
     ]
 )
 def test_table(op: type, operands: list[BinaryExpression], res: BinaryExpression):
-    assert rule_table(op(*operands)) == res
+    assert rule_table.apply(op(*operands)) == res

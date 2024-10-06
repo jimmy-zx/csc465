@@ -10,37 +10,37 @@ class Flip(BinaryOperator):
         self.op = operand
 
     def __str__(self) -> str:
-        return f"¬(" + str(self.op) + ")"
+        return f"¬" + str(self.op)
 
 
 class And(BinaryOperator2WithBinaryOperands):
     def __str__(self) -> str:
-        return "({})∧({})".format(str(self.lhs), str(self.rhs))
+        return "({}∧{})".format(str(self.lhs), str(self.rhs))
 
 
 class Or(BinaryOperator2WithBinaryOperands):
     def __str__(self) -> str:
-        return "({})∨({})".format(str(self.lhs), str(self.rhs))
+        return "({}∨{})".format(str(self.lhs), str(self.rhs))
 
 
 class Implies(BinaryOperator2WithBinaryOperands):
     def __str__(self) -> str:
-        return "({})⇒({})".format(str(self.lhs), str(self.rhs))
+        return "({}⇒{})".format(str(self.lhs), str(self.rhs))
 
 
 class ImpliedBy(BinaryOperator2WithBinaryOperands):
     def __str__(self) -> str:
-        return "({})⇐({})".format(str(self.lhs), str(self.rhs))
+        return "({}⇐{})".format(str(self.lhs), str(self.rhs))
 
 
 class Equals(BinaryOperator2WithBinaryOperands):
     def __str__(self) -> str:
-        return "({})=({})".format(str(self.lhs), str(self.rhs))
+        return "({}={})".format(str(self.lhs), str(self.rhs))
 
 
 class NotEquals(BinaryOperator2WithBinaryOperands):
     def __str__(self) -> str:
-        return "({})⧧({})".format(str(self.lhs), str(self.rhs))
+        return "({}⧧{})".format(str(self.lhs), str(self.rhs))
 
 
 class Ternary(BinaryOperator):
