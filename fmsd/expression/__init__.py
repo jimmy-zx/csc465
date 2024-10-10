@@ -2,6 +2,12 @@ VarTable = dict[str, "Expression"]
 
 
 class Expression:
+    def __eq__(self, other) -> bool:
+        raise NotImplementedError()
+
+    def __repr__(self) -> str:
+        return str(self)
+
     def copy(self) -> "Expression":
         return self
 
@@ -23,11 +29,8 @@ class Expression:
             return matched
         return None
 
-    def __eq__(self, other) -> bool:
+    def diff(self, other: "Expression", start: list[int] | None = None) -> list[int] | None:
         raise NotImplementedError()
-
-    def __repr__(self) -> str:
-        return str(self)
 
 
 class Variable(Expression):
@@ -43,8 +46,18 @@ class Variable(Expression):
                 return True
         return False
 
+    def __str__(self) -> str:
+        return self.name
+
     def eval_var(self, table: VarTable) -> "Expression":
         return table.get(self.name, self)
 
-    def __str__(self) -> str:
-        return self.name
+    def diff(self, other: "Expression", start: list[int] | None = None) -> list[int] | None:
+        if not isinstance(other, Variable):
+            return []
+        if type(self) != type(other):
+            return []
+        if self == other:
+            return None
+        return []
+

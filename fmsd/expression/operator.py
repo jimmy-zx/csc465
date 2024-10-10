@@ -36,6 +36,22 @@ class Operator(Expression):
             matched = res
         return matched
 
+    def diff(self, other: "Expression", start: list[int] | None = None) -> list[int] | None:
+        if not isinstance(other, Operator):
+            return []
+        if type(self) != type(other):
+            return []
+        start = start or [-1]
+        start_idx = start[0]
+        for i, (lhs, rhs) in enumerate(zip(self.operands, other.operands)):
+            if i <= start_idx:
+                continue
+            if lhs != rhs:
+                res = [i]
+                res.extend(lhs.diff(rhs, start[1:]))
+                return res
+        return None
+
     def is_constant(self) -> bool:
         return all(isinstance(op, Constant) for op in self.operands)
 
