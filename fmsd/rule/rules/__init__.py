@@ -1,12 +1,11 @@
-from typing import Callable
-import fmsd.rule.rules.table as table
-import fmsd.rule.rules.generic as generic
 import fmsd.rule.rules.binary as binary
-from fmsd.expression import Expression, VarTable
+import fmsd.rule.rules.generic as generic
+import fmsd.rule.rules.table as table
+from fmsd.rule import Rule
 
 rulelist = [table, generic, binary]
 
-ruleset: dict[str, Callable[[Expression, VarTable], Expression]] = {}
+ruleset: dict[str, Rule] = {}
 
 for module in rulelist:
     for rule_name in dir(module):

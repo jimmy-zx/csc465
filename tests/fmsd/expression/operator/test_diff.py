@@ -28,3 +28,9 @@ def test_start():
     assert rhs.diff(lhs, [0, 1]) == [1]
     assert lhs.diff(rhs, [1]) is None
     assert rhs.diff(lhs, [1]) is None
+
+
+def test_diff_all():
+    lhs = And(And(a, b), c)
+    rhs = And(And(a, Or(a, b)), And(b, c))
+    assert lhs.diff_all(rhs) == [[0, 1], [1]]

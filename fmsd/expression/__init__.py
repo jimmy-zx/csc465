@@ -29,8 +29,26 @@ class Expression:
             return matched
         return None
 
+    def is_constant(self) -> bool:
+        raise NotImplementedError()
+
+    def get(self, index: list[int]) -> "Expression":
+        raise NotImplementedError()
+
+    def set(self, index: list[int], repl: "Expression") -> None:
+        raise NotImplementedError()
+
     def diff(self, other: "Expression", start: list[int] | None = None) -> list[int] | None:
         raise NotImplementedError()
+
+    def diff_all(self, other: "Expression") -> list[list[int]]:
+        diff = self.diff(other)
+        if diff is None:
+            return []
+        diffs = [diff]
+        while (diff := self.diff(other, diffs[-1])) is not None:
+            diffs.append(diff)
+        return diffs
 
 
 class Variable(Expression):

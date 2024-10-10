@@ -48,7 +48,9 @@ class Operator(Expression):
                 continue
             if lhs != rhs:
                 res = [i]
-                res.extend(lhs.diff(rhs, start[1:]))
+                ext = lhs.diff(rhs, start[1:])
+                assert ext is not None
+                res.extend(ext)
                 return res
         return None
 
