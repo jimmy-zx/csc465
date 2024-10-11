@@ -37,9 +37,9 @@ def func_rule_table(exp: Expression, table: VarTable | None = None) -> Expressio
             return TRUE
         return FALSE
     if isinstance(exp, Ternary):
-        if exp.operands[0] == TRUE:
-            return exp.operands[1]
-        return exp.operands[2]
+        if exp.children[0] == TRUE:
+            return exp.children[1]
+        return exp.children[2]
     assert False
 
 

@@ -15,8 +15,8 @@ class BinaryOperator2WithBinaryOperands(BinaryOperator):
 
         @property
         def lhs(self) -> Expression:
-            return self.operands[0]
+            return self.children[0]
 
         @property
         def rhs(self) -> Expression:
-            return self.operands[1]
+            return self.children[1]

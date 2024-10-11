@@ -1,6 +1,6 @@
 #type: ignore
+from fmsd.expression.operators.binary import Flip, And, Or, Implies, ImpliedBy
 from fmsd.expression.types import BinaryExpression
-from fmsd.expression.operators.binary import Flip, And, Or, Implies, ImpliedBy, Equals, NotEquals
 
 BinaryExpression.__invert__ = lambda l: Flip(l)
 BinaryExpression.__and__ = lambda l, r: And(l, r)

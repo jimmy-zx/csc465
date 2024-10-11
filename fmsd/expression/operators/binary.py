@@ -10,7 +10,7 @@ class Flip(BinaryOperator):
 
     @property
     def op(self) -> Expression:
-        return self.operands[0]
+        return self.children[0]
 
     def __str__(self) -> str:
         return f"¬" + str(self.op)
@@ -54,4 +54,4 @@ class Ternary(BinaryOperator):
         assert isinstance(else_, BinaryExpression)
 
     def __str__(self) -> str:
-        return "if {} then {} else {} fi".format(*map(str, self.operands))
+        return "if {} then {} else {} fi".format(*map(str, self.children))

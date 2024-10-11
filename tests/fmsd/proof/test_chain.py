@@ -1,6 +1,6 @@
+from fmsd.expression.constants import TRUE
 from fmsd.expression.operators.binary import Equals, Implies, Or
 from fmsd.expression.variables import BinaryVariable
-from fmsd.expression.constants import TRUE, FALSE
 from fmsd.proof import EquivProof, EquivChainProof
 from fmsd.proof.step import StepProof, Step
 from fmsd.rule.rules.binary import rule_associative_equals, rule_commutative_or, rule_inclusion_or, \

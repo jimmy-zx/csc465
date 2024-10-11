@@ -2,6 +2,10 @@ VarTable = dict[str, "Expression"]
 
 
 class Expression:
+    def __init__(self) -> None:
+        self.parent: Expression | None = None
+        self.children: list[Expression] = []
+
     def __eq__(self, other) -> bool:
         raise NotImplementedError()
 
@@ -56,6 +60,7 @@ class Variable(Expression):
         return hash(self.name)
 
     def __init__(self, name: str) -> None:
+        Expression.__init__(self)
         self.name = name
 
     def __eq__(self, other) -> bool:
@@ -78,4 +83,3 @@ class Variable(Expression):
         if self == other:
             return None
         return []
-

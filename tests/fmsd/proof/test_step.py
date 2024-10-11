@@ -1,6 +1,6 @@
+from fmsd.expression.constants import TRUE
 from fmsd.expression.operators.binary import Equals, Implies, And, Flip
 from fmsd.expression.variables import BinaryVariable
-from fmsd.expression.constants import TRUE, FALSE
 from fmsd.proof.step import Step, StepProof
 from fmsd.rule.rules.binary import rule_conflation_and, rule_specialization, rule_portation, rule_noncontradiction, \
     rule_base_implies_false, rule_commutative_and
