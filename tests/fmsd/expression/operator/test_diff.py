@@ -14,6 +14,7 @@ c = BinaryVariable("c")
     [
         (And(Or(a, b), c), And(a, c), [0]),
         (And(And(a, b), c), And(And(a, Or(a, b)), c), [0, 1]),
+        (And(a, b), And(b, a), []),
     ]
 )
 def test_symmetric_diff(lhs: Expression, rhs: Expression, idx: list[int] | None):

@@ -9,15 +9,12 @@ class DerivedStepProof(Proof):
         Proof.__init__(self, src, dst, "")
 
     def verify(self, debug: bool = False) -> bool:
-        diffs = self.src.diff_all(self.dst)
-        hints = []
-        for diff in diffs:
-            src = self.src.get(diff)
-            dst = self.dst.get(diff)
-            if (hint := self.verify_ruleset(src, dst, global_ruleset)) is None:
-                return False
-            hints.append(hint)
-        self.hint = " ".join(hints)
+        idx = self.src.diff(self.dst)
+        src = self.src.get(idx)
+        dst = self.dst.get(idx)
+        if (hint := self.verify_ruleset(src, dst, global_ruleset)) is None:
+            return False
+        self.hint = hint
         return True
 
     @staticmethod
