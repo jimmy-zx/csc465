@@ -37,23 +37,24 @@ class Operator(Expression):
             matched = res
         return matched
 
-    def diff(self, other: "Expression", start: list[int] | None = None) -> list[int] | None:
-        if not isinstance(other, Operator):
-            return []
+    def diff(self, other: "Expression", start: int = 0) -> list[int] | None:
+        """
+        Returns the difference of two operators
+        """
         if type(self) != type(other):
             return []
-        start = start or [-1]
-        start_idx = start[0]
+        found: list[int] | None = None
         for i, (lhs, rhs) in enumerate(zip(self.children, other.children)):
-            if i <= start_idx:
-                continue
             if lhs != rhs:
-                res = [i]
-                ext = lhs.diff(rhs, start[1:])
+                if found:  # 1+ difference in operands, this is the root difference
+                    return []
+                found = [i]
+                ext = lhs.diff(rhs, start - 1)
                 assert ext is not None
-                res.extend(ext)
-                return res
-        return None
+                found.extend(ext)
+                if start > 0:
+                    return found
+        return found
 
     def is_constant(self) -> bool:
         return all(isinstance(op, Constant) for op in self.children)

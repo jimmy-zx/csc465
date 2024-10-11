@@ -1,3 +1,6 @@
+import pytest
+
+from fmsd.expression import Expression
 from fmsd.expression.operators.binary import And, Or
 from fmsd.expression.variables import BinaryVariable
 
@@ -6,31 +9,32 @@ b = BinaryVariable("b")
 c = BinaryVariable("c")
 
 
-def test_plain():
-    lhs = And(Or(a, b), c)
-    rhs = And(a, c)
-    assert lhs.diff(rhs) == [0]
-    assert rhs.diff(lhs) == [0]
-    assert lhs.diff(lhs) is None
+@pytest.mark.parametrize(
+    ("lhs", "rhs", "idx"),
+    [
+        (And(Or(a, b), c), And(a, c), [0]),
+        (And(And(a, b), c), And(And(a, Or(a, b)), c), [0, 1]),
+    ]
+)
+def test_symmetric_diff(lhs: Expression, rhs: Expression, idx: list[int] | None):
+    assert lhs.diff(rhs) == idx
+    assert rhs.diff(lhs) == idx
 
 
-def test_recursive():
-    lhs = And(And(a, b), c)
-    rhs = And(And(a, Or(a, b)), And(b, c))
-    assert lhs.diff(rhs) == [0, 1]
-    assert rhs.diff(lhs) == [0, 1]
+@pytest.mark.parametrize(
+    ("lhs", "rhs"),
+    [
+        (And(Or(a, b), c), And(Or(a, b), c)),
+    ],
+)
+def test_no_diff(lhs: Expression, rhs: Expression):
+    assert lhs.diff(rhs) is None
+    assert rhs.diff(lhs) is None
 
 
 def test_start():
     lhs = And(And(a, b), c)
-    rhs = And(And(a, Or(a, b)), And(b, c))
-    assert lhs.diff(rhs, [0, 1]) == [1]
-    assert rhs.diff(lhs, [0, 1]) == [1]
-    assert lhs.diff(rhs, [1]) is None
-    assert rhs.diff(lhs, [1]) is None
-
-
-def test_diff_all():
-    lhs = And(And(a, b), c)
-    rhs = And(And(a, Or(a, b)), And(b, c))
-    assert lhs.diff_all(rhs) == [[0, 1], [1]]
+    rhs = And(And(Or(a, b), b), Or(a, c))
+    assert lhs.diff(rhs) == []
+    assert rhs.diff(lhs) == []
+    assert lhs.diff(rhs, start=1) == [0, 0]

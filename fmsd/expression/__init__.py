@@ -42,17 +42,8 @@ class Expression:
     def set(self, index: list[int], repl: "Expression") -> None:
         raise NotImplementedError()
 
-    def diff(self, other: "Expression", start: list[int] | None = None) -> list[int] | None:
+    def diff(self, other: "Expression", start: int = 0) -> list[int] | None:
         raise NotImplementedError()
-
-    def diff_all(self, other: "Expression") -> list[list[int]]:
-        diff = self.diff(other)
-        if diff is None:
-            return []
-        diffs = [diff]
-        while (diff := self.diff(other, diffs[-1])) is not None:
-            diffs.append(diff)
-        return diffs
 
 
 class Variable(Expression):
@@ -75,11 +66,9 @@ class Variable(Expression):
     def eval_var(self, table: VarTable) -> "Expression":
         return table.get(self.name, self)
 
-    def diff(self, other: "Expression", start: list[int] | None = None) -> list[int] | None:
-        if not isinstance(other, Variable):
-            return []
-        if type(self) != type(other):
-            return []
+    def diff(self, other: "Expression", start: int = 0) -> list[int] | None:
+        if start > 0:
+            return None
         if self == other:
             return None
         return []
