@@ -5,7 +5,7 @@ from fmsd.proof import EquivProof, ChainEquivProof
 from fmsd.proof.step import StepProof, Step
 from fmsd.rule.rules.binary import rule_associative_equals, rule_commutative_or, rule_inclusion_or, \
     rule_reflexive_equals
-from fmsd.rule.rules.generic import rule_symmetry
+from fmsd.rule.rules.binary.generic import rule_symmetry
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")

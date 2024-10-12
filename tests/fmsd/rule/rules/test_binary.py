@@ -6,7 +6,7 @@ from fmsd.rule.rules.binary import rule_excluded_middle, rule_noncontradiction, 
     rule_double_negation, rule_duality_and, rule_duality_or, rule_exclusion, rule_material_implication, \
     rule_inclusion_and, \
     rule_inclusion_or, rule_base_implies_true, rule_base_implies_false, rule_contrapositive
-from fmsd.rule.rules.table import rule_table
+from fmsd.rule.rules.binary.table import rule_table
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")

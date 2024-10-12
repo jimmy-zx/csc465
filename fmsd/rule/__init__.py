@@ -15,6 +15,8 @@ class Rule(ABC):
 
 class MatchRule(Rule):
     def __init__(self, pattern: Expression, repl: Expression, equiv: bool = True, name: str = "") -> None:
+        assert isinstance(pattern, Expression)
+        assert isinstance(repl, Expression)
         Rule.__init__(self, name)
         self.pattern = pattern
         self.repl = repl

@@ -8,7 +8,7 @@ from fmsd.expression.variables import BinaryVariable
 from fmsd.proof.derived_step import DerivedStepProof, DerivedChainProof, DerivedEquivChainProof
 from fmsd.proof.step import StepProof, Step
 from fmsd.rule.rules.binary import rule_commutative_and, rule_commutative_or
-from fmsd.utils.patchops.binary import EQ, NEQ
+from fmsd.utils.patchops.infix import EQ, NEQ
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")

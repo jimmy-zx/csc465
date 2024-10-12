@@ -1,6 +1,6 @@
 from fmsd.expression.constants.binary import TRUE as T, FALSE as F
 from fmsd.expression.operators.binary import *
-from fmsd.rule.rules.generic import rule_reflexivity, rule_symmetry, rule_transitivity, rule_unequality, \
+from fmsd.rule.rules.binary.generic import rule_reflexivity, rule_symmetry, rule_transitivity, rule_unequality, \
     rule_case_idempotent, rule_case_reversal, rule_case_base_true, rule_case_base_false
 from fmsd.expression.variables import BinaryVariable
 

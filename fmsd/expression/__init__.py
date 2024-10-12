@@ -67,6 +67,33 @@ class Expression:
     def __lshift__(self, other: "Expression") -> "Expression":
         raise ImportPatchException()
 
+    def __add__(self, other: "Expression") -> "Expression":
+        raise ImportPatchException()
+
+    def __sub__(self, other: "Expression") -> "Expression":
+        raise ImportPatchException()
+
+    def __mul__(self, other: "Expression") -> "Expression":
+        raise ImportPatchException()
+
+    def __truediv__(self, other: "Expression") -> "Expression":
+        raise ImportPatchException()
+
+    def __pow__(self, power: "Expression") -> "Expression":
+        raise ImportPatchException()
+
+    def __lt__(self, other: "Expression") -> "Expression":
+        raise ImportPatchException()
+
+    def __le__(self, other: "Expression") -> "Expression":
+        raise ImportPatchException()
+
+    def __gt__(self, other: "Expression") -> "Expression":
+        raise ImportPatchException()
+
+    def __ge__(self, other: "Expression") -> "Expression":
+        raise ImportPatchException()
+
     def __matmul__(self, other):
         return NotImplemented
 

@@ -1,9 +1,10 @@
 import fmsd.rule.rules.binary as binary
-import fmsd.rule.rules.generic as generic
-import fmsd.rule.rules.table as table
+import fmsd.rule.rules.binary.generic as binary_generic
+import fmsd.rule.rules.binary.table as binary_table
+import fmsd.rule.rules.numeric.generic as numeric_generic
 from fmsd.rule import Rule
 
-rulelist = [table, generic, binary]
+rulelist = [binary_table, binary_generic, binary, numeric_generic]
 
 ruleset: dict[str, Rule] = {}
 
@@ -12,7 +13,7 @@ for module in rulelist:
         if not rule_name.startswith("rule_"):
             continue
         rule = getattr(module, rule_name)
-        rule.name = rule_name.replace("rule_", "", 1)
-        if rule_name in ruleset:
-            raise Exception(f"Duplicate rule {rule_name}: {ruleset[rule_name]}, {rule}")
-        ruleset[rule_name] = rule
+        rule.name = module.__name__ + "." + rule_name.replace("rule_", "", 1)
+        if rule.name in ruleset:
+            raise Exception(f"Duplicate rule {rule.name}")
+        ruleset[rule.name] = rule

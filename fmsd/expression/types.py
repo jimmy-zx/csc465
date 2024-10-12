@@ -8,7 +8,11 @@ class BinaryExpression(Expression):
     pass
 
 
-class NumericExpression(Expression):
+class OrderedExpression(Expression):
+    pass
+
+
+class NumericExpression(OrderedExpression):
     """
     An expression that evaluates to number
     """
