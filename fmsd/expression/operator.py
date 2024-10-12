@@ -48,6 +48,7 @@ class Operator(Expression):
         """
         if self == other:
             return None
+        found: list[int] | None = None
         if start > 0:
             for i, (lhs, rhs) in enumerate(zip(self.children, other.children)):
                 if lhs != rhs:
@@ -59,7 +60,6 @@ class Operator(Expression):
             return None
         if type(self) != type(other):
             return []
-        found: list[int] | None = None
         for i, (lhs, rhs) in enumerate(zip(self.children, other.children)):
             if lhs != rhs:
                 if found:  # 1+ difference in operands, this is the root difference
