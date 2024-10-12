@@ -8,7 +8,7 @@ BinaryInfixOperator = InfixOperator[BinaryExpression, BinaryExpression, BinaryEx
 
 # noinspection PyPep8Naming
 @BinaryInfixOperator
-def Equals(lhs, rhs):
+def EQ(lhs, rhs):
     if isinstance(lhs, BinaryExpression) and isinstance(rhs, BinaryExpression):
         return binop.Equals(lhs, rhs)
     raise NotImplementedError()
@@ -16,12 +16,12 @@ def Equals(lhs, rhs):
 
 # noinspection PyPep8Naming
 @BinaryInfixOperator
-def NotEquals(lhs, rhs):
+def NEQ(lhs, rhs):
     if isinstance(lhs, BinaryExpression) and isinstance(rhs, BinaryExpression):
         return binop.NotEquals(lhs, rhs)
 
 
 __all__ = [
-    "Equals",
-    "NotEquals",
+    "EQ",
+    "NEQ",
 ]

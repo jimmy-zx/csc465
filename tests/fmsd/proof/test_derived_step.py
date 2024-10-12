@@ -1,8 +1,10 @@
 import pytest
 
-from fmsd.expression.operators.binary import And, Implies, Flip, Or, Equals
+# noinspection PyUnresolvedReferences
+import fmsd.utils.patch.binary
+from fmsd.expression.constants import TRUE
+from fmsd.expression.operators.binary import Or, Equals
 from fmsd.expression.variables import BinaryVariable
-from fmsd.expression.constants import TRUE, FALSE
 from fmsd.proof.derived_step import DerivedStepProof, DerivedChainProof, DerivedEquivChainProof
 from fmsd.proof.step import StepProof, Step
 from fmsd.rule.rules.binary import rule_commutative_and
@@ -14,7 +16,7 @@ c = BinaryVariable("c")
 
 def test_simple():
     proof = DerivedStepProof(
-        And(a, b), And(b, a)
+        a & b, b & a
     )
     assert proof.verify()
     assert proof.hint == "commutative_and"
@@ -22,7 +24,7 @@ def test_simple():
 
 def test_invalid():
     proof = DerivedStepProof(
-        And(a, b), And(b, c)
+        a & b, b & c
     )
     with pytest.raises(Exception) as ex:
         proof.verify()
@@ -30,15 +32,15 @@ def test_invalid():
 
 def test_invalid_mult():
     proof = DerivedStepProof(
-        And(Or(a, b), Or(a, c)), And(Or(b, a), Or(c, a))
+        (a | b) & (a | c), (b | a) & (c | a)
     )
     with pytest.raises(Exception) as ex:
         proof.verify()
 
 
 def test_deep():
-    src = And(And(And(a, b), b), b)
-    dst = And(And(And(b, a), b), b)
+    src = ((a & b) & b) & b
+    dst = ((b & a) & b) & b
     proof = DerivedStepProof(
         src, dst
     )
@@ -55,13 +57,13 @@ def test_multiple():
     """
     Exercise 6m
     """
-    src = Implies(Implies(a, Flip(a)), Flip(a))
+    src = (a >> ~a) >> ~a
     dst = TRUE
     proof = DerivedChainProof(
         src, dst, [
             src,
-            Implies(Or(Flip(a), Flip(a)), Flip(a)),
-            Implies(Flip(a), Flip(a)),
+            (~a | ~a) >> ~a,
+            ~a >> ~a,
             dst
         ]
     )

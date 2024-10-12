@@ -1,27 +1,30 @@
+# noinspection PyUnresolvedReferences
+import fmsd.utils.patch.binary
 from fmsd.expression.constants import TRUE, FALSE
 from fmsd.expression.variables import BinaryVariable
-from fmsd.expression.operators.binary import And, Or, Equals
+from fmsd.utils.patchops.binary import EQ
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")
 c = BinaryVariable("c")
 
+
 def test_basic():
-    pattern = And(TRUE, a)
-    assert And(TRUE, FALSE).match(pattern, {}) == {"a": FALSE}
-    assert And(FALSE, BinaryVariable("a")).match(pattern, {}) is None
-    assert And(TRUE, a).match(pattern, {}) == {"a": a}
-    assert And(TRUE, Or(TRUE, FALSE)).match(pattern, {}) == {"a": Or(TRUE, FALSE)}
-    assert pattern.eval_var({"a": TRUE}) == And(TRUE, TRUE)
-    assert pattern.eval_var({"a": FALSE}) == And(TRUE, FALSE)
-    assert pattern.eval_var({}) == And(TRUE, BinaryVariable("a"))
+    pattern = TRUE & a
+    assert (TRUE & FALSE).match(pattern, {}) == {"a": FALSE}
+    assert (FALSE & a).match(pattern, {}) is None
+    assert (TRUE & a).match(pattern, {}) == {"a": a}
+    assert (TRUE & (TRUE | FALSE)).match(pattern, {}) == {"a": TRUE | FALSE}
+    assert pattern.eval_var({"a": TRUE}) == TRUE & TRUE
+    assert pattern.eval_var({"a": FALSE}) == TRUE & FALSE
+    assert pattern.eval_var({}) == TRUE & a
 
 
 def test_recursion():
-    pattern = And(a, Or(b, c))
-    assert And(TRUE, Or(FALSE, TRUE)).match(pattern, {}) == {"a": TRUE, "b": FALSE, "c": TRUE}
+    pattern = a & (b | c)
+    assert (TRUE & (FALSE | TRUE)).match(pattern, {}) == {"a": TRUE, "b": FALSE, "c": TRUE}
 
 
 def test_case():
-    pattern = Equals(a, b)
-    assert Equals(b, c).match(pattern, {}) == {"a": b, "b": c}
+    pattern = a @ EQ @ b
+    assert (b @ EQ @ c).match(pattern, {}) == {"a": b, "b": c}

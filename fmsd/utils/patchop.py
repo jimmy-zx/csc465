@@ -9,7 +9,7 @@ T = TypeVar("T")
 
 
 class InfixOperator(Generic[L, R, T]):
-    def __init__(self, func: Callable[[L, R], T], lhs: L = None, rhs: R = None) -> None:
+    def __init__(self, func: Callable[[L, R], T], lhs: L | None = None, rhs: R | None = None) -> None:
         self.func = func
         self.lhs = lhs
         self.rhs = rhs
@@ -35,6 +35,6 @@ class PrefixOperator(Generic[L, T]):
     def __init__(self, func: Callable[[L], T]) -> None:
         self.func = func
 
-    def __matmul__(self, rhs: R) -> T:
+    def __matmul__(self, rhs: L) -> T:
         assert rhs is not None
         return self.func(rhs)

@@ -1,3 +1,4 @@
+#type: ignore
 from fmsd.expression.operators.binary import Flip, And, Or, Implies, ImpliedBy
 from fmsd.expression.types import BinaryExpression
 

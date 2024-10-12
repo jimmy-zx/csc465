@@ -1,7 +1,8 @@
 import pytest
 
+# noinspection PyUnresolvedReferences
+import fmsd.utils.patch.binary
 from fmsd.expression import Expression
-from fmsd.expression.operators.binary import And, Or
 from fmsd.expression.variables import BinaryVariable
 
 a = BinaryVariable("a")
@@ -12,9 +13,9 @@ c = BinaryVariable("c")
 @pytest.mark.parametrize(
     ("lhs", "rhs", "idx"),
     [
-        (And(Or(a, b), c), And(a, c), [0]),
-        (And(And(a, b), c), And(And(a, Or(a, b)), c), [0, 1]),
-        (And(a, b), And(b, a), []),
+        ((a | b) & c, a & c, [0]),
+        ((a & b) & c, (a & (a | b)) & c, [0, 1]),
+        (a & b, b & a, []),
     ]
 )
 def test_symmetric_diff(lhs: Expression, rhs: Expression, idx: list[int] | None):
@@ -25,7 +26,7 @@ def test_symmetric_diff(lhs: Expression, rhs: Expression, idx: list[int] | None)
 @pytest.mark.parametrize(
     ("lhs", "rhs"),
     [
-        (And(Or(a, b), c), And(Or(a, b), c)),
+        ((a | b) & c, (a | b) & c),
     ],
 )
 def test_no_diff(lhs: Expression, rhs: Expression):
@@ -34,8 +35,8 @@ def test_no_diff(lhs: Expression, rhs: Expression):
 
 
 def test_start():
-    lhs = And(And(a, b), c)
-    rhs = And(And(Or(a, b), b), Or(a, c))
+    lhs = (a & b) & c
+    rhs = ((a | b) & b) & (a | c)
     assert lhs.diff(rhs) == []
     assert rhs.diff(lhs) == []
     assert lhs.diff(rhs, start=1) == [0, 0]

@@ -12,6 +12,8 @@ class DerivedStepProof(Proof):
 
     def verify(self, debug: bool = False) -> bool:
         idx = self.src.diff(self.dst)
+        if idx is None:
+            return True
         src = self.src.get(idx)
         dst = self.dst.get(idx)
         if (res := self.verify_ruleset(src, dst, global_ruleset)) is None:
@@ -32,6 +34,7 @@ class DerivedStepProof(Proof):
     def formalize(self) -> "Proof":
         if not self.derived_proof:
             assert self.verify()
+        assert self.derived_proof is not None
         return self.derived_proof
 
     def __eq__(self, other) -> bool:
