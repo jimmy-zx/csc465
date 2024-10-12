@@ -46,7 +46,7 @@ def test_deep():
     assert proof.hint == "commutative_and"
     assert proof.formalize() == StepProof(
         src, dst, [
-            Step([0, 0], rule_commutative_and)
+            Step([0, 0], rule_commutative_and, {"a": a, "b": b})
         ]
     )
 

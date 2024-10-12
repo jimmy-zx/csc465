@@ -1,4 +1,5 @@
-from fmsd.expression.operators.binary import And, Or
+# noinspection PyUnresolvedReferences
+import fmsd.utils.patch.binary
 from fmsd.expression.variables import BinaryVariable
 
 a = BinaryVariable("a")
@@ -7,14 +8,14 @@ c = BinaryVariable("c")
 
 
 def test_get():
-    tree = And(Or(a, b), c)
-    assert tree.get([0]) == Or(a, b)
+    tree = (a | b) & c
+    assert tree.get([0]) == a | b
     assert tree.get([1]) == c
     assert tree.get([0, 0]) == a
     assert tree.get([0, 1]) == b
 
 
 def test_set():
-    tree = And(Or(a, b), c)
+    tree = (a | b) & c
     tree.set([0, 0], b)
-    assert tree == And(Or(b, b), c)
+    assert tree == (b | b) & c

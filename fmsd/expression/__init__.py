@@ -1,6 +1,11 @@
 VarTable = dict[str, "Expression"]
 
 
+class ImportPatchException(Exception):
+    def __init__(self):
+        Exception.__init__(self, "import fmsd.utils.patch")
+
+
 class Expression:
     def __init__(self) -> None:
         self.parent: Expression | None = None
@@ -46,6 +51,24 @@ class Expression:
 
     def diff(self, other: "Expression", start: int = 0) -> list[int] | None:
         raise NotImplementedError()
+
+    def __invert__(self) -> "Expression":
+        raise ImportPatchException()
+
+    def __and__(self, other: "Expression") -> "Expression":
+        raise ImportPatchException()
+
+    def __or__(self, other: "Expression") -> "Expression":
+        raise ImportPatchException()
+
+    def __rshift__(self, other: "Expression") -> "Expression":
+        raise ImportPatchException()
+
+    def __lshift__(self, other: "Expression") -> "Expression":
+        raise ImportPatchException()
+
+    def __matmul__(self, other):
+        return NotImplemented
 
 
 class Variable(Expression):
