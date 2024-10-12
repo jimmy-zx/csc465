@@ -8,6 +8,7 @@ from fmsd.expression.variables import BinaryVariable
 from fmsd.proof.derived_step import DerivedStepProof, DerivedChainProof, DerivedEquivChainProof
 from fmsd.proof.step import StepProof, Step
 from fmsd.rule.rules.binary import rule_commutative_and, rule_commutative_or
+from fmsd.utils.patchops.binary import EQ, NEQ
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")
@@ -108,3 +109,20 @@ def test_multiple_equiv():
     )
     assert proof.verify()
     print(proof.formalize())
+
+
+def test_parallel():
+    """
+    Exercise 6p
+    """
+    src = ((a >> (a & b)) @ EQ @ (a >> b)) & ((a >> b) @ EQ @ ((a | b) >> b))
+    dst = TRUE
+    proof = DerivedEquivChainProof(src, dst, [
+        ((a >> (a & b)) @ EQ @ (a >> b)) & ((a >> b) @ EQ @ ((a | b) >> b)),
+        (((a >> a) & (a >> b)) @ EQ @ (a >> b)) & ((a >> b) @ EQ @ ((a >> b) & (b >> b))),
+        ((TRUE & (a >> b)) @ EQ @ (a >> b)) & ((a >> b) @ EQ @ ((a >> b) & TRUE)),
+        ((a >> b) @ EQ @ (a >> b)) & ((a >> b) @ EQ @ (a >> b)),
+        TRUE & TRUE,
+        TRUE
+    ])
+    assert proof.verify()

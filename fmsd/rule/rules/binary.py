@@ -20,7 +20,11 @@ rule_noncontradiction = MatchRule(And(a, Flip(a)), FALSE)
 
 rule_base_and = MatchRule(And(a, FALSE), FALSE)
 
+rule_base_and_rev = MatchRule(And(FALSE, a), FALSE)
+
 rule_base_or = MatchRule(Or(a, TRUE), TRUE)
+
+rule_base_or_rev = MatchRule(Or(TRUE, a), TRUE)
 
 rule_base_implies_true = MatchRule(Implies(a, TRUE), TRUE)
 
@@ -48,7 +52,11 @@ rule_inclusion_or = MatchRule(Implies(a, b), Equals(Or(a, b), b))
 
 rule_identity_and = MatchRule(And(TRUE, a), a)
 
+rule_identity_and_rev = MatchRule(And(a, TRUE), a)
+
 rule_identity_or = MatchRule(Or(FALSE, a), a)
+
+rule_identity_or_rev = MatchRule(Or(a, FALSE), a)
 
 rule_identity_implies = MatchRule(Implies(TRUE, a), a)
 

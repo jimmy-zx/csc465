@@ -20,7 +20,9 @@ class DerivedStepProof(Proof):
         src = self.src
         while src != self.dst:
             if (res := self.refine_once(src, self.dst, global_ruleset)) is None:
-                raise Exception(f"Failed to find a rule for ({self.src}) {src} to {self.dst}")
+                idx = src.diff(self.dst)
+                assert idx is not None
+                raise Exception(f"Failed to find a rule for {self.src.get(idx)} to {self.dst.get(idx)}, source {self.src}, {self.dst}")
             rule, idx, table, src = res
             steps.append(Step(idx, rule, table))
         self.derived_proof = StepProof(
@@ -84,7 +86,8 @@ class DerivedStepProof(Proof):
                     return VarTable()
             except AssertionError:
                 return None
-        assert None
+            return None
+        assert False
 
 
 class DerivedChainProof(ChainProof):
