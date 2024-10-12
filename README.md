@@ -1,5 +1,7 @@
 # Proof verifier for CSC465:FMSD
 
+[![Pytest](https://github.com/jimmy-zx/csc465/actions/workflows/pytest.yml/badge.svg)](https://github.com/jimmy-zx/csc465/actions/workflows/pytest.yml)
+
 Example: [Solution for 6d](tests/fmsd/proof/test_chain.py) for [Exercise 6](https://www.cs.utoronto.ca/~hehner/aPToP/solutions/Ex6.pdf)
 
 ## Structure
