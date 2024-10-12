@@ -29,14 +29,14 @@ class EquivProof(Proof):
         assert self.fwd.dst == self.dst
         assert self.bwd.src == self.dst
         assert self.bwd.dst == self.src
-        if not self.fwd.verify(debug=debug):
-            if debug:
-                print("fwd failed")
-            return False
-        if not self.bwd.verify(debug=debug):
-            if debug:
-                print("rev failed")
-            return False
+        try:
+            assert self.fwd.verify(debug=debug)
+        except Exception as ex:
+            raise Exception("EquivProof: failed to verify forward") from ex
+        try:
+            assert self.bwd.verify(debug=debug)
+        except Exception as ex:
+            raise Exception("EquivProof: failed to verify forward") from ex
         return True
 
     def formalize(self) -> "Proof":
@@ -58,9 +58,12 @@ class ChainProof(Proof):
 
     def verify(self, debug: bool = False) -> bool:
         last = self.src
-        for proof in self.proofs:
+        for i, proof in enumerate(self.proofs):
             assert proof.src == last
-            assert proof.verify(debug)
+            try:
+                assert proof.verify(debug)
+            except Exception as ex:
+                raise Exception(f"ChainProof: failed to verify step {i}") from ex
             last = proof.dst
         assert last == self.dst
         return True
@@ -80,7 +83,7 @@ class ChainProof(Proof):
         return s
 
 
-class EquivChainProof(ChainProof):
+class ChainEquivProof(ChainProof):
     def __init__(self, src: Expression, dst: Expression, proofs: Sequence[EquivProof]) -> None:
         ChainProof.__init__(self, src, dst, proofs)
 
@@ -99,6 +102,6 @@ class EquivChainProof(ChainProof):
         return s
 
     def __eq__(self, other) -> bool:
-        if not isinstance(other, EquivChainProof):
+        if not isinstance(other, ChainEquivProof):
             return False
         return ChainProof.__eq__(self, other)

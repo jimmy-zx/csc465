@@ -1,7 +1,7 @@
 from fmsd.expression.constants import TRUE
 from fmsd.expression.operators.binary import Equals, Implies, Or
 from fmsd.expression.variables import BinaryVariable
-from fmsd.proof import EquivProof, EquivChainProof
+from fmsd.proof import EquivProof, ChainEquivProof
 from fmsd.proof.step import StepProof, Step
 from fmsd.rule.rules.binary import rule_associative_equals, rule_commutative_or, rule_inclusion_or, \
     rule_reflexive_equals
@@ -86,7 +86,7 @@ def test_simple_chain():
     )
     assert step5_eqv.verify()
 
-    proof = EquivChainProof(src, dst, [step1_eqv, step2_eqv, step3_eqv, step4_eqv, step5_eqv])
+    proof = ChainEquivProof(src, dst, [step1_eqv, step2_eqv, step3_eqv, step4_eqv, step5_eqv])
     assert proof.verify()
     print(proof)  # outputs something like
     """
