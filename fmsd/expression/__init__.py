@@ -37,6 +37,8 @@ class Expression:
         raise NotImplementedError()
 
     def get(self, index: list[int]) -> "Expression":
+        if not index:
+            return self
         raise NotImplementedError()
 
     def set(self, index: list[int], repl: "Expression") -> None:

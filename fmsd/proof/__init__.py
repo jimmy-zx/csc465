@@ -14,6 +14,9 @@ class Proof(ABC):
     def verify(self, debug: bool = False) -> bool:
         ...
 
+    def formalize(self) -> "Proof":
+        return self
+
 
 class EquivProof(Proof):
     def __init__(self, src: Expression, dst: Expression, fwd: Proof, bwd: Proof) -> None:
@@ -36,8 +39,16 @@ class EquivProof(Proof):
             return False
         return True
 
+    def formalize(self) -> "Proof":
+        return EquivProof(self.src, self.dst, self.fwd.formalize(), self.bwd.formalize())
+
     def __str__(self) -> str:
         return str(self.fwd)
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, EquivProof):
+            return False
+        return self.src == other.src and self.dst == other.dst and self.fwd == other.fwd and self.bwd == other.bwd
 
 
 class ChainProof(Proof):
@@ -54,8 +65,22 @@ class ChainProof(Proof):
         assert last == self.dst
         return True
 
+    def formalize(self) -> "Proof":
+        return ChainProof(self.src, self.dst, [proof.formalize() for proof in self.proofs])
 
-class EquivChainProof(EquivProof, ChainProof):
+    def __eq__(self, other):
+        if not isinstance(other, ChainProof):
+            return False
+        return self.src == other.src and self.dst == other.dst and self.proofs == other.proofs
+
+    def __str__(self) -> str:
+        s = f"\n\t{self.src}"
+        for proof in self.proofs:
+            s += f"\t{proof.hint}\n=>\t{proof}"
+        return s
+
+
+class EquivChainProof(ChainProof):
     def __init__(self, src: Expression, dst: Expression, proofs: Sequence[EquivProof]) -> None:
         ChainProof.__init__(self, src, dst, proofs)
 
@@ -64,8 +89,16 @@ class EquivChainProof(EquivProof, ChainProof):
             assert isinstance(proof, EquivProof)
         return ChainProof.verify(self, debug)
 
+    def formalize(self) -> "Proof":
+        return ChainProof.formalize(self)
+
     def __str__(self) -> str:
         s = f"\n\t{self.src}"
         for proof in self.proofs:
             s += f"\t{proof.hint}\n=\t{proof}"
         return s
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, EquivChainProof):
+            return False
+        return ChainProof.__eq__(self, other)

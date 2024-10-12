@@ -19,6 +19,11 @@ class Step:
         src.set(self.pos, repl)
         return src
 
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, Step):
+            return False
+        return self.rule == other.rule and self.pos == other.pos and self.table == other.table
+
 
 class StepProof(Proof):
     def __init__(self, src: Expression, dst: Expression, steps: list[Step]) -> None:
@@ -40,4 +45,9 @@ class StepProof(Proof):
 
     def __str__(self) -> str:
         return str(self.dst)
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, StepProof):
+            return False
+        return self.src == other.src and self.dst == other.dst and self.steps == other.steps
 
