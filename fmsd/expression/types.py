@@ -9,4 +9,7 @@ class BinaryExpression(Expression):
 
 
 class NumericExpression(Expression):
+    """
+    An expression that evaluates to number
+    """
     pass

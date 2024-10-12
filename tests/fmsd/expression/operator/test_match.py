@@ -1,6 +1,6 @@
 # noinspection PyUnresolvedReferences
 import fmsd.utils.patch.binary
-from fmsd.expression.constants import TRUE, FALSE
+from fmsd.expression.constants.binary import TRUE, FALSE
 from fmsd.expression.variables import BinaryVariable
 from fmsd.utils.patchops.binary import EQ
 

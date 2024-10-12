@@ -1,5 +1,5 @@
 from fmsd.expression import Expression, VarTable
-from fmsd.expression.constants import TRUE, FALSE
+from fmsd.expression.constants.binary import TRUE, FALSE
 from fmsd.expression.operators import BinaryOperator
 from fmsd.expression.operators.binary import Flip, And, Or, Implies, ImpliedBy, Equals, NotEquals, Ternary
 from fmsd.rule import FunctionRule

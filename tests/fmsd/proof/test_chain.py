@@ -1,4 +1,4 @@
-from fmsd.expression.constants import TRUE
+from fmsd.expression.constants.binary import TRUE
 from fmsd.expression.operators.binary import Equals, Implies, Or
 from fmsd.expression.variables import BinaryVariable
 from fmsd.proof import EquivProof, ChainEquivProof

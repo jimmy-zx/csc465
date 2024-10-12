@@ -1,57 +1,40 @@
 from fmsd.expression import Expression
-from fmsd.expression.operators import BinaryOperator, BinaryOperator2WithBinaryOperands
+from fmsd.expression.operators import BinaryOperator, Operator1, Operator2, OperatorWithBinaryOperands, \
+    OperatorWithNumericOperands, EqualsOperator, NotEqualsOperator
 from fmsd.expression.types import BinaryExpression
 
 
-class Flip(BinaryOperator):
-    def __init__(self, operand: Expression) -> None:
-        BinaryOperator.__init__(self, operand)
-        assert isinstance(operand, BinaryExpression)
-
-    @property
-    def op(self) -> Expression:
-        return self.children[0]
-
-    def __str__(self) -> str:
-        return f"¬" + str(self.op)
+class Flip(OperatorWithBinaryOperands, Operator1, BinaryOperator):
+    DELIM = "¬"
 
 
-class And(BinaryOperator2WithBinaryOperands):
-    def __str__(self) -> str:
-        return "({}∧{})".format(str(self.lhs), str(self.rhs))
+class And(OperatorWithBinaryOperands, Operator2, BinaryOperator):
+    DELIM = "∧"
 
 
-class Or(BinaryOperator2WithBinaryOperands):
-    def __str__(self) -> str:
-        return "({}∨{})".format(str(self.lhs), str(self.rhs))
+class Or(OperatorWithBinaryOperands, Operator2, BinaryOperator):
+    DELIM = "∨"
 
 
-class Implies(BinaryOperator2WithBinaryOperands):
-    def __str__(self) -> str:
-        return "({}⇒{})".format(str(self.lhs), str(self.rhs))
+class Implies(OperatorWithBinaryOperands, Operator2, BinaryOperator):
+    DELIM = "⇒"
 
 
-class ImpliedBy(BinaryOperator2WithBinaryOperands):
-    def __str__(self) -> str:
-        return "({}⇐{})".format(str(self.lhs), str(self.rhs))
+class ImpliedBy(OperatorWithBinaryOperands, Operator2, BinaryOperator):
+    DELIM = "⇐"
 
 
-class Equals(BinaryOperator2WithBinaryOperands):
-    def __str__(self) -> str:
-        return "({}={})".format(str(self.lhs), str(self.rhs))
+class Equals(OperatorWithBinaryOperands, Operator2, BinaryOperator, EqualsOperator):
+    DELIM = "="
 
 
-class NotEquals(BinaryOperator2WithBinaryOperands):
-    def __str__(self) -> str:
-        return "({}⧧{})".format(str(self.lhs), str(self.rhs))
+class NotEquals(OperatorWithBinaryOperands, Operator2, BinaryOperator, NotEqualsOperator):
+    DELIM = "⧧"
 
 
-class Ternary(BinaryOperator):
+class Ternary(OperatorWithBinaryOperands, BinaryOperator):
     def __init__(self, if_: Expression, then: Expression, else_: Expression) -> None:
-        BinaryOperator.__init__(self, if_, then, else_)
-        assert isinstance(if_, BinaryExpression)
-        assert isinstance(then, BinaryExpression)
-        assert isinstance(else_, BinaryExpression)
+        OperatorWithBinaryOperands.__init__(self, if_, then, else_)
 
     def __str__(self) -> str:
         return "if {} then {} else {} fi".format(*map(str, self.children))

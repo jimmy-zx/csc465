@@ -1,4 +1,4 @@
-from fmsd.expression.constants import TRUE as T, FALSE as F
+from fmsd.expression.constants.binary import TRUE as T, FALSE as F
 from fmsd.expression.operators.binary import *
 from fmsd.expression.variables import BinaryVariable
 from fmsd.rule.rules.binary import rule_excluded_middle, rule_noncontradiction, rule_base_and, rule_base_or, \

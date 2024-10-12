@@ -2,7 +2,7 @@
 11.3.0, FMSD
 """
 
-from fmsd.expression.constants import TRUE, FALSE
+from fmsd.expression.constants.binary import TRUE, FALSE
 from fmsd.expression.operators.binary import Equals, And, NotEquals, Flip, Ternary
 from fmsd.rule import MatchRule
 from fmsd.expression.variables import BinaryVariable
