@@ -67,6 +67,9 @@ class Expression:
     def __lshift__(self, other: "Expression") -> "Expression":
         raise ImportPatchException()
 
+    def __neg__(self) -> "Expression":
+        raise ImportPatchException()
+
     def __add__(self, other: "Expression") -> "Expression":
         raise ImportPatchException()
 
