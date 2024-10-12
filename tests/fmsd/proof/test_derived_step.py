@@ -7,7 +7,7 @@ from fmsd.expression.operators.binary import Or, Equals
 from fmsd.expression.variables import BinaryVariable
 from fmsd.proof.derived_step import DerivedStepProof, DerivedChainProof, DerivedEquivChainProof
 from fmsd.proof.step import StepProof, Step
-from fmsd.rule.rules.binary import rule_commutative_and
+from fmsd.rule.rules.binary import rule_commutative_and, rule_commutative_or
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")
@@ -19,7 +19,11 @@ def test_simple():
         a & b, b & a
     )
     assert proof.verify()
-    assert proof.hint == "commutative_and"
+    assert proof.formalize() == StepProof(
+        a & b, b & a, [
+            Step([], rule_commutative_and, {"a": a, "b": b})
+        ]
+    )
 
 
 def test_invalid():
@@ -27,15 +31,20 @@ def test_invalid():
         a & b, b & c
     )
     with pytest.raises(Exception) as ex:
-        proof.verify()
+        assert proof.verify()
 
 
 def test_invalid_mult():
     proof = DerivedStepProof(
         (a | b) & (a | c), (b | a) & (c | a)
     )
-    with pytest.raises(Exception) as ex:
-        proof.verify()
+    assert proof.verify()
+    assert proof.formalize() == StepProof(
+        (a | b) & (a | c), (b | a) & (c | a), [
+            Step([0], rule_commutative_or, {"a": a, "b": b}),
+            Step([1], rule_commutative_or, {"a": a, "b": c}),
+        ]
+    )
 
 
 def test_deep():
@@ -45,7 +54,6 @@ def test_deep():
         src, dst
     )
     assert proof.verify()
-    assert proof.hint == "commutative_and"
     assert proof.formalize() == StepProof(
         src, dst, [
             Step([0, 0], rule_commutative_and, {"a": a, "b": b})

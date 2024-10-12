@@ -40,3 +40,11 @@ def test_start():
     assert lhs.diff(rhs) == []
     assert rhs.diff(lhs) == []
     assert lhs.diff(rhs, start=1) == [0, 0]
+    assert lhs.diff(rhs, start=3) is None
+
+
+def test_mult_diff():
+    lhs = (a | b) & (a | c)
+    rhs = (b | a) & (b | c)
+    assert lhs.diff(rhs) == []
+    assert lhs.diff(rhs, 1) == [0]

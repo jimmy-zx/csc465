@@ -39,8 +39,24 @@ class Operator(Expression):
 
     def diff(self, other: "Expression", start: int = 0) -> list[int] | None:
         """
-        Returns the difference of two operators
+        Returns the difference of two operator (tree)s
+
+        Behavior:
+        If self == other, returns None
+        If start > 0, returns the diff along first different child
+        If start <= 0, returns diff along the only different child, or the current node
         """
+        if self == other:
+            return None
+        if start > 0:
+            for i, (lhs, rhs) in enumerate(zip(self.children, other.children)):
+                if lhs != rhs:
+                    found = [i]
+                    ext = lhs.diff(rhs, start - 1)
+                    if ext is not None:
+                        found.extend(ext)
+                        return found
+            return None
         if type(self) != type(other):
             return []
         found: list[int] | None = None
@@ -52,8 +68,6 @@ class Operator(Expression):
                 ext = lhs.diff(rhs, start - 1)
                 assert ext is not None
                 found.extend(ext)
-                if start > 0:
-                    return found
         return found
 
     def is_constant(self) -> bool:

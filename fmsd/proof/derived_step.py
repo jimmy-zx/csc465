@@ -1,3 +1,5 @@
+import itertools
+
 from fmsd.expression import Expression, VarTable
 from fmsd.proof import Proof, ChainProof, EquivProof
 from fmsd.proof.step import StepProof, Step
@@ -14,21 +16,21 @@ class DerivedStepProof(Proof):
         idx = self.src.diff(self.dst)
         if idx is None:
             return True
-        src = self.src.get(idx)
-        dst = self.dst.get(idx)
-        if (res := self.verify_ruleset(src, dst, global_ruleset)) is None:
-            raise Exception(f"Failed to find a rule from {src} to {dst}")
-        rule, table = res
-        self.hint = rule.name
+        steps = []
+        src = self.src
+        while src != self.dst:
+            if (res := self.refine_once(src, self.dst, global_ruleset)) is None:
+                raise Exception(f"Failed to find a rule for ({self.src}) {src} to {self.dst}")
+            rule, idx, table, src = res
+            steps.append(Step(idx, rule, table))
         self.derived_proof = StepProof(
-            self.src, self.dst, [
-                Step(idx, rule, table)
-            ]
+            self.src, self.dst, steps
         )
         try:
-            assert self.derived_proof.verify(debug=debug)
+            assert self.derived_proof.verify()
         except Exception as ex:
             raise Exception("Failed to verify derived proof") from ex
+        self.hint = self.derived_proof.hint
         return True
 
     def formalize(self) -> "Proof":
@@ -41,14 +43,32 @@ class DerivedStepProof(Proof):
         return self.src == other.src and self.dst == other.dst
 
     @staticmethod
-    def verify_ruleset(src: Expression, dst: Expression, ruleset: dict[str, Rule], debug: bool = False) -> tuple[Rule, VarTable] | None:
+    def refine_once(src: Expression, dst: Expression, ruleset: dict[str, Rule]) -> tuple[Rule, list[
+        int], VarTable, Expression] | None:
+        assert src.diff(dst) is not None
+        for i in itertools.count(start=0):
+            idx = src.diff(dst, start=i)
+            if idx is None:
+                return None
+            if (res := DerivedStepProof.verify_ruleset(src.get(idx), dst.get(idx), ruleset)) is not None:
+                if not idx:
+                    refined = dst
+                else:
+                    refined = src.copy()
+                    refined.set(idx, dst.get(idx))
+
+                return res[0], idx, res[1], refined
+        assert False
+
+    @staticmethod
+    def verify_ruleset(src: Expression, dst: Expression, ruleset: dict[str, Rule]) -> tuple[Rule, VarTable] | None:
         for _, rule in ruleset.items():
-            if (table := DerivedStepProof.verify_once(src, dst, rule, debug)) is not None:
+            if (table := DerivedStepProof.verify_once(src, dst, rule)) is not None:
                 return rule, table
         return None
 
     @staticmethod
-    def verify_once(src: Expression, dst: Expression, rule: Rule, debug: bool = False) -> VarTable | None:
+    def verify_once(src: Expression, dst: Expression, rule: Rule) -> VarTable | None:
         if isinstance(rule, MatchRule):
             if (m := src.match(rule.pattern, {})) is not None:
                 if dst.match(rule.repl, m) == m:
@@ -76,10 +96,10 @@ class DerivedChainProof(ChainProof):
 
 
 class DerivedEquivChainProof(EquivProof):
-        def __init__(self, src: Expression, dst: Expression, steps: list[Expression]) -> None:
-            EquivProof.__init__(
-                self,
-                src, dst,
-                DerivedChainProof(src, dst, steps),
-                DerivedChainProof(dst, src, steps[::-1])
-            )
+    def __init__(self, src: Expression, dst: Expression, steps: list[Expression]) -> None:
+        EquivProof.__init__(
+            self,
+            src, dst,
+            DerivedChainProof(src, dst, steps),
+            DerivedChainProof(dst, src, steps[::-1])
+        )
