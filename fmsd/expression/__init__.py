@@ -33,6 +33,8 @@ class Expression(Typed):
 
     def match(self, pattern: "Expression", matched: VarTable) -> VarTable | None:
         if isinstance(pattern, Variable):
+            if self.type() != pattern.type():
+                return None
             if pattern.name in matched:
                 if self != matched[pattern.name]:
                     return None
@@ -118,10 +120,13 @@ class Variable(Expression):
         self.name = name
 
     def __eq__(self, other) -> bool:
-        if isinstance(other, Variable):
-            if self.name == other.name:
-                return True
-        return False
+        if self.type() != other.type():
+            return False
+        if not isinstance(other, Variable):
+            return False
+        if self.name != other.name:
+            return False
+        return True
 
     def __str__(self) -> str:
         return self.name

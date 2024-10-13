@@ -1,12 +1,15 @@
 # noinspection PyUnresolvedReferences
 import fmsd.utils.patch.binary
 from fmsd.expression.constants.binary import TRUE, FALSE
-from fmsd.expression.variables import BinaryVariable
+from fmsd.expression.types import Numeric
+from fmsd.expression.variables import BinaryVariable, NumericVariable
 from fmsd.utils.patchops.infix import EQ
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")
 c = BinaryVariable("c")
+x = NumericVariable("x")
+y = NumericVariable("y")
 
 
 def test_basic():
@@ -28,3 +31,9 @@ def test_recursion():
 def test_case():
     pattern = a @ EQ @ b
     assert (b @ EQ @ c).match(pattern, {}) == {"a": b, "b": c}
+
+
+def test_typing():
+    assert a.match(x, {}) is None
+    assert a.match(a, {}) == {"a": a}
+    assert (a @ EQ @ b).match(x @ EQ @ y, {}) is None

@@ -1,5 +1,5 @@
 from fmsd.expression import Expression
-from fmsd.expression.operator import Operator, OperatorWithSameTypeOperands
+from fmsd.expression.operator import Operator
 from fmsd.expression.types import Type
 
 
@@ -37,6 +37,15 @@ class Operator2(Operator):
         return "({}{}{})".format(
             str(self.lhs), self.DELIM, str(self.rhs)
         )
+
+
+class OperatorWithSameTypeOperands(Operator):
+    def __init__(self, *operands: Expression) -> None:
+        assert len(set(op.type() for op in operands)) == 1
+        Expression.__init__(self)
+        self.children = list(operands)
+        for child in self.children:
+            child.parent = self
 
 
 class OperatorWithBinaryOperands(OperatorWithSameTypeOperands):

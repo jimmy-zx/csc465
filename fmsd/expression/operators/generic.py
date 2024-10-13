@@ -1,6 +1,6 @@
 from fmsd.expression import Expression
-from fmsd.expression.operator import OperatorWithSameTypeOperands, Operator
-from fmsd.expression.operators import Operator2, AssociativeOperator, CommutativeOperator
+from fmsd.expression.operator import Operator
+from fmsd.expression.operators import Operator2, AssociativeOperator, CommutativeOperator, OperatorWithSameTypeOperands
 from fmsd.expression.types import Binary, Type
 
 
