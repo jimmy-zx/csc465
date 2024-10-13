@@ -1,14 +1,6 @@
 from fmsd.expression import Expression
-from fmsd.expression.operator import Operator
-from fmsd.expression.types import BinaryExpression, NumericExpression
-
-
-class BinaryOperator(Operator, BinaryExpression):
-    pass
-
-
-class NumericOperator(Operator, NumericExpression):
-    pass
+from fmsd.expression.operator import Operator, OperatorWithSameTypeOperands
+from fmsd.expression.types import Type
 
 
 class Operator1(Operator):
@@ -47,26 +39,18 @@ class Operator2(Operator):
         )
 
 
-class OperatorWithBinaryOperands(Operator):
+class OperatorWithBinaryOperands(OperatorWithSameTypeOperands):
     def __init__(self, *operands: Expression) -> None:
         for op in operands:
-            assert isinstance(op, BinaryExpression)
-        Operator.__init__(self, *operands)
+            assert op.type() == Type.BINARY
+        OperatorWithSameTypeOperands.__init__(self, *operands)
 
 
-class OperatorWithNumericOperands(Operator):
+class OperatorWithNumericOperands(OperatorWithSameTypeOperands):
     def __init__(self, *operands: Expression) -> None:
         for op in operands:
-            assert isinstance(op, NumericExpression)
-        Operator.__init__(self, *operands)
-
-
-class EqualsOperator(Operator):
-    pass
-
-
-class NotEqualsOperator(Operator):
-    pass
+            assert op.type() == Type.NUMERIC
+        OperatorWithSameTypeOperands.__init__(self, *operands)
 
 
 class AssociativeOperator(Operator):

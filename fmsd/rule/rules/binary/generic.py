@@ -3,7 +3,8 @@
 """
 
 from fmsd.expression.constants.binary import TRUE, FALSE
-from fmsd.expression.operators.binary import Equals, And, NotEquals, Flip, Ternary
+from fmsd.expression.operators.binary import And, Flip
+from fmsd.expression.operators.generic import Equals, NotEquals, Ternary
 from fmsd.rule import MatchRule
 from fmsd.expression.variables import BinaryVariable
 

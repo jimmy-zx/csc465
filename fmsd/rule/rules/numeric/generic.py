@@ -7,7 +7,7 @@ import fmsd.utils.patch.binary
 # noinspection PyUnresolvedReferences
 import fmsd.utils.patch.numeric
 from fmsd.expression.constants.binary import TRUE, FALSE
-from fmsd.expression.operators.numeric import Ternary
+from fmsd.expression.operators.generic import Ternary
 from fmsd.expression.variables import BinaryVariable
 from fmsd.expression.variables import NumericVariable
 from fmsd.rule import MatchRule

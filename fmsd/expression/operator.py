@@ -96,7 +96,21 @@ class Operator(Expression):
     def __eq__(self, other) -> bool:
         if type(self) != type(other):
             return False
+        if self.type() != other.type():
+            return False
         return self.children == other.children
 
     def __hash__(self) -> int:
         return hash((type(self), hash(tuple(self.children))))
+
+    def singular(self) -> bool:
+        return all(op.singular() for op in self.children)
+
+
+class OperatorWithSameTypeOperands(Operator):
+    def __init__(self, *operands: Expression) -> None:
+        assert len(set(op.type() for op in operands)) == 1
+        Expression.__init__(self)
+        self.children = list(operands)
+        for child in self.children:
+            child.parent = self

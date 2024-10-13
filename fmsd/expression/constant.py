@@ -27,3 +27,6 @@ class Constant(Expression):
 
     def __str__(self) -> str:
         return self.name
+
+    def singular(self) -> bool:
+        return True

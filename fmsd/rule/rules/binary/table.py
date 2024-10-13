@@ -1,12 +1,13 @@
 from fmsd.expression import Expression, VarTable
 from fmsd.expression.constants.binary import TRUE, FALSE
-from fmsd.expression.operators import BinaryOperator
-from fmsd.expression.operators.binary import Flip, And, Or, Implies, ImpliedBy, Equals, NotEquals, Ternary
+from fmsd.expression.operators.binary import Flip, And, Or, Implies, ImpliedBy
+from fmsd.expression.operators.generic import Equals, NotEquals, Ternary
+from fmsd.expression.types import Type
 from fmsd.rule import FunctionRule
 
 
 def func_rule_table(exp: Expression, table: VarTable | None = None) -> Expression:
-    assert isinstance(exp, BinaryOperator)
+    assert exp.type() == Type.BINARY
     assert exp.is_constant()
     if isinstance(exp, Flip):
         if exp.op == TRUE:

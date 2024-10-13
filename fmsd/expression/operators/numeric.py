@@ -1,71 +1,51 @@
-from fmsd.expression import Expression
-from fmsd.expression.operators import NumericOperator, Operator1, Operator2, OperatorWithNumericOperands, \
-    BinaryOperator, EqualsOperator, NotEqualsOperator, AssociativeOperator, CommutativeOperator
-from fmsd.expression.types import BinaryExpression, NumericExpression
+from fmsd.expression.operators import Operator1, Operator2, OperatorWithNumericOperands, \
+    AssociativeOperator, CommutativeOperator
+from fmsd.expression.types import Numeric, Binary
 
 
-class Negate(OperatorWithNumericOperands, Operator1, NumericOperator):
+class Negate(OperatorWithNumericOperands, Operator1, Numeric):
     DELIM = "-"
 
 
-class Plus(OperatorWithNumericOperands, Operator2, NumericOperator, AssociativeOperator, CommutativeOperator):
+class Plus(OperatorWithNumericOperands, Operator2, Numeric, AssociativeOperator, CommutativeOperator):
     DELIM = "+"
 
 
-class Minus(OperatorWithNumericOperands, Operator2, NumericOperator):
+class Minus(OperatorWithNumericOperands, Operator2, Numeric):
     DELIM = "-"
 
 
-class Multiply(OperatorWithNumericOperands, Operator2, NumericOperator, AssociativeOperator, CommutativeOperator):
+class Multiply(OperatorWithNumericOperands, Operator2, Numeric, AssociativeOperator, CommutativeOperator):
     DELIM = "×"
 
 
-class DividedBy(OperatorWithNumericOperands, Operator2, NumericOperator):
+class DividedBy(OperatorWithNumericOperands, Operator2, Numeric):
     DELIM = "/"
 
 
-class Power(OperatorWithNumericOperands, Operator2, NumericOperator):
+class Power(OperatorWithNumericOperands, Operator2, Numeric):
     DELIM = "^"
 
 
-class Max(OperatorWithNumericOperands, Operator2, NumericOperator, AssociativeOperator, CommutativeOperator):
+class Max(OperatorWithNumericOperands, Operator2, Numeric, AssociativeOperator, CommutativeOperator):
     DELIM = "↑"
 
 
-class Min(OperatorWithNumericOperands, Operator2, NumericOperator, AssociativeOperator, CommutativeOperator):
+class Min(OperatorWithNumericOperands, Operator2, Numeric, AssociativeOperator, CommutativeOperator):
     DELIM = "↓"
 
 
-class LessThan(OperatorWithNumericOperands, Operator2, BinaryOperator):
+class LessThan(OperatorWithNumericOperands, Operator2, Binary):
     DELIM = "<"
 
 
-class LessThanOrEqualsTo(OperatorWithNumericOperands, Operator2, BinaryOperator):
+class LessThanOrEqualsTo(OperatorWithNumericOperands, Operator2, Binary):
     DELIM = "≤"
 
 
-class GreaterThan(OperatorWithNumericOperands, Operator2, BinaryOperator):
+class GreaterThan(OperatorWithNumericOperands, Operator2, Binary):
     DELIM = ">"
 
 
-class GreaterThanOrEqualsTo(OperatorWithNumericOperands, Operator2, BinaryOperator):
+class GreaterThanOrEqualsTo(OperatorWithNumericOperands, Operator2, Binary):
     DELIM = "≥"
-
-
-class Equals(OperatorWithNumericOperands, Operator2, BinaryOperator, EqualsOperator, CommutativeOperator):
-    DELIM = "="
-
-
-class NotEquals(OperatorWithNumericOperands, Operator2, BinaryOperator, NotEqualsOperator):
-    DELIM = "⧧"
-
-
-class Ternary(NumericOperator):
-    def __init__(self, if_: Expression, then: Expression, else_: Expression) -> None:
-        NumericOperator.__init__(self, if_, then, else_)
-        assert isinstance(if_, BinaryExpression)
-        assert isinstance(then, NumericExpression)
-        assert isinstance(else_, NumericExpression)
-
-    def __str__(self) -> str:
-        return "if {} then {} else {} fi".format(*map(str, self.children))

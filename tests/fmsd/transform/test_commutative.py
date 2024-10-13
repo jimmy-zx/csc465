@@ -2,6 +2,7 @@ import pytest
 
 import fmsd.expression.operators.binary as binop
 import fmsd.expression.operators.numeric as numop
+import fmsd.expression.operators.generic as genop
 # noinspection PyUnresolvedReferences
 import fmsd.utils.patch.binary
 # noinspection PyUnresolvedReferences
@@ -24,7 +25,7 @@ z = NumericVariable("z")
     [
         binop.And, binop.Or,
         binop.Implies, binop.ImpliedBy,
-        binop.Equals, binop.NotEquals,
+        genop.Equals, genop.NotEquals,
     ]
 )
 def test_commutative_binary(op):
@@ -40,7 +41,7 @@ def test_commutative_binary(op):
         numop.Max, numop.Min,
         numop.LessThan, numop.LessThanOrEqualsTo,
         numop.GreaterThan, numop.GreaterThanOrEqualsTo,
-        numop.Equals, numop.NotEquals
+        genop.Equals, genop.NotEquals
     ]
 )
 def test_commutative_numeric(op):

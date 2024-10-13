@@ -1,19 +1,24 @@
-from fmsd.expression import Expression
+from enum import Enum
 
 
-class BinaryExpression(Expression):
-    """
-    An expression that evaluates to binary
-    """
-    pass
+class Type(Enum):
+    BINARY = 0
+    NUMERIC = 1
 
 
-class OrderedExpression(Expression):
-    pass
+class Typed:
+    def type(self) -> Type:
+        raise NotImplementedError()
+
+    def singular(self) -> bool:
+        return False
 
 
-class NumericExpression(OrderedExpression):
-    """
-    An expression that evaluates to number
-    """
-    pass
+class Binary(Typed):
+    def type(self) -> Type:
+        return Type.BINARY
+
+
+class Numeric(Typed):
+    def type(self) -> Type:
+        return Type.NUMERIC

@@ -1,3 +1,5 @@
+from fmsd.expression.types import Typed
+
 VarTable = dict[str, "Expression"]
 
 
@@ -6,7 +8,7 @@ class ImportPatchException(Exception):
         Exception.__init__(self, "import fmsd.utils.patch")
 
 
-class Expression:
+class Expression(Typed):
     def __init__(self) -> None:
         self.parent: Expression | None = None
         self.children: list[Expression] = []
@@ -42,7 +44,7 @@ class Expression:
         return None
 
     def is_constant(self) -> bool:
-        raise NotImplementedError()
+        return False
 
     def get(self, index: list[int]) -> "Expression":
         if not index:
@@ -133,3 +135,6 @@ class Variable(Expression):
         if self == other:
             return None
         return []
+
+    def singular(self) -> bool:
+        return True

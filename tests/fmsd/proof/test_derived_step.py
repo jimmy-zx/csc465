@@ -3,7 +3,8 @@ import pytest
 # noinspection PyUnresolvedReferences
 import fmsd.utils.patch.binary
 from fmsd.expression.constants.binary import TRUE
-from fmsd.expression.operators.binary import Or, Equals
+from fmsd.expression.operators.binary import Or
+from fmsd.expression.operators.generic import Equals
 from fmsd.expression.variables import BinaryVariable
 from fmsd.proof import ChainProof
 from fmsd.proof.derived_step import DerivedStepProof, DerivedChainProof, DerivedEquivChainProof, TransformProof
