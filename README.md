@@ -10,7 +10,7 @@ Example: [Solution for 6d](tests/fmsd/proof/test_chain.py) for [Exercise 6](http
 
 - [ ] Generic
 - [x] Binary
-- [ ] Numbers
+- [x] Numbers
 - [ ] Bunches
 - [ ] Sets
 - [ ] Strings
@@ -39,7 +39,7 @@ Example: [Solution for 6d](tests/fmsd/proof/test_chain.py) for [Exercise 6](http
 
 #### L3
 
-- [ ] 6[f](tests/fmsd/proof/test_step.py),[m](tests/fmsd/proof/test_derived_step.py),[p](tests/fmsd/proof/test_derived_step.py),s
+- [ ] 6[f](tests/fmsd/proof/test_step.py),[m](tests/fmsd/proof/test_derived_step.py),[p](tests/fmsd/proof/test_derived_step.py),[s](tests/fmsd/proof/test_derived_step.py)
 - [ ] 7c
 - 22
 

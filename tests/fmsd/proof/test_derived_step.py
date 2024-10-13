@@ -113,7 +113,7 @@ def test_multiple_equiv():
 
 def test_parallel():
     """
-    Exercise 6p
+    Exercise 6s
     """
     src = ((a >> (a & b)) @ EQ @ (a >> b)) & ((a >> b) @ EQ @ ((a | b) >> b))
     dst = TRUE

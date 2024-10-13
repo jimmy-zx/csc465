@@ -14,6 +14,9 @@ class Expression:
     def __eq__(self, other) -> bool:
         raise NotImplementedError()
 
+    def __hash__(self) -> int:
+        raise NotImplementedError()
+
     def __repr__(self) -> str:
         return str(self)
 
@@ -51,6 +54,9 @@ class Expression:
 
     def diff(self, other: "Expression", start: int = 0) -> list[int] | None:
         raise NotImplementedError()
+
+    def collect(self) -> list["Expression"]:
+        return [self]
 
     def __invert__(self) -> "Expression":
         raise ImportPatchException()
@@ -103,7 +109,7 @@ class Expression:
 
 class Variable(Expression):
     def __hash__(self):
-        return hash(self.name)
+        return hash((type(self), self.name))
 
     def __init__(self, name: str) -> None:
         Expression.__init__(self)

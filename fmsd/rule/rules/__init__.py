@@ -1,10 +1,11 @@
 import fmsd.rule.rules.binary as binary
 import fmsd.rule.rules.binary.generic as binary_generic
 import fmsd.rule.rules.binary.table as binary_table
+import fmsd.rule.rules.numeric as numeric
 import fmsd.rule.rules.numeric.generic as numeric_generic
 from fmsd.rule import Rule
 
-rulelist = [binary_table, binary_generic, binary, numeric_generic]
+rulelist = [binary_table, binary_generic, binary, numeric, numeric_generic]
 
 ruleset: dict[str, Rule] = {}
 

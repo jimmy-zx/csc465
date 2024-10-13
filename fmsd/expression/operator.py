@@ -97,3 +97,6 @@ class Operator(Expression):
         if type(self) != type(other):
             return False
         return self.children == other.children
+
+    def __hash__(self) -> int:
+        return hash((type(self), hash(tuple(self.children))))

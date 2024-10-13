@@ -1,18 +1,17 @@
 from fmsd.expression import Expression
 from fmsd.expression.operators import BinaryOperator, Operator1, Operator2, OperatorWithBinaryOperands, \
-    OperatorWithNumericOperands, EqualsOperator, NotEqualsOperator
-from fmsd.expression.types import BinaryExpression
+    EqualsOperator, NotEqualsOperator, AssociativeOperator, CommutativeOperator
 
 
 class Flip(OperatorWithBinaryOperands, Operator1, BinaryOperator):
     DELIM = "¬"
 
 
-class And(OperatorWithBinaryOperands, Operator2, BinaryOperator):
+class And(OperatorWithBinaryOperands, Operator2, BinaryOperator, AssociativeOperator, CommutativeOperator):
     DELIM = "∧"
 
 
-class Or(OperatorWithBinaryOperands, Operator2, BinaryOperator):
+class Or(OperatorWithBinaryOperands, Operator2, BinaryOperator, AssociativeOperator, CommutativeOperator):
     DELIM = "∨"
 
 
@@ -24,7 +23,8 @@ class ImpliedBy(OperatorWithBinaryOperands, Operator2, BinaryOperator):
     DELIM = "⇐"
 
 
-class Equals(OperatorWithBinaryOperands, Operator2, BinaryOperator, EqualsOperator):
+class Equals(OperatorWithBinaryOperands, Operator2, BinaryOperator, EqualsOperator, AssociativeOperator,
+             CommutativeOperator):
     DELIM = "="
 
 

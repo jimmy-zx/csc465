@@ -1,6 +1,6 @@
 from fmsd.expression import Expression
 from fmsd.expression.operators import NumericOperator, Operator1, Operator2, OperatorWithNumericOperands, \
-    BinaryOperator, EqualsOperator, NotEqualsOperator
+    BinaryOperator, EqualsOperator, NotEqualsOperator, AssociativeOperator, CommutativeOperator
 from fmsd.expression.types import BinaryExpression, NumericExpression
 
 
@@ -8,7 +8,7 @@ class Negate(OperatorWithNumericOperands, Operator1, NumericOperator):
     DELIM = "-"
 
 
-class Plus(OperatorWithNumericOperands, Operator2, NumericOperator):
+class Plus(OperatorWithNumericOperands, Operator2, NumericOperator, AssociativeOperator, CommutativeOperator):
     DELIM = "+"
 
 
@@ -16,7 +16,7 @@ class Minus(OperatorWithNumericOperands, Operator2, NumericOperator):
     DELIM = "-"
 
 
-class Multiply(OperatorWithNumericOperands, Operator2, NumericOperator):
+class Multiply(OperatorWithNumericOperands, Operator2, NumericOperator, AssociativeOperator, CommutativeOperator):
     DELIM = "×"
 
 
@@ -28,11 +28,11 @@ class Power(OperatorWithNumericOperands, Operator2, NumericOperator):
     DELIM = "^"
 
 
-class Max(OperatorWithNumericOperands, Operator2, NumericOperator):
+class Max(OperatorWithNumericOperands, Operator2, NumericOperator, AssociativeOperator, CommutativeOperator):
     DELIM = "↑"
 
 
-class Min(OperatorWithNumericOperands, Operator2, NumericOperator):
+class Min(OperatorWithNumericOperands, Operator2, NumericOperator, AssociativeOperator, CommutativeOperator):
     DELIM = "↓"
 
 
@@ -52,7 +52,7 @@ class GreaterThanOrEqualsTo(OperatorWithNumericOperands, Operator2, BinaryOperat
     DELIM = "≥"
 
 
-class Equals(OperatorWithNumericOperands, Operator2, BinaryOperator, EqualsOperator):
+class Equals(OperatorWithNumericOperands, Operator2, BinaryOperator, EqualsOperator, CommutativeOperator):
     DELIM = "="
 
 

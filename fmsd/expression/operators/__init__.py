@@ -67,3 +67,19 @@ class EqualsOperator(Operator):
 
 class NotEqualsOperator(Operator):
     pass
+
+
+class AssociativeOperator(Operator):
+    def collect(self) -> list["Expression"]:
+        ops = []
+        for op in self.children:
+            if type(self) == type(op):
+                ops.extend(op.collect())
+            else:
+                ops.append(op)
+        return ops
+
+
+class CommutativeOperator(Operator):
+    pass
+
