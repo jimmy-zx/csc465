@@ -3,7 +3,8 @@ import fmsd.utils.patch.binary
 from fmsd.expression.constants.binary import TRUE
 from fmsd.expression.operators.binary import Ternary
 from fmsd.expression.variables import BinaryVariable
-from fmsd.proof.derived_step import DerivedEquivChainProof
+from fmsd.proof.derived_step import DerivedEquivChainProof, DerivedChainProof
+
 
 def test_7c():
     """
@@ -53,18 +54,22 @@ def test_22a():
     stmt3 = ~(p & w)
     stmt4 = ~(w & r)
     stmt5 = ~(p & r)
-    dst1 = ~r  # the speaker is not reading about tennis
-    proof1 = DerivedEquivChainProof(
-        stmt1 & (stmt2 & (stmt3 & (stmt4 & stmt5))),
-        dst1,
+    dst = ~p & ~r & w  # the speaker is not reading about tennis
+    proof = DerivedChainProof(
+        stmt1 & stmt2 & stmt3 & stmt4 & stmt5,
+        dst,
         [
-            stmt1 & (stmt2 & (stmt3 & (stmt4 & stmt5))),
-            stmt1 & (stmt2 & (stmt3 & (stmt5 & stmt4))),
-            stmt1 & (stmt2 & ((stmt3 & stmt5) & stmt4)),
-            stmt1 & ((stmt2 & (stmt3 & stmt5)) & stmt4),
-            stmt1 & (((stmt3 & stmt5) & stmt2) & stmt4),
-            stmt1 & ((stmt3 & stmt5) & (stmt2 & stmt4)),
-            (stmt1 & (stmt3 & stmt5)) & (stmt2 & stmt4),
-            (stmt1 & (stmt3 & stmt5)) & ((~~w | r) & (~w | ~r)),
+            stmt1 & stmt2 & stmt3 & stmt4 & stmt5,
+            (stmt1 & stmt2) & stmt3 & stmt4 & stmt5,
+            (stmt1 & (~r >> ~~w)) & stmt3 & stmt4 & stmt5,
+            (stmt1 & (~r >> w)) & stmt3 & stmt4 & stmt5,
+            ((~p | ~r) >> w) & stmt3 & stmt4 & (~p | ~r),
+            ((~p | ~r) >> w) & (~p | ~r) & stmt3 & stmt4,
+            w & stmt3 & stmt4,
+            w & (~p | ~w) & (~w | ~r),
+            ((~p | ~w) & w) & ((~w | ~r) & w) & w,
+            ((~w | ~p) & ~~w) & ((~w | ~r) & ~~w) & w,
+            (~p) & (~r) & w,
         ]
     )
+    assert proof.verify()
