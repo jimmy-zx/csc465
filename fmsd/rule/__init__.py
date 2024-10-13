@@ -1,7 +1,12 @@
+import warnings
 from abc import ABC, abstractmethod
 from typing import Callable
 
 from fmsd.expression import Expression, VarTable
+from fmsd.expression.operators.binary import Implies
+from fmsd.expression.operators.generic import Equals
+
+warnings.warn("This module is deprecated", DeprecationWarning)
 
 
 class Rule(ABC):
@@ -35,6 +40,11 @@ class MatchRule(Rule):
             assert self.repl.variables().issubset(m)
             return self.pattern.eval_var(m)
         assert False
+
+    def to_expr(self) -> Expression:
+        if self.equiv:
+            return Equals(self.pattern, self.repl)
+        return Implies(self.pattern, self.repl)
 
     def __repr__(self) -> str:
         if self.equiv:
