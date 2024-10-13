@@ -22,5 +22,8 @@ class Constant(Expression):
             return False
         return True
 
+    def __hash__(self) -> int:
+        return hash((type(self), self.name))
+
     def __str__(self) -> str:
         return self.name

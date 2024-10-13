@@ -1,4 +1,4 @@
-import fmsd.transform.transforms.rule
+import fmsd.transform.transforms.rule as rule
 
 from fmsd.transform.prop import AssociativeTransform, CommutativeTransform
 

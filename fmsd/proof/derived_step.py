@@ -4,7 +4,24 @@ from fmsd.expression import Expression, VarTable
 from fmsd.proof import Proof, ChainProof, EquivProof
 from fmsd.proof.step import StepProof, Step
 from fmsd.rule import MatchRule, FunctionRule, Rule
-from fmsd.rule.rules import ruleset as global_ruleset
+from fmsd.transform import Transform
+from fmsd.transform.transforms import transforms as global_transforms
+
+
+class TransformProof(Proof):
+    def __init__(self, src: Expression, dst: Expression, transform: Transform, index: list[int]) -> None:
+        Proof.__init__(self, src, dst, transform.name or "")
+        self.transform = transform
+        self.index = index
+
+    def verify(self, debug: bool = False) -> bool:
+        assert self.transform.verify(self.src.get(self.index), self.dst.get(self.index))
+        if not self.index:
+            return True
+        src = self.src.copy()
+        src.set(self.index, self.dst.get(self.index))
+        assert src == self.dst
+        return True
 
 
 class DerivedStepProof(Proof):
@@ -19,13 +36,13 @@ class DerivedStepProof(Proof):
         steps = []
         src = self.src
         while src != self.dst:
-            if (res := self.refine_once(src, self.dst, global_ruleset)) is None:
+            if (res := self.refine_once(src, self.dst, global_transforms)) is None:
                 idx = src.diff(self.dst)
                 assert idx is not None
-                raise Exception(f"Failed to find a rule for {self.src.get(idx)} to {self.dst.get(idx)}, source {self.src}, {self.dst}")
-            rule, idx, table, src = res
-            steps.append(Step(idx, rule, table))
-        self.derived_proof = StepProof(
+                raise Exception(f"Failed to find a transform for {self.src.get(idx)} to {self.dst.get(idx)}, source {self.src}, {self.dst}")
+            steps.append(TransformProof(src, res[1], res[0], res[2]))
+            src = res[1]
+        self.derived_proof = ChainProof(
             self.src, self.dst, steps
         )
         try:
@@ -45,49 +62,28 @@ class DerivedStepProof(Proof):
         return self.src == other.src and self.dst == other.dst
 
     @staticmethod
-    def refine_once(src: Expression, dst: Expression, ruleset: dict[str, Rule]) -> tuple[Rule, list[
-        int], VarTable, Expression] | None:
+    def refine_once(src: Expression, dst: Expression, transforms: list[Transform]) -> tuple[Transform, Expression, list[int]] | None:
         assert src.diff(dst) is not None
         for i in itertools.count(start=0):
             idx = src.diff(dst, start=i)
             if idx is None:
                 return None
-            if (res := DerivedStepProof.verify_ruleset(src.get(idx), dst.get(idx), ruleset)) is not None:
+            if (res := DerivedStepProof.verify_transforms(src.get(idx), dst.get(idx), transforms)) is not None:
                 if not idx:
                     refined = dst
                 else:
                     refined = src.copy()
                     refined.set(idx, dst.get(idx))
 
-                return res[0], idx, res[1], refined
+                return res, refined, idx
         assert False
 
     @staticmethod
-    def verify_ruleset(src: Expression, dst: Expression, ruleset: dict[str, Rule]) -> tuple[Rule, VarTable] | None:
-        for _, rule in ruleset.items():
-            if (table := DerivedStepProof.verify_once(src, dst, rule)) is not None:
-                return rule, table
+    def verify_transforms(src: Expression, dst: Expression, transforms: list[Transform]) -> Transform | None:
+        for trf in transforms:
+            if trf.verify(src, dst):
+                return trf
         return None
-
-    @staticmethod
-    def verify_once(src: Expression, dst: Expression, rule: Rule) -> VarTable | None:
-        if isinstance(rule, MatchRule):
-            if (m := src.match(rule.pattern, {})) is not None:
-                if dst.match(rule.repl, m) == m:
-                    return m
-            if rule.equiv:
-                if (m := dst.match(rule.pattern, {})) is not None:
-                    if src.match(rule.repl, m) == m:
-                        return m
-            return None
-        if isinstance(rule, FunctionRule):
-            try:
-                if dst == rule(src):
-                    return VarTable()
-            except AssertionError:
-                return None
-            return None
-        assert False
 
 
 class DerivedChainProof(ChainProof):
