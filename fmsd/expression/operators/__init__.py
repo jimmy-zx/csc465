@@ -59,11 +59,6 @@ class OperatorWithNumericOperands(OperatorWithSameTypeOperands):
         assert all(op.type() == Type.NUMERIC for op in self.children)
 
 
-class OperatorWithSetOperands(OperatorWithSameTypeOperands):
-    def _init_operator_numeric_operands(self) -> None:
-        assert all(op.type() == Type.SET for op in self.children)
-
-
 class AssociativeOperator(Operator):
     def collect(self) -> list["Expression"]:
         ops = []

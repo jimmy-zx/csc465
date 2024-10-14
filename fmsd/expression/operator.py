@@ -26,8 +26,9 @@ class Operator(Expression):
         if type(self) != type(pattern):
             return None
         for lhs, rhs in zip(self.children, pattern.children):
-            if (matched := lhs.match(rhs, matched)) is None:
+            if (res := lhs.match(rhs, matched)) is None:
                 return None
+            matched = res
         return matched
 
     def diff(self, other: "Expression", start: int = 0) -> list[int] | None:

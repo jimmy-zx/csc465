@@ -12,8 +12,8 @@ class NumericVariable(Variable, Numeric):
 
 class NumericSingularVariable(NumericVariable, Singular):
     def vmatch(self, expr: Expression, matched: VarTable) -> VarTable | None:
-        if (matched := NumericVariable.vmatch(self, expr, matched)) is None:
+        if (res := NumericVariable.vmatch(self, expr, matched)) is None:
             return None
         if self.singular() != expr.singular():
             return None
-        return matched
+        return res
