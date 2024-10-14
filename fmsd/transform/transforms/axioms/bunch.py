@@ -70,7 +70,8 @@ axiom_xreal = In(XREAL, ZERO / ZERO)
 
 axiom_distribution_null = Equals(-NULL, NULL)
 axiom_distribution_neg = Equals(-Union(A, B), Union(-A, -B))
-axiom_distribution_null = Equals(A + NULL, A)
-axiom_distribution_add = Equals(Union(A, B) + Union(C, D), Union(Union(A + C, A + D), Union(B + C, B + D)))
+axiom_distribution_add_null = Equals(A + NULL, A)
+axiom_distribution_add = Equals(A + Union(B, C), Union(A + B, A + C))
+axiom_distribution_mul = Equals(A * Union(B, C), Union(A * B, A * C))
 
 # TODO

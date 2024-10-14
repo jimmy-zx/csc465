@@ -5,6 +5,7 @@ from fmsd.proof import Proof, ChainProof, EquivProof
 from fmsd.proof.step import StepProof, Step
 from fmsd.rule import MatchRule, FunctionRule, Rule
 from fmsd.transform import Transform
+from fmsd.transform.expr import ExpressionTransform
 from fmsd.transform.transforms import transforms as global_transforms
 
 
@@ -67,8 +68,8 @@ class DerivedStepProof(Proof):
         for i in itertools.count(start=0):
             idx = src.diff(dst, start=i)
             if idx is None:
-                return None
-            if (res := DerivedStepProof.verify_transforms(src.get(idx), dst.get(idx), transforms)) is not None:
+                break
+            if (res := DerivedStepProof.verify_transforms(src.get(idx), dst.get(idx), src.context(idx), transforms)) is not None:
                 if not idx:
                     refined = dst
                 else:
@@ -76,11 +77,26 @@ class DerivedStepProof(Proof):
                     refined.set(idx, dst.get(idx))
 
                 return res, refined, idx
-        assert False
+        idx = src.diff(dst)
+        while idx:
+            idx.pop()
+            if (res := DerivedStepProof.verify_transforms(src.get(idx), dst.get(idx), src.context(idx), transforms)) is not None:
+                if not idx:
+                    refined = dst
+                else:
+                    refined = src.copy()
+                    refined.set(idx, dst.get(idx))
+
+                return res, refined, idx
+        return None
 
     @staticmethod
-    def verify_transforms(src: Expression, dst: Expression, transforms: list[Transform]) -> Transform | None:
+    def verify_transforms(src: Expression, dst: Expression, context: list[Expression], transforms: list[Transform]) -> Transform | None:
         for trf in transforms:
+            if trf.verify(src, dst):
+                return trf
+        for ctx in context:
+            trf = ExpressionTransform(ctx, "context")
             if trf.verify(src, dst):
                 return trf
         return None

@@ -1,7 +1,9 @@
 import fmsd.transform.transforms.axioms.bunch as bunch
+import fmsd.transform.transforms.axioms.constants as constants
+import fmsd.transform.transforms.axioms.context as context
 from fmsd.transform.expr import ExpressionTransform
 
-modules = [bunch]
+modules = [bunch, constants, context]
 
 transforms = []
 

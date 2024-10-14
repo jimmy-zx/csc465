@@ -10,3 +10,8 @@ class Transform(ABC):
     @abstractmethod
     def verify(self, src: Expression, dst: Expression) -> bool:
         ...
+
+    def __str__(self) -> str:
+        if self.name is not None:
+            return self.name
+        return "<Transform>"

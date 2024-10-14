@@ -67,6 +67,12 @@ class Operator(Expression):
     def is_constant(self) -> bool:
         return all(isinstance(op, Constant) for op in self.children)
 
+    def context(self, index: list[int]) -> list["Expression"]:
+        res = []
+        if index:
+            res.extend(self.children[index[0]].context(index[1:]))
+        return res
+
     def get(self, index: list[int]) -> Expression:
         if not index:
             return self

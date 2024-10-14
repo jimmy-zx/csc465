@@ -47,6 +47,9 @@ class Expression(Typed):
     def is_constant(self) -> bool:
         return False
 
+    def context(self, index: list[int]) -> list["Expression"]:
+        return []
+
     def get(self, index: list[int]) -> "Expression":
         if not index:
             return self
