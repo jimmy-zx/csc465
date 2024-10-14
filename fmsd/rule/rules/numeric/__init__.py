@@ -91,3 +91,5 @@ rule_distributivity_max_pos = MatchRule(x >= ZERO, (x * (y @ MAX @ z)) @ EQ @ ((
 rule_distributivity_max_neg = MatchRule(x <= ZERO, (x * (y @ MAX @ z)) @ EQ @ ((x * y) @ MIN @ (x * z)))
 rule_distributivity_min_pos = MatchRule(x >= ZERO, (x * (y @ MIN @ z)) @ EQ @ ((x * y) @ MIN @ (x * z)))
 rule_distributivity_min_neg = MatchRule(x <= ZERO, (x * (y @ MIN @ z)) @ EQ @ ((x * y) @ MAX @ (x * z)))
+
+rule_exp = MatchRule(x ** (y * z), (x ** y) ** z)

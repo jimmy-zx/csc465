@@ -6,9 +6,9 @@ from fmsd.expression.types import Type
 class Operator1(Operator):
     DELIM: str | None = None
 
-    def __init__(self, op: Expression) -> None:
+    def _init_operator1(self) -> None:
         assert self.DELIM is not None
-        Operator.__init__(self, op)
+        assert len(self.children) == 1
 
     @property
     def op(self) -> Expression:
@@ -21,9 +21,9 @@ class Operator1(Operator):
 class Operator2(Operator):
     DELIM: str | None = None
 
-    def __init__(self, lhs: Expression, rhs: Expression) -> None:
+    def _init_operator2(self) -> None:
         assert self.DELIM is not None
-        Operator.__init__(self, lhs, rhs)
+        assert len(self.children) == 2
 
     @property
     def lhs(self) -> Expression:
@@ -40,26 +40,28 @@ class Operator2(Operator):
 
 
 class OperatorWithSameTypeOperands(Operator):
-    def __init__(self, *operands: Expression) -> None:
-        assert len(set(op.type() for op in operands)) == 1
-        Expression.__init__(self)
-        self.children = list(operands)
-        for child in self.children:
-            child.parent = self
+    def _init_operator_same_type_operands(self) -> None:
+        assert len(set(op.type() for op in self.children)) == 1
+
+
+class OperatorWithSameOp1AndReturnType(Operator):
+    def type(self) -> Type:
+        return self.children[0].type()
 
 
 class OperatorWithBinaryOperands(OperatorWithSameTypeOperands):
-    def __init__(self, *operands: Expression) -> None:
-        for op in operands:
-            assert op.type() == Type.BINARY
-        OperatorWithSameTypeOperands.__init__(self, *operands)
+    def _init_operator_binary_operands(self) -> None:
+        assert all(op.type() == Type.BINARY for op in self.children)
 
 
 class OperatorWithNumericOperands(OperatorWithSameTypeOperands):
-    def __init__(self, *operands: Expression) -> None:
-        for op in operands:
-            assert op.type() == Type.NUMERIC
-        OperatorWithSameTypeOperands.__init__(self, *operands)
+    def _init_operator_numeric_operands(self) -> None:
+        assert all(op.type() == Type.NUMERIC for op in self.children)
+
+
+class OperatorWithSetOperands(OperatorWithSameTypeOperands):
+    def _init_operator_numeric_operands(self) -> None:
+        assert all(op.type() == Type.SET for op in self.children)
 
 
 class AssociativeOperator(Operator):
@@ -75,4 +77,3 @@ class AssociativeOperator(Operator):
 
 class CommutativeOperator(Operator):
     pass
-

@@ -3,12 +3,6 @@ from fmsd.expression.constant import Constant
 
 
 class Operator(Expression):
-    def __init__(self, *operands: Expression) -> None:
-        Expression.__init__(self)
-        self.children = list(operands)
-        for child in self.children:
-            child.parent = self
-
     def copy(self) -> "Expression":
         return type(self)(*(op.copy() for op in self.children))
 
@@ -26,15 +20,14 @@ class Operator(Expression):
 
     def match(self, pattern: "Expression", matched: dict[str, "Expression"]) -> dict[str, "Expression"] | None:
         if isinstance(pattern, Variable):
-            return Expression.match(self, pattern, matched)
+            return pattern.vmatch(self, matched)
         if not isinstance(pattern, Operator):
             return None
         if type(self) != type(pattern):
             return None
         for lhs, rhs in zip(self.children, pattern.children):
-            if (res := lhs.match(rhs, matched)) is None:
+            if (matched := lhs.match(rhs, matched)) is None:
                 return None
-            matched = res
         return matched
 
     def diff(self, other: "Expression", start: int = 0) -> list[int] | None:

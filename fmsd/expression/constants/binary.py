@@ -1,8 +1,8 @@
 from fmsd.expression.constant import Constant
-from fmsd.expression.types import Binary
+from fmsd.expression.types import Binary, Singular
 
 
-class BinaryConstant(Constant, Binary):
+class BinaryConstant(Constant, Binary, Singular):
     pass
 
 

@@ -9,9 +9,15 @@ class ImportPatchException(Exception):
 
 
 class Expression(Typed):
-    def __init__(self) -> None:
+    def __init__(self, *children: "Expression") -> None:
         self.parent: Expression | None = None
-        self.children: list[Expression] = []
+        self.children: list[Expression] = list(children)
+        for child in self.children:
+            child.parent = self
+
+        for func in dir(self):
+            if func.startswith("_init"):
+                getattr(self, func)()
 
     def __eq__(self, other) -> bool:
         raise NotImplementedError()
@@ -33,14 +39,7 @@ class Expression(Typed):
 
     def match(self, pattern: "Expression", matched: VarTable) -> VarTable | None:
         if isinstance(pattern, Variable):
-            if self.type() != pattern.type():
-                return None
-            if pattern.name in matched:
-                if self != matched[pattern.name]:
-                    return None
-            else:
-                matched[pattern.name] = self
-            return matched
+            return pattern.vmatch(self, matched)
         if self == pattern:
             return matched
         return None
@@ -119,15 +118,6 @@ class Variable(Expression):
         Expression.__init__(self)
         self.name = name
 
-    def __eq__(self, other) -> bool:
-        if self.type() != other.type():
-            return False
-        if not isinstance(other, Variable):
-            return False
-        if self.name != other.name:
-            return False
-        return True
-
     def __str__(self) -> str:
         return self.name
 
@@ -141,5 +131,20 @@ class Variable(Expression):
             return None
         return []
 
-    def singular(self) -> bool:
+    def vmatch(self, expr: Expression, matched: VarTable) -> VarTable | None:
+        if matched.get(self.name, expr) != expr:
+            return None
+        if self.type() != expr.type():
+            return None
+        matched[self.name] = expr
+        return matched
+
+    def __eq__(self, other) -> bool:
+        if type(self) != type(other):
+            return False
+        if self.type() != other.type():
+            return False
+        if self.name != other.name:
+            return False
         return True
+

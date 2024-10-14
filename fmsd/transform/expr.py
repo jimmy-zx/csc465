@@ -24,3 +24,4 @@ class ExpressionTransform(Transform):
             if (m := src.match(self.expr.rhs, {})) is not None:
                 if dst.match(self.expr.lhs, m) == m:
                     return True
+        return False

@@ -1,8 +1,8 @@
 from fmsd.expression.constant import Constant
-from fmsd.expression.types import Numeric
+from fmsd.expression.types import Numeric, Singular
 
 
-class NumericConstant(Constant, Numeric):
+class NumericConstant(Constant, Numeric, Singular):
     pass
 
 

@@ -1,24 +1,27 @@
-from fmsd.expression.operators import Operator2, Operator1
+from fmsd.expression.operators import Operator2, Operator1, AssociativeOperator, CommutativeOperator, \
+    OperatorWithSameOp1AndReturnType, OperatorWithSameTypeOperands, OperatorWithNumericOperands
 from fmsd.expression.types import Binary, Numeric
 
 
-class Union(Operator2):
+class Union(OperatorWithSameOp1AndReturnType, OperatorWithSameTypeOperands, Operator2, AssociativeOperator, CommutativeOperator):
     DELIM = ","
 
 
-class Intersect(Operator2):
+class Intersect(OperatorWithSameOp1AndReturnType, OperatorWithSameTypeOperands, Operator2, AssociativeOperator, CommutativeOperator):
     DELIM = "‘"
 
 
-class In(Operator2, Binary):
+class In(OperatorWithSameTypeOperands, Operator2, Binary):
     DELIM = ":"
 
 
-class Includes(Operator2, Binary):
+class Includes(OperatorWithSameTypeOperands, Operator2, Binary):
     DELIM = "::"
+
+
+class BunchInterval(OperatorWithNumericOperands, Operator2, Numeric):
+    DELIM = ",.."
 
 
 class Count(Operator1, Numeric):
     DELIM = "¢"
-
-

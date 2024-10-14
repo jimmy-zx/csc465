@@ -22,3 +22,8 @@ class Binary(Typed):
 class Numeric(Typed):
     def type(self) -> Type:
         return Type.NUMERIC
+
+
+class Singular(Typed):
+    def singular(self) -> bool:
+        return True

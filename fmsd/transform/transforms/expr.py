@@ -1,4 +1,4 @@
-from fmsd.rule import FunctionRule, MatchRule
+from fmsd.rule import MatchRule
 from fmsd.rule.rules import ruleset
 from fmsd.transform.expr import ExpressionTransform
 
