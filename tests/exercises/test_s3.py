@@ -1,11 +1,11 @@
+from fmsd.expression.constants.binary import TRUE
+from fmsd.expression.constants.bunch import NAT
+from fmsd.expression.constants.numeric import ZERO, INFINITY, NEG_INFINITY, ONE
+from fmsd.expression.operators.bunch import In, Union
 from fmsd.expression.operators.context import Context
 from fmsd.expression.operators.generic import Equals
 from fmsd.expression.variables import NumericSingularVariable
-from fmsd.proof.derived_step import DerivedChainProof, DerivedStepProof
-from fmsd.expression.operators.bunch import In, Union
-from fmsd.expression.constants.bunch import NAT
-from fmsd.expression.constants.binary import TRUE
-from fmsd.expression.constants.numeric import ZERO, INFINITY, NEG_INFINITY
+from fmsd.proof.derived_step import DerivedChainProof
 
 
 def test_49a():
@@ -45,6 +45,7 @@ def test_49a():
 def test_49b():
     m = NumericSingularVariable("m")
     proof = DerivedChainProof(
+        # adding a local context here
         Context(In(m, ZERO * NAT), Equals(ZERO, ZERO * NAT)),
         Equals(m, ZERO),
         [
@@ -52,6 +53,25 @@ def test_49b():
             Context(In(m, ZERO), Equals(ZERO, ZERO * NAT)),
             In(m, ZERO),
             Equals(m, ZERO),
+        ]
+    )
+    assert proof.verify()
+
+
+def test_49c():
+    # TODO: no proofs yet
+    pass
+
+
+def test_49d():
+    m = NumericSingularVariable("m")
+    proof = DerivedChainProof(
+        Context(In(m, ONE * NAT), Equals(ONE * NAT, NAT)),
+        In(m, NAT),
+        [
+            Context(In(m, ONE * NAT), Equals(ONE * NAT, NAT)),
+            Context(In(m, NAT), Equals(ONE * NAT, NAT)),
+            In(m, NAT)
         ]
     )
     assert proof.verify()

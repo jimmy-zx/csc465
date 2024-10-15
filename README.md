@@ -11,7 +11,7 @@ Example: [Solution for 6d](tests/fmsd/proof/test_chain.py) for [Exercise 6](http
 - [ ] Generic
 - [x] Binary
 - [x] Numbers
-- [ ] Bunches
+- [x] Bunches
 - [ ] Sets
 - [ ] Strings
 - [ ] Lists
@@ -27,21 +27,30 @@ Example: [Solution for 6d](tests/fmsd/proof/test_chain.py) for [Exercise 6](http
 
 ### Recommended exercises
 
-#### L1
+#### L0
 
 - [ ] 0
 - [ ] 2
 
-#### L2
+#### L1
 
 - [ ] 14
 - [ ] 17
 
-#### L3
+#### L2
 
 - [x] 6[f](tests/fmsd/proof/test_step.py),[m](tests/fmsd/proof/test_derived_step.py),[p](tests/fmsd/proof/test_derived_step.py),[s](tests/fmsd/proof/test_derived_step.py)
 - [x] 7c
 - [x] 22
+
+#### L3
+
+- [x] 49 (partial)
+- [ ] 53
+
+#### L4
+
+- [ ] 64
 
 ## Structure
 
