@@ -40,3 +40,18 @@ def test_49a():
         ]
     )
     assert proof.verify()
+
+
+def test_49b():
+    m = NumericSingularVariable("m")
+    proof = DerivedChainProof(
+        Context(In(m, ZERO * NAT), Equals(ZERO, ZERO * NAT)),
+        Equals(m, ZERO),
+        [
+            Context(In(m, ZERO * NAT), Equals(ZERO, ZERO * NAT)),
+            Context(In(m, ZERO), Equals(ZERO, ZERO * NAT)),
+            In(m, ZERO),
+            Equals(m, ZERO),
+        ]
+    )
+    assert proof.verify()

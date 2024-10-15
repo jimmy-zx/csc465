@@ -1,7 +1,6 @@
-import glob
 import importlib.util
-import os
 from pathlib import Path
+import subprocess
 
 import pytest
 
@@ -14,3 +13,7 @@ def test_import_all(file):
     spec = importlib.util.spec_from_file_location("sample", file)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
+
+
+def test_mypy():
+    subprocess.run(["mypy", "fmsd", "--check-untyped-defs"], check=True)
