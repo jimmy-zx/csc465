@@ -17,3 +17,9 @@ def test_import_all(file):
 
 def test_mypy():
     subprocess.run(["mypy", "fmsd", "--check-untyped-defs"], check=True)
+
+
+def test_tree_clean():
+    # https://unix.stackexchange.com/questions/155046/determine-if-git-working-directory-is-clean-from-a-script
+    p = subprocess.run(["git", "status", "--porcelain"], capture_output=True)
+    assert not p.stdout
