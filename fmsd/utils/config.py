@@ -1,0 +1,11 @@
+class Config:
+    def __init__(
+            self,
+            trace: bool = False,
+            debug: bool = False,
+    ) -> None:
+        self.trace = trace
+        self.debug = debug
+
+
+config = Config()
