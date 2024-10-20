@@ -1,6 +1,7 @@
 """
 11.3.1, FMSD
 """
+from fmsd.expression import Expression
 from fmsd.expression.constants.binary import TRUE, FALSE
 from fmsd.expression.operators.binary import And, Flip, Or, Implies, ImpliedBy
 from fmsd.expression.operators.generic import Equals, NotEquals, Ternary
@@ -128,7 +129,7 @@ rule_transitive_implies_equals = MatchRule(And(Implies(a, b), Equals(b, c)), Imp
 rule_transitive_equals_implies = MatchRule(And(Equals(a, b), Implies(b, c)), Implies(a, c), equiv=False)
 
 
-def helper_distributive(outer, inner) -> MatchRule:
+def helper_distributive(outer, inner) -> Expression:
     return MatchRule(outer(a, inner(b, c)), inner(outer(a, b), outer(a, c)))
 
 
@@ -186,7 +187,7 @@ rule_one_case_not_equals = MatchRule(Ternary(a, Flip(b), b), NotEquals(a, b))
 rule_case_distributive_flip = MatchRule(Flip(Ternary(a, b, c)), Ternary(a, Flip(b), Flip(c)))
 
 
-def helper_case_distributive_single(op) -> MatchRule:
+def helper_case_distributive_single(op) -> Expression:
     return MatchRule(op(Ternary(a, b, c), d), Ternary(a, op(b, d), op(c, d)))
 
 
@@ -198,7 +199,7 @@ rule_case_distributive_single_implies = helper_case_distributive_single(Implies)
 rule_case_distributive_single_implied_by = helper_case_distributive_single(ImpliedBy)
 
 
-def helper_case_distributive_multiple(op) -> MatchRule:
+def helper_case_distributive_multiple(op) -> Expression:
     return MatchRule(Ternary(a, op(b, c), op(d, e)), op(Ternary(a, b, d), Ternary(a, c, e)))
 
 

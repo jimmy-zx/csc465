@@ -1,17 +1,14 @@
 import pytest
 
+import fmsd.utils.config as config
 # noinspection PyUnresolvedReferences
 import fmsd.utils.patch.binary
-from fmsd.expression.constants.binary import TRUE, FALSE
+from fmsd.expression.constants.binary import TRUE
 from fmsd.expression.operators.binary import Or
 from fmsd.expression.operators.generic import Equals
 from fmsd.expression.variables import BinaryVariable
-from fmsd.proof import ChainProof
-from fmsd.proof.derived_step import DerivedStepProof, DerivedChainProof, DerivedEquivChainProof, TransformProof
-from fmsd.proof.step import StepProof, Step
-from fmsd.rule.rules.binary import rule_commutative_and, rule_commutative_or
-from fmsd.utils.patchops.infix import EQ, NEQ
-import fmsd.utils.config as config
+from fmsd.proof.derived_step import DerivedStepProof, DerivedChainProof, DerivedEquivChainProof
+from fmsd.utils.patchops.infix import EQ
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")
@@ -112,5 +109,19 @@ def test_parallel():
         ((a >> b) @ EQ @ (a >> b)) & ((a >> b) @ EQ @ (a >> b)),
         TRUE & TRUE,
         TRUE
+    ])
+    assert proof.verify()
+
+
+def test_chain():
+    src = Equals(Equals(a, b >> a), a | b)
+    dst = TRUE
+    proof = DerivedEquivChainProof(src, dst, [
+        src,
+        Equals(a | b, Equals(a, b >> a)),
+        Equals(Equals(a | b, a), b >> a),
+        Equals(Equals(b | a, a), b >> a),
+        Equals(b >> a, b >> a),
+        dst
     ])
     assert proof.verify()

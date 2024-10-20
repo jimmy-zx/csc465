@@ -1,100 +1,48 @@
-from fmsd.expression.constants.binary import TRUE
-from fmsd.expression.operators.binary import Implies, Or
-from fmsd.expression.operators.generic import Equals
+from fmsd.expression.constants.binary import TRUE, FALSE
+from fmsd.expression.operators.binary import Implies, And, Flip
 from fmsd.expression.variables import BinaryVariable
-from fmsd.proof import EquivProof, ChainEquivProof
-from fmsd.proof.step import StepProof, Step
-from fmsd.rule.rules.binary import rule_associative_equals, rule_commutative_or, rule_inclusion_or, \
-    rule_reflexive_equals
-from fmsd.rule.rules.binary.generic import rule_symmetry
+from fmsd.proof import ChainProof
+from fmsd.proof.derived_step import TransformProof
+from fmsd.rule.rules.binary import rule_portation, rule_noncontradiction, \
+    rule_base_implies_false, rule_commutative_and
+from fmsd.transform.expr import ExpressionTransform
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")
 c = BinaryVariable("c")
 
 
-def test_simple_chain():
+def test_multi_step_proof():
     """
-    Exercise 6d
+    Exercise 6c
     """
-    src = Equals(Equals(a, Implies(b, a)), Or(a, b))
+    src = Implies(Flip(a), Implies(a, b))
     dst = TRUE
-
-    step1 = Equals(Or(a, b), Equals(a, Implies(b, a)))
-
-    step1_fwd = StepProof(
-        src,
-        step1,
-        [Step([0], rule_symmetry), Step([], rule_symmetry), Step([1], rule_symmetry)]
-    )
-    assert step1_fwd.verify()
-
-    step1_rev = StepProof(
-        step1,
-        src,
-        [Step([1], rule_symmetry), Step([], rule_symmetry), Step([0], rule_symmetry)]
-    )
-    assert step1_rev.verify()
-
-    step1_eqv = EquivProof(src, step1, step1_fwd, step1_rev)
-    assert step1_eqv.verify()
-
-    step2 = Equals(Equals(Or(a, b), a), Implies(b, a))
-    step2_eqv = EquivProof(
-        step1, step2,
-        StepProof(
-            step1, step2, [Step([], rule_associative_equals)],
-        ),
-        StepProof(
-            step2, step1, [Step([], rule_associative_equals)],
-        )
-    )
-    assert step2_eqv.verify()
-
-    step3 = Equals(Equals(Or(b, a), a), Implies(b, a))
-    step3_eqv = EquivProof(
-        step2, step3,
-        StepProof(
-            step2, step3, [Step([0, 0], rule_commutative_or)],
-        ),
-        StepProof(
-            step3, step2, [Step([0, 0], rule_commutative_or)],
-        )
-    )
-    assert step3_eqv.verify()
-
-    step4 = Equals(Implies(b, a), Implies(b, a))
-    step4_eqv = EquivProof(
-        step3, step4,
-        StepProof(
-            step3, step4, [Step([0], rule_inclusion_or)],
-        ),
-        StepProof(
-            step4, step3, [Step([0], rule_inclusion_or)],
-        )
-    )
-    assert step4_eqv.verify()
-
-    step5 = TRUE
-    step5_eqv = EquivProof(
-        step4, step5,
-        StepProof(
-            step4, step5, [Step([], rule_reflexive_equals)],
-        ),
-        StepProof(
-            step5, step4, [Step([], rule_reflexive_equals, {"a": Implies(b, a)})],
-        )
-    )
-    assert step5_eqv.verify()
-
-    proof = ChainEquivProof(src, dst, [step1_eqv, step2_eqv, step3_eqv, step4_eqv, step5_eqv])
+    step1 = Implies(And(Flip(a), a), b)
+    step2 = Implies(And(a, Flip(a)), b)
+    step3 = Implies(FALSE, b)
+    proof = ChainProof(src, dst, [
+        TransformProof(src, step1, ExpressionTransform(rule_portation), []),
+        TransformProof(step1, step2, ExpressionTransform(rule_commutative_and), [0]),
+        TransformProof(step2, step3, ExpressionTransform(rule_noncontradiction), [0]),
+        TransformProof(step3, dst, ExpressionTransform(rule_base_implies_false), []),
+    ])
     assert proof.verify()
-    print(proof)  # outputs something like
+
+
+def test_multi_step_proof_rev():
     """
-        ((a=(b⇒a))=(a∨b))       ['symmetry', 'symmetry', 'symmetry']
-=       ((a∨b)=(a=(b⇒a)))       ['associative_equals']
-=       (((a∨b)=a)=(b⇒a))       ['commutative_or']
-=       (((b∨a)=a)=(b⇒a))       ['inclusion_or']
-=       ((b⇒a)=(b⇒a))   ['reflexive_equals']
-=       ⊤
+    Exercise 6c
     """
+    src = TRUE
+    dst = Implies(Flip(a), Implies(a, b))
+    step1 = Implies(FALSE, b)
+    step2 = Implies(And(a, Flip(a)), b)
+    step3 = Implies(And(Flip(a), a), b)
+    proof = ChainProof(src, dst, [
+        TransformProof(src, step1, ExpressionTransform(rule_base_implies_false), []),
+        TransformProof(step1, step2, ExpressionTransform(rule_noncontradiction), [0]),
+        TransformProof(step2, step3, ExpressionTransform(rule_commutative_and), [0]),
+        TransformProof(step3, dst, ExpressionTransform(rule_portation), []),
+    ])
+    assert proof.verify()

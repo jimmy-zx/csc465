@@ -1,9 +1,7 @@
 import itertools
 
-from fmsd.expression import Expression, VarTable
+from fmsd.expression import Expression
 from fmsd.proof import Proof, ChainProof, EquivProof
-from fmsd.proof.step import StepProof, Step
-from fmsd.rule import MatchRule, FunctionRule, Rule
 from fmsd.transform import Transform
 from fmsd.transform.expr import ExpressionTransform
 from fmsd.transform.transforms import t_all
@@ -80,13 +78,15 @@ class DerivedStepProof(Proof):
         return self.src == other.src and self.dst == other.dst
 
     @staticmethod
-    def refine_once(src: Expression, dst: Expression, transforms: dict[str, Transform]) -> tuple[Transform, Expression, list[int]] | None:
+    def refine_once(src: Expression, dst: Expression, transforms: dict[str, Transform]) -> tuple[Transform, Expression,
+    list[int]] | None:
         assert src.diff(dst) is not None
         for i in itertools.count(start=0):
             idx = src.diff(dst, start=i)
             if idx is None:
                 break
-            if (res := DerivedStepProof.verify_transforms(src.get(idx), dst.get(idx), src.context(idx), transforms)) is not None:
+            if (res := DerivedStepProof.verify_transforms(src.get(idx), dst.get(idx), src.context(idx),
+                                                          transforms)) is not None:
                 if not idx:
                     refined = dst
                 else:
@@ -97,7 +97,8 @@ class DerivedStepProof(Proof):
         idx = src.diff(dst)
         while idx:
             idx.pop()
-            if (res := DerivedStepProof.verify_transforms(src.get(idx), dst.get(idx), src.context(idx), transforms)) is not None:
+            if (res := DerivedStepProof.verify_transforms(src.get(idx), dst.get(idx), src.context(idx),
+                                                          transforms)) is not None:
                 if not idx:
                     refined = dst
                 else:
@@ -108,7 +109,8 @@ class DerivedStepProof(Proof):
         return None
 
     @staticmethod
-    def verify_transforms(src: Expression, dst: Expression, context: list[Expression], transforms: dict[str, Transform]) -> Transform | None:
+    def verify_transforms(src: Expression, dst: Expression, context: list[Expression],
+                          transforms: dict[str, Transform]) -> Transform | None:
         for trf in transforms.values():
             if trf.verify(src, dst):
                 return trf
