@@ -25,6 +25,23 @@ class TransformProof(Proof):
         return True
 
 
+class NoTransformationFoundException(Exception):
+    def __init__(self, src: Expression, dst: Expression) -> None:
+        diff = src.diff(dst)
+        assert diff is not None
+        msgs = [f"Failed to find transformation for {src.get(diff)} to {dst.get(diff)}"]
+        # some trick to make the filename clickable in pycharm
+        if src.stack:
+            msgs.append(f"src File \"{src.stack.filename}\", line {src.stack.lineno}, {src}")
+        else:
+            msgs.append(f"src {src}")
+        if dst.stack:
+            msgs.append(f"dst File \"{dst.stack.filename}\", line {dst.stack.lineno}, {dst}")
+        else:
+            msgs.append(f"dst {dst}")
+        Exception.__init__(self, "\n".join(msgs))
+
+
 class DerivedStepProof(Proof):
     def __init__(self, src: Expression, dst: Expression) -> None:
         Proof.__init__(self, src, dst, "")
@@ -40,7 +57,7 @@ class DerivedStepProof(Proof):
             if (res := self.refine_once(src, self.dst, global_transforms)) is None:
                 idx = src.diff(self.dst)
                 assert idx is not None
-                raise Exception(f"Failed to find a transform for {self.src.get(idx)} to {self.dst.get(idx)}, source {self.src}, {self.dst}")
+                raise NoTransformationFoundException(self.src, self.dst)
             steps.append(TransformProof(src, res[1], res[0], res[2]))
             src = res[1]
         self.derived_proof = ChainProof(

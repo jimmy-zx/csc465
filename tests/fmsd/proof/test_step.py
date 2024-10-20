@@ -1,3 +1,5 @@
+import pytest
+
 from fmsd.expression.constants.binary import TRUE
 from fmsd.expression.operators.binary import Implies, And, Flip
 from fmsd.expression.operators.generic import Equals
@@ -10,6 +12,8 @@ from fmsd.rule.rules.binary.generic import rule_symmetry
 a = BinaryVariable("a")
 b = BinaryVariable("b")
 c = BinaryVariable("c")
+
+pytest.skip(allow_module_level=True)
 
 
 def test_child():

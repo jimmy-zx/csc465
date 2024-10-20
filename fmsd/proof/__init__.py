@@ -36,7 +36,7 @@ class EquivProof(Proof):
         try:
             assert self.bwd.verify(debug=debug)
         except Exception as ex:
-            raise Exception("EquivProof: failed to verify forward") from ex
+            raise Exception("EquivProof: failed to verify backward") from ex
         return True
 
     def formalize(self) -> "Proof":

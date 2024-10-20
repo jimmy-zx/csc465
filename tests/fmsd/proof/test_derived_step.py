@@ -2,7 +2,7 @@ import pytest
 
 # noinspection PyUnresolvedReferences
 import fmsd.utils.patch.binary
-from fmsd.expression.constants.binary import TRUE
+from fmsd.expression.constants.binary import TRUE, FALSE
 from fmsd.expression.operators.binary import Or
 from fmsd.expression.operators.generic import Equals
 from fmsd.expression.variables import BinaryVariable
@@ -11,6 +11,7 @@ from fmsd.proof.derived_step import DerivedStepProof, DerivedChainProof, Derived
 from fmsd.proof.step import StepProof, Step
 from fmsd.rule.rules.binary import rule_commutative_and, rule_commutative_or
 from fmsd.utils.patchops.infix import EQ, NEQ
+import fmsd.utils.config as config
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")
@@ -71,6 +72,7 @@ def test_multiple_equiv():
     """
     src = Or(Equals(a, b), Or(Equals(a, c), Equals(b, c)))
     dst = TRUE
+    config.config.trace = True
     proof = DerivedEquivChainProof(
         src, dst, [
             src,
@@ -92,6 +94,7 @@ def test_multiple_equiv():
             dst
         ]
     )
+    config.config.trace = False
     assert proof.verify()
     print(proof.formalize())
 

@@ -32,16 +32,10 @@ class StepProof(Proof):
 
     def verify(self, debug: bool = False) -> bool:
         exp = self.src
-        if debug:
-            print("    orig:", exp)
         for step in self.steps:
             exp = step.apply(exp)
-            if debug:
-                print("    step:", exp)
-        if debug:
-            print("     got:", exp)
-            print("expected:", self.dst)
-        return exp == self.dst
+        assert exp == self.dst
+        return True
 
     def __str__(self) -> str:
         return str(self.dst)

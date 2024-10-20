@@ -29,7 +29,7 @@ rule_base_or_rev = MatchRule(Or(TRUE, a), TRUE)
 
 rule_base_implies_true = MatchRule(Implies(a, TRUE), TRUE)
 
-rule_base_implies_false = MatchRule(Implies(FALSE, a), TRUE)
+rule_base_implies_false = MatchRule(FALSE, a, equiv=False)
 
 rule_mirror = MatchRule(Implies(a, b), ImpliedBy(b, a))
 

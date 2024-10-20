@@ -1,4 +1,6 @@
+import fmsd.utils.config as config
 from fmsd.expression.types import Typed
+from fmsd.utils.trace import get_trace
 
 VarTable = dict[str, "Expression"]
 
@@ -9,7 +11,9 @@ class ImportPatchException(Exception):
 
 
 class Expression(Typed):
-    def __init__(self, *children: "Expression") -> None:
+    def __init__(self, *children: "Expression", cfg: config.Config | None = None) -> None:
+        self.config = cfg or config.config
+        self.stack = get_trace() if self.config.trace else None
         self.parent: Expression | None = None
         self.children: list[Expression] = list(children)
         for child in self.children:
@@ -150,4 +154,3 @@ class Variable(Expression):
         if self.name != other.name:
             return False
         return True
-

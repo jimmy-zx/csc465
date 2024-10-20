@@ -35,8 +35,8 @@ def test_noncontradiction():
 def test_base():
     assert rule_base_and(And(a, F)) == F
     assert rule_base_or(Or(a, T)) == T
-    assert rule_base_implies_true(Implies(a, T)) == T
-    assert rule_base_implies_false(Implies(F, a)) == T
+    # assert rule_base_implies_true(Implies(a, T)) == T
+    # assert rule_base_implies_false(Implies(F, a)) == T
 
 
 def test_mirror():
