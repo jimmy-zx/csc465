@@ -1,12 +1,12 @@
-from fmsd.expression import Expression, VarTable
+from fmsd.expression import Expression
 from fmsd.expression.constants.binary import TRUE, FALSE
 from fmsd.expression.operators.binary import Flip, And, Or, Implies, ImpliedBy
 from fmsd.expression.operators.generic import Equals, NotEquals, Ternary
 from fmsd.expression.types import Type
-from fmsd.rule import FunctionRule
+from fmsd.transform.func import FunctionTransform
 
 
-def func_rule_table(exp: Expression, table: VarTable | None = None) -> Expression:
+def func_rule_table(exp: Expression) -> Expression:
     assert exp.type() == Type.BINARY
     assert exp.is_constant()
     if isinstance(exp, Flip):
@@ -44,4 +44,11 @@ def func_rule_table(exp: Expression, table: VarTable | None = None) -> Expressio
     assert False
 
 
-rule_table = FunctionRule(func_rule_table)
+def rule_table_wrapper(src: Expression, dst: Expression) -> bool:
+    try:
+        return func_rule_table(src) == dst
+    except AssertionError:
+        return False
+
+
+t_rule_table = FunctionTransform(rule_table_wrapper)

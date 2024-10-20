@@ -6,7 +6,7 @@ from fmsd.proof.step import StepProof, Step
 from fmsd.rule import MatchRule, FunctionRule, Rule
 from fmsd.transform import Transform
 from fmsd.transform.expr import ExpressionTransform
-from fmsd.transform.transforms import transforms as global_transforms
+from fmsd.transform.transforms import t_all
 
 
 class TransformProof(Proof):
@@ -54,7 +54,7 @@ class DerivedStepProof(Proof):
         steps = []
         src = self.src
         while src != self.dst:
-            if (res := self.refine_once(src, self.dst, global_transforms)) is None:
+            if (res := self.refine_once(src, self.dst, t_all)) is None:
                 idx = src.diff(self.dst)
                 assert idx is not None
                 raise NoTransformationFoundException(self.src, self.dst)
@@ -80,7 +80,7 @@ class DerivedStepProof(Proof):
         return self.src == other.src and self.dst == other.dst
 
     @staticmethod
-    def refine_once(src: Expression, dst: Expression, transforms: list[Transform]) -> tuple[Transform, Expression, list[int]] | None:
+    def refine_once(src: Expression, dst: Expression, transforms: dict[str, Transform]) -> tuple[Transform, Expression, list[int]] | None:
         assert src.diff(dst) is not None
         for i in itertools.count(start=0):
             idx = src.diff(dst, start=i)
@@ -108,12 +108,13 @@ class DerivedStepProof(Proof):
         return None
 
     @staticmethod
-    def verify_transforms(src: Expression, dst: Expression, context: list[Expression], transforms: list[Transform]) -> Transform | None:
-        for trf in transforms:
+    def verify_transforms(src: Expression, dst: Expression, context: list[Expression], transforms: dict[str, Transform]) -> Transform | None:
+        for trf in transforms.values():
             if trf.verify(src, dst):
                 return trf
         for ctx in context:
-            trf = ExpressionTransform(ctx, "context")
+            trf = ExpressionTransform(ctx)
+            trf.name = "context"
             if trf.verify(src, dst):
                 return trf
         return None

@@ -6,9 +6,8 @@ from fmsd.transform import Transform
 
 
 class ExpressionTransform(Transform):
-    def __init__(self, expr: Expression, name: str) -> None:
+    def __init__(self, expr: Expression) -> None:
         Transform.__init__(self)
-        self.name = name
         self.expr = expr
 
     def verify(self, src: Expression, dst: Expression) -> bool:

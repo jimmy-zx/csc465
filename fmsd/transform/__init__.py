@@ -15,3 +15,6 @@ class Transform(ABC):
         if self.name is not None:
             return self.name
         return "<Transform>"
+
+    def __repr__(self) -> str:
+        return str(self)

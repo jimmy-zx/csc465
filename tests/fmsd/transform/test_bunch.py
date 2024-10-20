@@ -15,4 +15,4 @@ def test_generalization():
     n = NumericSingularVariable("n")
     src = TRUE
     dst = In(n * ZERO, Union(n * ZERO, n * NAT))
-    assert ExpressionTransform(axiom_generalization, "").verify(src, dst)
+    assert ExpressionTransform(axiom_generalization).verify(src, dst)

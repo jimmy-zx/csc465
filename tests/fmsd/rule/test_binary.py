@@ -7,7 +7,7 @@ from fmsd.rule.rules.binary import rule_excluded_middle, rule_noncontradiction, 
     rule_double_negation, rule_duality_and, rule_duality_or, rule_exclusion, rule_material_implication, \
     rule_inclusion_and, \
     rule_inclusion_or, rule_base_implies_true, rule_base_implies_false, rule_contrapositive
-from fmsd.rule.rules.binary.table import rule_table
+from fmsd.transform.transforms.binary_table import func_rule_table
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")
@@ -18,8 +18,8 @@ z = BinaryVariable("z")
 
 def test_binary():
     assert T == T
-    assert rule_table(Flip(F)) == T
-    assert rule_table(NotEquals(T, F)) == T
+    assert func_rule_table(Flip(F)) == T
+    assert func_rule_table(NotEquals(T, F)) == T
 
 
 def test_excluded_middle():

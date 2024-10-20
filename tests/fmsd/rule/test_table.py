@@ -4,7 +4,7 @@ from fmsd.expression import Expression
 from fmsd.expression.constants.binary import TRUE as T, FALSE as F
 from fmsd.expression.operators.binary import Flip, And, Or, Implies, ImpliedBy
 from fmsd.expression.operators.generic import Equals, NotEquals, Ternary
-from fmsd.rule.rules.binary.table import rule_table
+from fmsd.transform.transforms.binary_table import func_rule_table
 
 
 @pytest.mark.parametrize(
@@ -47,4 +47,4 @@ from fmsd.rule.rules.binary.table import rule_table
     ]
 )
 def test_table(op: type, operands: list[Expression], res: Expression):
-    assert rule_table(op(*operands)) == res
+    assert func_rule_table(op(*operands)) == res
