@@ -1,10 +1,24 @@
-from fmsd.transform.transforms.axioms import bunch
-from fmsd.transform.transforms.axioms import constants
-from fmsd.transform.transforms.axioms import context
+from fmsd.transform.transforms.axioms import (
+    binary,
+    binary_generic,
+    bunch,
+    constants,
+    context,
+    numeric,
+    numeric_generic,
+)
 from fmsd.transform import Transform
 from fmsd.transform.expr import ExpressionTransform
 
-modules = [bunch, constants, context]
+modules = [
+    binary,
+    binary_generic,
+    bunch,
+    constants,
+    context,
+    numeric,
+    numeric_generic,
+]
 
 t_all: dict[str, Transform] = {}
 

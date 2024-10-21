@@ -1,10 +1,9 @@
 from fmsd.transform.transforms import axioms
 from fmsd.transform.transforms import binary_table
 from fmsd.transform.transforms import prop
-from fmsd.transform.transforms import rules
 from fmsd.transform import Transform
 
-modules = [binary_table, prop, axioms, rules]
+modules = [binary_table, prop, axioms]
 
 t_all: dict[str, Transform] = {}
 

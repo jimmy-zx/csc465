@@ -13,21 +13,21 @@ y = BinaryVariable("y")
 z = BinaryVariable("z")
 a = BinaryVariable("a")
 
-rule_reflexivity = Equals(Equals(x, x), TRUE)
+axiom_reflexivity = Equals(Equals(x, x), TRUE)
 
-rule_symmetry = Equals(Equals(x, y), Equals(y, x))
+axiom_symmetry = Equals(Equals(x, y), Equals(y, x))
 
-rule_transitivity = Implies(
+axiom_transitivity = Implies(
     And(Equals(x, y), Equals(y, z)),
     Equals(x, z),
 )
 
-rule_unequality = Equals(NotEquals(x, y), Flip(Equals(x, y)))
+axiom_unequality = Equals(NotEquals(x, y), Flip(Equals(x, y)))
 
-rule_case_base_true = Equals(Ternary(TRUE, x, y), x)
+axiom_case_base_true = Equals(Ternary(TRUE, x, y), x)
 
-rule_case_base_false = Equals(Ternary(FALSE, x, y), y)
+axiom_case_base_false = Equals(Ternary(FALSE, x, y), y)
 
-rule_case_idempotent = Equals(Ternary(a, x, x), x)
+axiom_case_idempotent = Equals(Ternary(a, x, x), x)
 
-rule_case_reversal = Equals(Ternary(a, x, y), Ternary(Flip(a), y, x))
+axiom_case_reversal = Equals(Ternary(a, x, y), Ternary(Flip(a), y, x))

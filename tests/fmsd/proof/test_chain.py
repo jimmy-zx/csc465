@@ -3,11 +3,11 @@ from fmsd.expression.operators.binary import Implies, And, Flip
 from fmsd.expression.variables import BinaryVariable
 from fmsd.proof import ChainProof
 from fmsd.proof.derived_step import TransformProof
-from fmsd.rule.rules.binary import (
-    rule_portation,
-    rule_noncontradiction,
-    rule_base_implies_false,
-    rule_commutative_and,
+from fmsd.transform.transforms.axioms.binary import (
+    axiom_portation,
+    axiom_noncontradiction,
+    axiom_base_implies_false,
+    axiom_commutative_and,
 )
 from fmsd.transform.expr import ExpressionTransform
 
@@ -29,15 +29,15 @@ def test_multi_step_proof():
         src,
         dst,
         [
-            TransformProof(src, step1, ExpressionTransform(rule_portation), []),
+            TransformProof(src, step1, ExpressionTransform(axiom_portation), []),
             TransformProof(
-                step1, step2, ExpressionTransform(rule_commutative_and), [0]
+                step1, step2, ExpressionTransform(axiom_commutative_and), [0]
             ),
             TransformProof(
-                step2, step3, ExpressionTransform(rule_noncontradiction), [0]
+                step2, step3, ExpressionTransform(axiom_noncontradiction), [0]
             ),
             TransformProof(
-                step3, dst, ExpressionTransform(rule_base_implies_false), []
+                step3, dst, ExpressionTransform(axiom_base_implies_false), []
             ),
         ],
     )
@@ -58,15 +58,15 @@ def test_multi_step_proof_rev():
         dst,
         [
             TransformProof(
-                src, step1, ExpressionTransform(rule_base_implies_false), []
+                src, step1, ExpressionTransform(axiom_base_implies_false), []
             ),
             TransformProof(
-                step1, step2, ExpressionTransform(rule_noncontradiction), [0]
+                step1, step2, ExpressionTransform(axiom_noncontradiction), [0]
             ),
             TransformProof(
-                step2, step3, ExpressionTransform(rule_commutative_and), [0]
+                step2, step3, ExpressionTransform(axiom_commutative_and), [0]
             ),
-            TransformProof(step3, dst, ExpressionTransform(rule_portation), []),
+            TransformProof(step3, dst, ExpressionTransform(axiom_portation), []),
         ],
     )
     assert proof.verify()
