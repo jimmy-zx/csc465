@@ -1,6 +1,4 @@
-# noinspection PyUnresolvedReferences
 import fmsd.utils.patch.binary
-# noinspection PyUnresolvedReferences
 import fmsd.utils.patch.numeric
 from fmsd.expression import Expression
 from fmsd.expression.constants.bunch import NULL, NAT, XINT, XREAL
@@ -10,6 +8,9 @@ from fmsd.expression.operators.binary import Implies
 from fmsd.expression.operators.bunch import In, Union, Intersect, Includes, Count, BunchInterval
 from fmsd.expression.operators.generic import Equals
 from fmsd.expression.variables import NumericVariable, NumericSingularVariable
+
+assert fmsd.utils.patch.binary
+assert fmsd.utils.patch.numeric
 
 x = NumericSingularVariable("x")
 y = NumericSingularVariable("y")

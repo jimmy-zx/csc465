@@ -1,6 +1,7 @@
 from fmsd.expression import Expression
 from fmsd.expression.operator import Operator
-from fmsd.expression.operators import Operator2, AssociativeOperator, CommutativeOperator, OperatorWithSameTypeOperands
+from fmsd.expression.operators import Operator2, OperatorWithSameTypeOperands, \
+    AssociativeOperator, CommutativeOperator
 from fmsd.expression.types import Binary, Type
 
 
@@ -23,4 +24,4 @@ class Ternary(Operator):
         return self.children[1].type()
 
     def __str__(self) -> str:
-        return "if {} then {} else {} fi".format(*map(str, self.children))
+        return f"if {self.children[0]} then {self.children[1]} else {self.children[2]} fi"

@@ -1,6 +1,7 @@
-# noinspection PyUnresolvedReferences
 import fmsd.utils.patch.binary
 from fmsd.expression.variables import BinaryVariable
+
+assert fmsd.utils.patch.binary
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")

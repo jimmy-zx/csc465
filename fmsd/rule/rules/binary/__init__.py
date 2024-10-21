@@ -84,7 +84,9 @@ rule_associative_or = MatchRule(Or(a, Or(b, c)), Or(Or(a, b), c))
 
 rule_associative_equals = MatchRule(Equals(a, Equals(b, c)), Equals(Equals(a, b), c))
 
-rule_associative_not_equals = MatchRule(NotEquals(a, NotEquals(b, c)), NotEquals(NotEquals(a, b), c))
+rule_associative_not_equals = MatchRule(
+    NotEquals(a, NotEquals(b, c)),
+    NotEquals(NotEquals(a, b), c))
 
 rule_associative_mixed_equals = MatchRule(Equals(a, NotEquals(b, c)), NotEquals(Equals(a, b), c))
 
@@ -124,9 +126,13 @@ rule_transitive_implies = MatchRule(And(Implies(a, b), Implies(b, c)), Implies(a
 
 rule_transitive_equals = MatchRule(And(Equals(a, b), Equals(b, c)), Equals(a, c), equiv=False)
 
-rule_transitive_implies_equals = MatchRule(And(Implies(a, b), Equals(b, c)), Implies(a, c), equiv=False)
+rule_transitive_implies_equals = MatchRule(
+    And(Implies(a, b), Equals(b, c)),
+    Implies(a, c), equiv=False)
 
-rule_transitive_equals_implies = MatchRule(And(Equals(a, b), Implies(b, c)), Implies(a, c), equiv=False)
+rule_transitive_equals_implies = MatchRule(
+    And(Equals(a, b), Implies(b, c)),
+    Implies(a, c), equiv=False)
 
 
 def helper_distributive(outer, inner) -> Expression:

@@ -1,4 +1,4 @@
-import fmsd.utils.config as config
+from fmsd.utils import config
 from fmsd.expression.types import Typed
 from fmsd.utils.trace import get_trace
 
@@ -35,7 +35,7 @@ class Expression(Typed):
     def copy(self) -> "Expression":
         return self
 
-    def eval_var(self, table: VarTable) -> "Expression":
+    def eval_var(self, table: VarTable) -> "Expression":  # pylint: disable=unused-argument
         return self
 
     def variables(self) -> set[str]:
@@ -51,7 +51,7 @@ class Expression(Typed):
     def is_constant(self) -> bool:
         return False
 
-    def context(self, index: list[int]) -> list["Expression"]:
+    def context(self, index: list[int]) -> list["Expression"]:  # pylint: disable=unused-argument
         return []
 
     def get(self, index: list[int]) -> "Expression":

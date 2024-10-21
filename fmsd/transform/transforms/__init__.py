@@ -1,7 +1,7 @@
-import fmsd.transform.transforms.axioms as axioms
-import fmsd.transform.transforms.binary_table as binary_table
-import fmsd.transform.transforms.prop as prop
-import fmsd.transform.transforms.rules as rules
+from fmsd.transform.transforms import axioms
+from fmsd.transform.transforms import binary_table
+from fmsd.transform.transforms import prop
+from fmsd.transform.transforms import rules
 from fmsd.transform import Transform
 
 modules = [

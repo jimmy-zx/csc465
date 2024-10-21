@@ -15,7 +15,7 @@ class Operator1(Operator):
         return self.children[0]
 
     def __str__(self) -> str:
-        return "{}{}".format(self.DELIM, self.op)
+        return f"{self.DELIM}{self.op}"
 
 
 class Operator2(Operator):
@@ -34,9 +34,7 @@ class Operator2(Operator):
         return self.children[1]
 
     def __str__(self) -> str:
-        return "({}{}{})".format(
-            str(self.lhs), self.DELIM, str(self.rhs)
-        )
+        return f"({self.lhs}{self.DELIM}{self.rhs})"
 
 
 class OperatorWithSameTypeOperands(Operator):

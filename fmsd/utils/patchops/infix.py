@@ -3,6 +3,8 @@ from fmsd.expression.operators.numeric import Max, Min
 from fmsd.expression import Expression
 from fmsd.utils.patchop import InfixOperator
 
+# pylint: disable=invalid-name
+
 
 # noinspection PyPep8Naming
 @InfixOperator[Expression, Expression, Expression]

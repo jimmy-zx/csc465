@@ -1,6 +1,6 @@
-import fmsd.transform.transforms.axioms.bunch as bunch
-import fmsd.transform.transforms.axioms.constants as constants
-import fmsd.transform.transforms.axioms.context as context
+from fmsd.transform.transforms.axioms import bunch
+from fmsd.transform.transforms.axioms import constants
+from fmsd.transform.transforms.axioms import context
 from fmsd.transform import Transform
 from fmsd.transform.expr import ExpressionTransform
 

@@ -4,6 +4,10 @@ from typing import Sequence
 from fmsd.expression import Expression
 
 
+class ProofException(Exception):
+    pass
+
+
 class Proof(ABC):
     def __init__(self, src: Expression, dst: Expression, hint: str = "") -> None:
         self.src = src
@@ -32,11 +36,11 @@ class EquivProof(Proof):
         try:
             assert self.fwd.verify(debug=debug)
         except Exception as ex:
-            raise Exception("EquivProof: failed to verify forward") from ex
+            raise ProofException("EquivProof: failed to verify forward") from ex
         try:
             assert self.bwd.verify(debug=debug)
         except Exception as ex:
-            raise Exception("EquivProof: failed to verify backward") from ex
+            raise ProofException("EquivProof: failed to verify backward") from ex
         return True
 
     def formalize(self) -> "Proof":
@@ -48,7 +52,8 @@ class EquivProof(Proof):
     def __eq__(self, other) -> bool:
         if not isinstance(other, EquivProof):
             return False
-        return self.src == other.src and self.dst == other.dst and self.fwd == other.fwd and self.bwd == other.bwd
+        return self.src == other.src and self.dst == other.dst \
+            and self.fwd == other.fwd and self.bwd == other.bwd
 
 
 class ChainProof(Proof):
@@ -63,7 +68,7 @@ class ChainProof(Proof):
             try:
                 assert proof.verify(debug)
             except Exception as ex:
-                raise Exception(f"ChainProof: failed to verify step {i}") from ex
+                raise ProofException(f"ChainProof: failed to verify step {i}") from ex
             last = proof.dst
         assert last == self.dst
         return True

@@ -1,15 +1,16 @@
 import pytest
 
 import fmsd.expression.operators.binary as binop
-import fmsd.expression.operators.numeric as numop
 import fmsd.expression.operators.generic as genop
-# noinspection PyUnresolvedReferences
+import fmsd.expression.operators.numeric as numop
 import fmsd.utils.patch.binary
-# noinspection PyUnresolvedReferences
 import fmsd.utils.patch.numeric
 from fmsd.expression.operators import AssociativeOperator, CommutativeOperator
 from fmsd.expression.variables import BinaryVariable, NumericVariable
 from fmsd.transform.prop import AssociativeTransform
+
+assert fmsd.utils.patch.binary
+assert fmsd.utils.patch.numeric
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")

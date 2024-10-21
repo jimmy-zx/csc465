@@ -1,14 +1,16 @@
 import itertools
 
 from fmsd.expression import Expression
-from fmsd.proof import Proof, ChainProof, EquivProof
+from fmsd.proof import Proof, ChainProof, EquivProof, ProofException
 from fmsd.transform import Transform
 from fmsd.transform.expr import ExpressionTransform
 from fmsd.transform.transforms import t_all
 
 
 class TransformProof(Proof):
-    def __init__(self, src: Expression, dst: Expression, transform: Transform, index: list[int]) -> None:
+    def __init__(self,
+                 src: Expression, dst: Expression,
+                 transform: Transform, index: list[int]) -> None:
         Proof.__init__(self, src, dst, transform.name or "")
         self.transform = transform
         self.index = index
@@ -64,7 +66,7 @@ class DerivedStepProof(Proof):
         try:
             assert self.derived_proof.verify()
         except Exception as ex:
-            raise Exception("Failed to verify derived proof") from ex
+            raise ProofException("Failed to verify derived proof") from ex
         self.hint = self.derived_proof.hint
         return True
 
@@ -78,15 +80,19 @@ class DerivedStepProof(Proof):
         return self.src == other.src and self.dst == other.dst
 
     @staticmethod
-    def refine_once(src: Expression, dst: Expression, transforms: dict[str, Transform]) -> tuple[Transform, Expression,
+    def refine_once(src: Expression, dst: Expression,
+                    transforms: dict[str, Transform]) -> tuple[Transform, Expression,
     list[int]] | None:
         assert src.diff(dst) is not None
         for i in itertools.count(start=0):
             idx = src.diff(dst, start=i)
             if idx is None:
                 break
-            if (res := DerivedStepProof.verify_transforms(src.get(idx), dst.get(idx), src.context(idx),
-                                                          transforms)) is not None:
+            if (res := DerivedStepProof.verify_transforms(
+                    src.get(idx),
+                    dst.get(idx),
+                    src.context(idx),
+                    transforms)) is not None:
                 if not idx:
                     refined = dst
                 else:
@@ -97,8 +103,11 @@ class DerivedStepProof(Proof):
         idx = src.diff(dst)
         while idx:
             idx.pop()
-            if (res := DerivedStepProof.verify_transforms(src.get(idx), dst.get(idx), src.context(idx),
-                                                          transforms)) is not None:
+            if (res := DerivedStepProof.verify_transforms(
+                    src.get(idx),
+                    dst.get(idx),
+                    src.context(idx),
+                    transforms)) is not None:
                 if not idx:
                     refined = dst
                 else:

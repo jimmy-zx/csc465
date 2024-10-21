@@ -1,9 +1,10 @@
-# noinspection PyUnresolvedReferences
 import fmsd.utils.patch.binary
 from fmsd.expression.constants.binary import TRUE
 from fmsd.expression.operators.generic import Ternary
 from fmsd.expression.variables import BinaryVariable
 from fmsd.proof.derived_step import DerivedEquivChainProof, DerivedChainProof
+
+assert fmsd.utils.patch.binary
 
 
 def test_7c():
@@ -12,8 +13,10 @@ def test_7c():
     """
     b = BinaryVariable("b")
     c = BinaryVariable("c")
+    # pylint: disable=invalid-name
     P = BinaryVariable("P")
     Q = BinaryVariable("Q")
+    # pylint: enable=invalid-name
 
     src = Ternary(b, Ternary(c, P, Q), Q)
     dst = Ternary(b & c, P, Q)
@@ -48,8 +51,8 @@ def test_22a():
     p = BinaryVariable("p")  # play tennis
     w = BinaryVariable("w")  # watch tennis
     r = BinaryVariable("r")  # read tennis
-    stmt1 = (~p) >> w   # If I'm not playing tennis, I'm watching tennis.
-    stmt2 = (~w) >> r   # I'm not watching tennis, I'm reading about tennis
+    stmt1 = (~p) >> w  # If I'm not playing tennis, I'm watching tennis.
+    stmt2 = (~w) >> r  # I'm not watching tennis, I'm reading about tennis
     # speaker cannot do more than one of these activities at a time
     stmt3 = ~(p & w)
     stmt4 = ~(w & r)

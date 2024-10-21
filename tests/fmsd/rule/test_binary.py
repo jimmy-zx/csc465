@@ -1,10 +1,12 @@
 from fmsd.expression.constants.binary import TRUE as T, FALSE as F
-from fmsd.expression.operators.binary import *
+from fmsd.expression.operators.binary import And, Or, Implies, ImpliedBy, Flip
 from fmsd.expression.operators.generic import Equals, NotEquals
 from fmsd.expression.variables import BinaryVariable
-from fmsd.rule.rules.binary import rule_excluded_middle, rule_noncontradiction, rule_base_and, rule_base_or, \
+from fmsd.rule.rules.binary import rule_excluded_middle, rule_noncontradiction, rule_base_and, \
+    rule_base_or, \
     rule_mirror, \
-    rule_double_negation, rule_duality_and, rule_duality_or, rule_exclusion, rule_material_implication, \
+    rule_double_negation, rule_duality_and, rule_duality_or, rule_exclusion, \
+    rule_material_implication, \
     rule_inclusion_and, \
     rule_inclusion_or, rule_base_implies_true, rule_base_implies_false, rule_contrapositive
 from fmsd.transform.expr import ExpressionTransform

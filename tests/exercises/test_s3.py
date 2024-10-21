@@ -33,8 +33,10 @@ def test_49a():
             In(ZERO, n * Union(ZERO, NAT)) & TRUE,
             In(ZERO, n * Union(ZERO, NAT)) & In(ZERO, NAT),
             In(ZERO, n * Union(ZERO, NAT)) & Equals(Union(ZERO, NAT), NAT),
-            Context(In(ZERO, n * Union(ZERO, NAT)), Equals(Union(ZERO, NAT), NAT)) & Equals(Union(ZERO, NAT), NAT),
-            Context(In(ZERO, n * NAT), Equals(Union(ZERO, NAT), NAT)) & Equals(Union(ZERO, NAT), NAT),
+            Context(In(ZERO, n * Union(ZERO, NAT)), Equals(Union(ZERO, NAT), NAT)) & Equals(
+                Union(ZERO, NAT), NAT),
+            Context(In(ZERO, n * NAT), Equals(Union(ZERO, NAT), NAT)) & Equals(Union(ZERO, NAT),
+                                                                               NAT),
             In(ZERO, n * NAT) & Equals(Union(ZERO, NAT), NAT),
             In(ZERO, n * NAT)
         ]

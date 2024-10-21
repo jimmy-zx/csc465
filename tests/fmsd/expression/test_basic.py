@@ -1,9 +1,10 @@
-from fmsd.expression.variables import NumericVariable, NumericSingularVariable
+import fmsd.utils.patch.binary
 from fmsd.expression.operators.binary import And, Or
 from fmsd.expression.variables import BinaryVariable
-# noinspection PyUnresolvedReferences
-import fmsd.utils.patch.binary
-import fmsd.utils.config as config
+from fmsd.expression.variables import NumericVariable, NumericSingularVariable
+from fmsd.utils import config
+
+assert fmsd.utils.patch.binary
 
 
 def test_singular():
@@ -18,3 +19,5 @@ def test_simple():
     config.TRACE = True
     d = Or(And(a, b), c)
     e = a & b
+    assert d
+    assert e

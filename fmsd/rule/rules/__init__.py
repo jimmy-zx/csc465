@@ -1,7 +1,7 @@
-import fmsd.rule.rules.binary as binary
-import fmsd.rule.rules.binary.generic as binary_generic
-import fmsd.rule.rules.numeric as numeric
-import fmsd.rule.rules.numeric.generic as numeric_generic
+from fmsd.rule.rules import binary
+from fmsd.rule.rules import numeric
+from fmsd.rule.rules.binary import generic as binary_generic
+from fmsd.rule.rules.numeric import generic as numeric_generic
 from fmsd.transform import Transform
 from fmsd.transform.expr import ExpressionTransform
 

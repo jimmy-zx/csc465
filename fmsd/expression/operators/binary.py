@@ -1,4 +1,5 @@
-from fmsd.expression.operators import Operator1, Operator2, OperatorWithBinaryOperands, AssociativeOperator, CommutativeOperator
+from fmsd.expression.operators import Operator1, Operator2, \
+    OperatorWithBinaryOperands, AssociativeOperator, CommutativeOperator
 from fmsd.expression.types import Binary
 
 

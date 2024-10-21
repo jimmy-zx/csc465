@@ -15,8 +15,7 @@ class AssociativeTransform(Transform):
             return False
         if not isinstance(src, CommutativeOperator):
             return src.collect() == dst.collect()
-        else:
-            return set(src.collect()) == set(dst.collect())
+        return set(src.collect()) == set(dst.collect())
 
 
 class CommutativeTransform(Transform):

@@ -1,11 +1,9 @@
-# noinspection PyUnresolvedReferences
 import fmsd.utils.patch.binary
 from fmsd.expression.constants.binary import TRUE, FALSE
-from fmsd.expression.constants.bunch import NumericBunchConstant
-from fmsd.expression.types import Numeric
 from fmsd.expression.variables import BinaryVariable, NumericVariable, NumericSingularVariable
 from fmsd.utils.patchops.infix import EQ
 
+assert fmsd.utils.patch.binary
 
 
 def test_basic():
@@ -53,4 +51,3 @@ def test_singular():
     assert sin.match(num, {}) == {"num": sin}
     assert num.match(sin, {}) is None
     assert sin.match(sin, {}) == {"sin": sin}
-

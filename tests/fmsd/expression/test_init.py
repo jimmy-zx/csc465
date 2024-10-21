@@ -1,8 +1,8 @@
 import pytest
 
+from fmsd.expression.operators.binary import Flip
+from fmsd.expression.operators.numeric import Negate
 from fmsd.expression.variables import BinaryVariable, NumericVariable
-from fmsd.expression.operators.binary import Flip, And
-from fmsd.expression.operators.numeric import Negate, Plus
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")

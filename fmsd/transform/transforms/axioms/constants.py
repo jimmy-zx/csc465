@@ -1,12 +1,13 @@
-# noinspection PyUnresolvedReferences
 import fmsd.utils.patch.binary
-# noinspection PyUnresolvedReferences
 import fmsd.utils.patch.numeric
 from fmsd.expression.constants.bunch import NAT
 from fmsd.expression.constants.numeric import ZERO, ONE, INFINITY
 from fmsd.expression.operators.binary import Implies
 from fmsd.expression.operators.bunch import In, Union
 from fmsd.expression.variables import NumericVariable
+
+assert fmsd.utils.patch.binary
+assert fmsd.utils.patch.numeric
 
 x = NumericVariable("x")
 y = NumericVariable("y")

@@ -18,7 +18,9 @@ class Operator(Expression):
                 var_set.update(op.variables())
         return var_set
 
-    def match(self, pattern: "Expression", matched: dict[str, "Expression"]) -> dict[str, "Expression"] | None:
+    def match(self,
+              pattern: "Expression",
+              matched: dict[str, "Expression"]) -> dict[str, "Expression"] | None:
         if isinstance(pattern, Variable):
             return pattern.vmatch(self, matched)
         if not isinstance(pattern, Operator):
@@ -91,7 +93,7 @@ class Operator(Expression):
             return
         target = self.children[index[0]]
         assert isinstance(target, Operator)
-        return target.set(next_index, repl)
+        target.set(next_index, repl)
 
     def __eq__(self, other) -> bool:
         if type(self) != type(other):

@@ -1,10 +1,10 @@
 from fmsd.expression.constants.binary import TRUE as T, FALSE as F
-from fmsd.expression.operators.binary import *
+from fmsd.expression.operators.binary import And, Flip
 from fmsd.expression.operators.generic import Equals, NotEquals, Ternary
-from fmsd.proof.derived_step import TransformProof
-from fmsd.rule.rules.binary.generic import rule_reflexivity, rule_symmetry, rule_transitivity, rule_unequality, \
-    rule_case_idempotent, rule_case_reversal, rule_case_base_true, rule_case_base_false
 from fmsd.expression.variables import BinaryVariable
+from fmsd.rule.rules.binary.generic import rule_reflexivity, rule_symmetry, rule_transitivity, \
+    rule_unequality, \
+    rule_case_idempotent, rule_case_reversal, rule_case_base_true, rule_case_base_false
 from fmsd.transform.expr import ExpressionTransform
 
 a = BinaryVariable("a")
@@ -24,7 +24,8 @@ def test_symmetry():
 
 
 def test_transitivity():
-    assert ExpressionTransform(rule_transitivity).verify(And(Equals(x, y), Equals(y, z)), Equals(x, z))
+    assert ExpressionTransform(rule_transitivity).verify(And(Equals(x, y), Equals(y, z)),
+                                                         Equals(x, z))
 
 
 def test_unequality():

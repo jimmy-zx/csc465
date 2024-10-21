@@ -1,7 +1,10 @@
 # type: ignore
-from fmsd.expression.operators.numeric import Negate, Plus, Minus, Multiply, DividedBy, Power, LessThan, \
-    LessThanOrEqualsTo, GreaterThan, GreaterThanOrEqualsTo
 from fmsd.expression import Expression
+from fmsd.expression.operators.numeric import Negate, Plus, Minus, Multiply, DividedBy, Power, \
+    LessThan, \
+    LessThanOrEqualsTo, GreaterThan, GreaterThanOrEqualsTo
+
+# pylint: disable=unnecessary-lambda
 
 Expression.__neg__ = lambda r: Negate(r)
 Expression.__add__ = lambda l, r: Plus(l, r)

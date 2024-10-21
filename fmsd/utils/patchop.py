@@ -8,8 +8,15 @@ R = TypeVar("R")
 T = TypeVar("T")
 
 
+class InfixOperatorException(Exception):
+    pass
+
+
 class InfixOperator(Generic[L, R, T]):
-    def __init__(self, func: Callable[[L, R], T], lhs: L | None = None, rhs: R | None = None) -> None:
+    def __init__(self,
+                 func: Callable[[L, R], T],
+                 lhs: L | None = None,
+                 rhs: R | None = None) -> None:
         self.func = func
         self.lhs = lhs
         self.rhs = rhs
@@ -19,7 +26,7 @@ class InfixOperator(Generic[L, R, T]):
         if self.lhs is not None:
             return self.func(self.lhs, rhs)
         if self.rhs is not None:
-            raise Exception("rhs already occupied")
+            raise InfixOperatorException("rhs already occupied")
         return InfixOperator(self.func, None, rhs)
 
     def __rmatmul__(self, lhs: L) -> T | "InfixOperator[L, R, T]":
@@ -27,7 +34,7 @@ class InfixOperator(Generic[L, R, T]):
         if self.rhs is not None:
             return self.func(lhs, self.rhs)
         if self.lhs is not None:
-            raise Exception("lhs already occupied")
+            raise InfixOperatorException("lhs already occupied")
         return InfixOperator(self.func, lhs, None)
 
 

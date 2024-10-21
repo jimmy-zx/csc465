@@ -1,14 +1,15 @@
 import pytest
 
-import fmsd.utils.config as config
-# noinspection PyUnresolvedReferences
 import fmsd.utils.patch.binary
 from fmsd.expression.constants.binary import TRUE
 from fmsd.expression.operators.binary import Or
 from fmsd.expression.operators.generic import Equals
 from fmsd.expression.variables import BinaryVariable
 from fmsd.proof.derived_step import DerivedStepProof, DerivedChainProof, DerivedEquivChainProof
+from fmsd.utils import config
 from fmsd.utils.patchops.infix import EQ
+
+assert fmsd.utils.patch.binary
 
 a = BinaryVariable("a")
 b = BinaryVariable("b")
@@ -26,7 +27,7 @@ def test_invalid():
     proof = DerivedStepProof(
         a & b, b & c
     )
-    with pytest.raises(Exception) as ex:
+    with pytest.raises(Exception):
         assert proof.verify()
 
 
@@ -80,12 +81,18 @@ def test_multiple_equiv():
             Or(Equals(a, b), Or(Equals(a, c), Equals(b, Equals(a, Equals(a, c))))),
             Or(Equals(a, b), Or(Equals(a, c), Equals(Equals(b, a), Equals(a, c)))),
             Or(Or(Equals(a, b), Equals(a, c)), Equals(Equals(b, a), Equals(a, c))),
-            Equals(Or(Or(Equals(a, b), Equals(a, c)), Equals(b, a)), Or(Or(Equals(a, b), Equals(a, c)), Equals(a, c))),
-            Equals(Or(Or(Equals(a, b), Equals(a, c)), Equals(a, b)), Or(Or(Equals(a, b), Equals(a, c)), Equals(a, c))),
-            Equals(Or(Or(Equals(a, c), Equals(a, b)), Equals(a, b)), Or(Or(Equals(a, b), Equals(a, c)), Equals(a, c))),
-            Equals(Or(Equals(a, c), Or(Equals(a, b), Equals(a, b))), Or(Or(Equals(a, b), Equals(a, c)), Equals(a, c))),
-            Equals(Or(Equals(a, c), Or(Equals(a, b), Equals(a, b))), Or(Equals(a, b), Or(Equals(a, c), Equals(a, c)))),
-            Equals(Or(Equals(a, c), Equals(a, b)), Or(Equals(a, b), Or(Equals(a, c), Equals(a, c)))),
+            Equals(Or(Or(Equals(a, b), Equals(a, c)), Equals(b, a)),
+                   Or(Or(Equals(a, b), Equals(a, c)), Equals(a, c))),
+            Equals(Or(Or(Equals(a, b), Equals(a, c)), Equals(a, b)),
+                   Or(Or(Equals(a, b), Equals(a, c)), Equals(a, c))),
+            Equals(Or(Or(Equals(a, c), Equals(a, b)), Equals(a, b)),
+                   Or(Or(Equals(a, b), Equals(a, c)), Equals(a, c))),
+            Equals(Or(Equals(a, c), Or(Equals(a, b), Equals(a, b))),
+                   Or(Or(Equals(a, b), Equals(a, c)), Equals(a, c))),
+            Equals(Or(Equals(a, c), Or(Equals(a, b), Equals(a, b))),
+                   Or(Equals(a, b), Or(Equals(a, c), Equals(a, c)))),
+            Equals(Or(Equals(a, c), Equals(a, b)),
+                   Or(Equals(a, b), Or(Equals(a, c), Equals(a, c)))),
             Equals(Or(Equals(a, c), Equals(a, b)), Or(Equals(a, b), Equals(a, c))),
             Equals(Or(Equals(a, b), Equals(a, c)), Or(Equals(a, b), Equals(a, c))),
             dst
