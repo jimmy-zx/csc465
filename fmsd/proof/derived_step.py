@@ -80,9 +80,10 @@ class DerivedStepProof(Proof):
         return self.src == other.src and self.dst == other.dst
 
     @staticmethod
-    def refine_once(src: Expression, dst: Expression,
-                    transforms: dict[str, Transform]) -> tuple[Transform, Expression,
-    list[int]] | None:
+    def refine_once(
+            src: Expression, dst: Expression,
+            transforms: dict[str, Transform]
+    ) -> tuple[Transform, Expression, list[int]] | None:
         assert src.diff(dst) is not None
         for i in itertools.count(start=0):
             idx = src.diff(dst, start=i)

@@ -1,9 +1,7 @@
 """
 11.3.2, FMSD
 """
-# noinspection PyUnresolvedReferences
 import fmsd.utils.patch.binary
-# noinspection PyUnresolvedReferences
 import fmsd.utils.patch.numeric
 from fmsd.expression import Expression
 from fmsd.expression.constants.binary import TRUE
@@ -11,6 +9,9 @@ from fmsd.expression.constants.numeric import ZERO, ONE, INFINITY, NEG_INFINITY
 from fmsd.expression.variables import NumericVariable
 from fmsd.rule import MatchRule
 from fmsd.utils.patchops.infix import EQ, NEQ, MAX, MIN
+
+assert fmsd.utils.patch.numeric
+assert fmsd.utils.patch.binary
 
 x = NumericVariable("x")
 y = NumericVariable("y")

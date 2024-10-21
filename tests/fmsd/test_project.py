@@ -16,7 +16,7 @@ def test_import_all(file):
 
 
 def test_mypy():
-    subprocess.run(["mypy", "fmsd"], check=True)
+    subprocess.run(["mypy", "fmsd", "tests"], check=True)
 
 
 def test_tree_clean():
@@ -28,5 +28,12 @@ def test_tree_clean():
 def test_pylint():
     subprocess.run(
         ["pylint", "fmsd", "tests"],
+        check=True
+    )
+
+
+def test_flake8():
+    subprocess.run(
+        ["flake8", "fmsd", "tests"],
         check=True
     )
