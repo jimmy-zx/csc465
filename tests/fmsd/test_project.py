@@ -25,6 +25,34 @@ def test_tree_clean():
     assert not p.stdout
 
 
+def test_readme_intro():
+    pattern = re.compile(
+        r"\[//]: <> \(MARKER_START__([^\)]*)\)\n.*\[//]: <> \(MARKER_END__([^\)]*)\)",
+        flags=re.DOTALL,
+    )
+    whitelist = {"tests/fmsd/test_intro.py"}
+    with open("README.md", "r", encoding="utf-8") as f:
+        data = f.read()
+
+    def repl(m: re.Match) -> str:
+        assert m.group(1) == m.group(2)
+        fname = m.group(1)
+        assert fname in whitelist
+        hdr = "python" if fname.endswith(".py") else ""
+        with open(fname, "r", encoding="utf-8") as fp:
+            fdata = fp.read()
+        return f"""[//]: <> (MARKER_START__{fname})
+```{hdr}
+{fdata}
+```
+[//]: <> (MARKER_END__{fname})"""
+
+    new_data = pattern.sub(repl, data)
+    with open("README.md", "w", encoding="utf-8") as f:
+        f.write(new_data)
+    assert data == new_data
+
+
 def test_pylint():
     subprocess.run(["pylint", "fmsd", "tests"], check=True)
 
@@ -35,24 +63,3 @@ def test_flake8():
 
 def test_black():
     subprocess.run(["black", "fmsd", "tests", "--check"], check=True)
-
-
-def test_readme_intro():
-    pattern =re.compile(r"\[//]: <> \(MARKER_START__([^\)]*)\)\n.*\[//]: <> \(MARKER_END__([^\)]*)\)", flags=re.DOTALL)
-    with open("README.md", "r") as f:
-        data = f.read()
-    def repl(m: re.Match) -> str:
-        assert m.group(1) == m.group(2)
-        fname = m.group(1)
-        hdr = "python" if fname.endswith(".py") else ""
-        with open(fname, "r") as fp:
-            fdata = fp.read()
-        return f"""[//]: <> (MARKER_START__{fname})
-```{hdr}
-{fdata}
-```
-[//]: <> (MARKER_END__{fname})"""
-    new_data = pattern.sub(repl, data)
-    with open("README.md", "w") as f:
-        f.write(new_data)
-    assert data == new_data
