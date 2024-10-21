@@ -2,9 +2,15 @@ from enum import Enum
 
 
 class Type(Enum):
-    BINARY = 0
-    NUMERIC = 1
-    SET = 2
+    ANY = 0
+    BINARY = 1
+    NUMERIC = 2
+    SET = 3
+
+    def match(self, other: "Type") -> bool:
+        if self == self.ANY:
+            return True
+        return self == other
 
 
 class Typed:

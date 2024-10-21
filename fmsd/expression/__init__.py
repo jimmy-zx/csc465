@@ -147,7 +147,7 @@ class Variable(Expression):
     def vmatch(self, expr: Expression, matched: VarTable) -> VarTable | None:
         if matched.get(self.name, expr) != expr:
             return None
-        if self.type() != expr.type():
+        if not self.type().match(expr.type()):
             return None
         matched[self.name] = expr
         return matched
