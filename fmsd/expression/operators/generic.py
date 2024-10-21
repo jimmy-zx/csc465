@@ -2,7 +2,6 @@ from fmsd.expression import Expression
 from fmsd.expression.operator import Operator
 from fmsd.expression.operators import (
     Operator2,
-    OperatorWithSameTypeOperands,
     AssociativeOperator,
     CommutativeOperator,
 )
@@ -10,7 +9,6 @@ from fmsd.expression.types import Binary, Type
 
 
 class Equals(
-    OperatorWithSameTypeOperands,
     Operator2,
     Binary,
     AssociativeOperator,
@@ -19,7 +17,7 @@ class Equals(
     DELIM = "="
 
 
-class NotEquals(OperatorWithSameTypeOperands, Operator2, Binary):
+class NotEquals(Operator2, Binary):
     DELIM = "⧧"
 
 
