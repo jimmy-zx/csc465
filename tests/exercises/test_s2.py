@@ -21,7 +21,9 @@ def test_7c():
     src = Ternary(b, Ternary(c, P, Q), Q)
     dst = Ternary(b & c, P, Q)
     proof = DerivedEquivChainProof(
-        src, dst, [
+        src,
+        dst,
+        [
             Ternary(b, Ternary(c, P, Q), Q),
             (b & Ternary(c, P, Q)) | (~b & Q),
             (b & ((c & P) | (~c & Q))) | (~b & Q),
@@ -37,8 +39,8 @@ def test_7c():
             ((b & c) & P) | ((TRUE & (~b | ~c)) & Q),
             ((b & c) & P) | ((~b | ~c) & Q),
             ((b & c) & P) | (~(b & c) & Q),
-            Ternary(b & c, P, Q)
-        ]
+            Ternary(b & c, P, Q),
+        ],
     )
     assert proof.verify()
     print(proof.formalize())
@@ -73,6 +75,6 @@ def test_22a():
             ((~p | ~w) & w) & ((~w | ~r) & w) & w,
             ((~w | ~p) & ~~w) & ((~w | ~r) & ~~w) & w,
             (~p) & (~r) & w,
-        ]
+        ],
     )
     assert proof.verify()

@@ -8,9 +8,9 @@ from fmsd.transform.transforms import t_all
 
 
 class TransformProof(Proof):
-    def __init__(self,
-                 src: Expression, dst: Expression,
-                 transform: Transform, index: list[int]) -> None:
+    def __init__(
+        self, src: Expression, dst: Expression, transform: Transform, index: list[int]
+    ) -> None:
         Proof.__init__(self, src, dst, transform.name or "")
         self.transform = transform
         self.index = index
@@ -32,11 +32,15 @@ class NoTransformationFoundException(Exception):
         msgs = [f"Failed to find transformation for {src.get(diff)} to {dst.get(diff)}"]
         # some trick to make the filename clickable in pycharm
         if src.stack:
-            msgs.append(f"src File \"{src.stack.filename}\", line {src.stack.lineno}, {src}")
+            msgs.append(
+                f'src File "{src.stack.filename}", line {src.stack.lineno}, {src}'
+            )
         else:
             msgs.append(f"src {src}")
         if dst.stack:
-            msgs.append(f"dst File \"{dst.stack.filename}\", line {dst.stack.lineno}, {dst}")
+            msgs.append(
+                f'dst File "{dst.stack.filename}", line {dst.stack.lineno}, {dst}'
+            )
         else:
             msgs.append(f"dst {dst}")
         Exception.__init__(self, "\n".join(msgs))
@@ -60,9 +64,7 @@ class DerivedStepProof(Proof):
                 raise NoTransformationFoundException(self.src, self.dst)
             steps.append(TransformProof(src, res[1], res[0], res[2]))
             src = res[1]
-        self.derived_proof = ChainProof(
-            self.src, self.dst, steps
-        )
+        self.derived_proof = ChainProof(self.src, self.dst, steps)
         try:
             assert self.derived_proof.verify()
         except Exception as ex:
@@ -81,19 +83,18 @@ class DerivedStepProof(Proof):
 
     @staticmethod
     def refine_once(
-            src: Expression, dst: Expression,
-            transforms: dict[str, Transform]
+        src: Expression, dst: Expression, transforms: dict[str, Transform]
     ) -> tuple[Transform, Expression, list[int]] | None:
         assert src.diff(dst) is not None
         for i in itertools.count(start=0):
             idx = src.diff(dst, start=i)
             if idx is None:
                 break
-            if (res := DerivedStepProof.verify_transforms(
-                    src.get(idx),
-                    dst.get(idx),
-                    src.context(idx),
-                    transforms)) is not None:
+            if (
+                res := DerivedStepProof.verify_transforms(
+                    src.get(idx), dst.get(idx), src.context(idx), transforms
+                )
+            ) is not None:
                 if not idx:
                     refined = dst
                 else:
@@ -104,11 +105,11 @@ class DerivedStepProof(Proof):
         idx = src.diff(dst)
         while idx:
             idx.pop()
-            if (res := DerivedStepProof.verify_transforms(
-                    src.get(idx),
-                    dst.get(idx),
-                    src.context(idx),
-                    transforms)) is not None:
+            if (
+                res := DerivedStepProof.verify_transforms(
+                    src.get(idx), dst.get(idx), src.context(idx), transforms
+                )
+            ) is not None:
                 if not idx:
                     refined = dst
                 else:
@@ -119,8 +120,12 @@ class DerivedStepProof(Proof):
         return None
 
     @staticmethod
-    def verify_transforms(src: Expression, dst: Expression, context: list[Expression],
-                          transforms: dict[str, Transform]) -> Transform | None:
+    def verify_transforms(
+        src: Expression,
+        dst: Expression,
+        context: list[Expression],
+        transforms: dict[str, Transform],
+    ) -> Transform | None:
         for trf in transforms.values():
             if trf.verify(src, dst):
                 return trf
@@ -133,18 +138,25 @@ class DerivedStepProof(Proof):
 
 
 class DerivedChainProof(ChainProof):
-    def __init__(self, src: Expression, dst: Expression, steps: list[Expression]) -> None:
-        ChainProof.__init__(self, src, dst, [
-            DerivedStepProof(steps[i], steps[i + 1])
-            for i in range(len(steps) - 1)
-        ])
+    def __init__(
+        self, src: Expression, dst: Expression, steps: list[Expression]
+    ) -> None:
+        ChainProof.__init__(
+            self,
+            src,
+            dst,
+            [DerivedStepProof(steps[i], steps[i + 1]) for i in range(len(steps) - 1)],
+        )
 
 
 class DerivedEquivChainProof(EquivProof):
-    def __init__(self, src: Expression, dst: Expression, steps: list[Expression]) -> None:
+    def __init__(
+        self, src: Expression, dst: Expression, steps: list[Expression]
+    ) -> None:
         EquivProof.__init__(
             self,
-            src, dst,
+            src,
+            dst,
             DerivedChainProof(src, dst, steps),
-            DerivedChainProof(dst, src, steps[::-1])
+            DerivedChainProof(dst, src, steps[::-1]),
         )

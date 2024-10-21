@@ -5,7 +5,14 @@ from fmsd.expression.constants.bunch import NULL, NAT, XINT, XREAL
 from fmsd.expression.constants.numeric import ZERO, ONE, INFINITY, NEG_INFINITY
 from fmsd.expression.operators.binary import Flip
 from fmsd.expression.operators.binary import Implies
-from fmsd.expression.operators.bunch import In, Union, Intersect, Includes, Count, BunchInterval
+from fmsd.expression.operators.bunch import (
+    In,
+    Union,
+    Intersect,
+    Includes,
+    Count,
+    BunchInterval,
+)
 from fmsd.expression.operators.generic import Equals
 from fmsd.expression.variables import NumericVariable, NumericSingularVariable
 
@@ -35,7 +42,9 @@ axiom_mirror = Equals(Includes(A, B), In(B, A))
 axiom_size_null = Equals(Count(NULL), ZERO)
 axiom_size_one = Equals(Count(x), ONE)
 axiom_size_nat = Equals(Count(NAT), INFINITY)
-axiom_size_bin = Equals(Count(Intersect(A, B)) + Count(Union(A, B)), Count(A) + Count(B))
+axiom_size_bin = Equals(
+    Count(Intersect(A, B)) + Count(Union(A, B)), Count(A) + Count(B)
+)
 axiom_size_notin = Equals(Flip(In(x, A)), Equals(Count(Intersect(x, A)), ZERO))
 axiom_size_subset = Implies(In(A, B), Count(A) <= Count(B))
 axiom_absorption_union = Equals(Union(A, Intersect(A, B)), A)
@@ -54,7 +63,9 @@ axiom_distributive_union_intersect = helper_distributive(Union, Intersect)
 axiom_distributive_union_union = helper_distributive(Union, Union)
 
 axiom_monotonicity_union = Implies(In(A, B) & In(C, D), In(Union(A, C), Union(B, D)))
-axiom_monotonicity_intersect = Implies(In(A, B) & In(C, D), In(Intersect(A, C), Intersect(B, D)))
+axiom_monotonicity_intersect = Implies(
+    In(A, B) & In(C, D), In(Intersect(A, C), Intersect(B, D))
+)
 axiom_induction = In(NULL, A)
 axiom_identity_left = Equals(Union(A, NULL), A)
 axiom_identity_right = Equals(Union(NULL, A), A)
@@ -62,7 +73,9 @@ axiom_base_left = Equals(Intersect(A, NULL), NULL)
 axiom_base_right = Equals(Intersect(NULL, A), A)
 axiom_size_empty = Equals(Equals(Count(A), ZERO), Equals(A, NULL))
 
-axiom_interval_content = Equals(In(x, BunchInterval(y, z)), In(x, XINT) & (y <= x) & (x < z))
+axiom_interval_content = Equals(
+    In(x, BunchInterval(y, z)), In(x, XINT) & (y <= x) & (x < z)
+)
 axiom_interval_size = Equals(Count(BunchInterval(x, y)), y - x)
 axiom_nat = Equals(NAT, BunchInterval(ZERO, INFINITY))
 axiom_infty = In(INFINITY, x / ZERO)

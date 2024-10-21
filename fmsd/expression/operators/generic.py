@@ -1,12 +1,21 @@
 from fmsd.expression import Expression
 from fmsd.expression.operator import Operator
-from fmsd.expression.operators import Operator2, OperatorWithSameTypeOperands, \
-    AssociativeOperator, CommutativeOperator
+from fmsd.expression.operators import (
+    Operator2,
+    OperatorWithSameTypeOperands,
+    AssociativeOperator,
+    CommutativeOperator,
+)
 from fmsd.expression.types import Binary, Type
 
 
-class Equals(OperatorWithSameTypeOperands, Operator2, Binary, AssociativeOperator,
-             CommutativeOperator):
+class Equals(
+    OperatorWithSameTypeOperands,
+    Operator2,
+    Binary,
+    AssociativeOperator,
+    CommutativeOperator,
+):
     DELIM = "="
 
 
@@ -24,4 +33,6 @@ class Ternary(Operator):
         return self.children[1].type()
 
     def __str__(self) -> str:
-        return f"if {self.children[0]} then {self.children[1]} else {self.children[2]} fi"
+        return (
+            f"if {self.children[0]} then {self.children[1]} else {self.children[2]} fi"
+        )

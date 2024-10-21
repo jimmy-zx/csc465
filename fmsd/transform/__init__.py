@@ -8,8 +8,7 @@ class Transform(ABC):
         self.name: str | None = None
 
     @abstractmethod
-    def verify(self, src: Expression, dst: Expression) -> bool:
-        ...
+    def verify(self, src: Expression, dst: Expression) -> bool: ...
 
     def __str__(self) -> str:
         if self.name is not None:

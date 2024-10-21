@@ -1,16 +1,32 @@
-from fmsd.expression.operators import Operator2, Operator1, \
-    AssociativeOperator, CommutativeOperator, \
-    OperatorWithSameOp1AndReturnType, OperatorWithSameTypeOperands, OperatorWithNumericOperands
+from fmsd.expression.operators import (
+    Operator2,
+    Operator1,
+    AssociativeOperator,
+    CommutativeOperator,
+    OperatorWithSameOp1AndReturnType,
+    OperatorWithSameTypeOperands,
+    OperatorWithNumericOperands,
+)
 from fmsd.expression.types import Binary, Numeric
 
 
-class Union(OperatorWithSameOp1AndReturnType, OperatorWithSameTypeOperands, Operator2,
-            AssociativeOperator, CommutativeOperator):
+class Union(
+    OperatorWithSameOp1AndReturnType,
+    OperatorWithSameTypeOperands,
+    Operator2,
+    AssociativeOperator,
+    CommutativeOperator,
+):
     DELIM = ","
 
 
-class Intersect(OperatorWithSameOp1AndReturnType, OperatorWithSameTypeOperands, Operator2,
-                AssociativeOperator, CommutativeOperator):
+class Intersect(
+    OperatorWithSameOp1AndReturnType,
+    OperatorWithSameTypeOperands,
+    Operator2,
+    AssociativeOperator,
+    CommutativeOperator,
+):
     DELIM = "‘"
 
 

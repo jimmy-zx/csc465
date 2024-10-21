@@ -6,7 +6,11 @@ from fmsd.expression.types import Type
 from fmsd.transform.func import FunctionTransform
 
 
-def func_rule_table(exp: Expression) -> Expression:  # pylint: disable=too-many-branches,too-many-return-statements  # noqa: E501
+def func_rule_table(
+    exp: Expression,
+) -> (
+    Expression
+):  # pylint: disable=too-many-branches,too-many-return-statements  # noqa: E501
     assert exp.type() == Type.BINARY
     assert exp.is_constant()
     if isinstance(exp, Flip):

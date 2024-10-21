@@ -44,7 +44,7 @@ from fmsd.transform.transforms.binary_table import func_rule_table
         (Ternary, [F, T, F], F),
         (Ternary, [F, F, T], T),
         (Ternary, [F, F, F], F),
-    ]
+    ],
 )
 def test_table(op: type, operands: list[Expression], res: Expression):
     assert func_rule_table(op(*operands)) == res

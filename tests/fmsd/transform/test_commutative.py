@@ -24,10 +24,13 @@ z = NumericVariable("z")
 @pytest.mark.parametrize(
     "op",
     [
-        binop.And, binop.Or,
-        binop.Implies, binop.ImpliedBy,
-        genop.Equals, genop.NotEquals,
-    ]
+        binop.And,
+        binop.Or,
+        binop.Implies,
+        binop.ImpliedBy,
+        genop.Equals,
+        genop.NotEquals,
+    ],
 )
 def test_commutative_binary(op):
     trf = CommutativeTransform()
@@ -37,13 +40,19 @@ def test_commutative_binary(op):
 @pytest.mark.parametrize(
     "op",
     [
-        numop.Plus, numop.Minus,
-        numop.Multiply, numop.DividedBy,
-        numop.Max, numop.Min,
-        numop.LessThan, numop.LessThanOrEqualsTo,
-        numop.GreaterThan, numop.GreaterThanOrEqualsTo,
-        genop.Equals, genop.NotEquals
-    ]
+        numop.Plus,
+        numop.Minus,
+        numop.Multiply,
+        numop.DividedBy,
+        numop.Max,
+        numop.Min,
+        numop.LessThan,
+        numop.LessThanOrEqualsTo,
+        numop.GreaterThan,
+        numop.GreaterThanOrEqualsTo,
+        genop.Equals,
+        genop.NotEquals,
+    ],
 )
 def test_commutative_numeric(op):
     trf = CommutativeTransform()

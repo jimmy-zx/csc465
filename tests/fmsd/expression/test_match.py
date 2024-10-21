@@ -1,6 +1,10 @@
 import fmsd.utils.patch.binary
 from fmsd.expression.constants.binary import TRUE, FALSE
-from fmsd.expression.variables import BinaryVariable, NumericVariable, NumericSingularVariable
+from fmsd.expression.variables import (
+    BinaryVariable,
+    NumericVariable,
+    NumericSingularVariable,
+)
 from fmsd.utils.patchops.infix import EQ
 
 assert fmsd.utils.patch.binary
@@ -23,7 +27,11 @@ def test_recursion():
     b = BinaryVariable("b")
     c = BinaryVariable("c")
     pattern = a & (b | c)
-    assert (TRUE & (FALSE | TRUE)).match(pattern, {}) == {"a": TRUE, "b": FALSE, "c": TRUE}
+    assert (TRUE & (FALSE | TRUE)).match(pattern, {}) == {
+        "a": TRUE,
+        "b": FALSE,
+        "c": TRUE,
+    }
 
 
 def test_case():

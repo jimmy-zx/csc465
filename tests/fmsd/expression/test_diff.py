@@ -17,7 +17,7 @@ c = BinaryVariable("c")
         ((a | b) & c, a & c, [0]),
         ((a & b) & c, (a & (a | b)) & c, [0, 1]),
         (a & b, b & a, []),
-    ]
+    ],
 )
 def test_symmetric_diff(lhs: Expression, rhs: Expression, idx: list[int] | None):
     assert lhs.diff(rhs) == idx

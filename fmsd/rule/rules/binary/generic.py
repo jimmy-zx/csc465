@@ -18,7 +18,9 @@ rule_reflexivity = MatchRule(Equals(x, x), TRUE)
 
 rule_symmetry = MatchRule(Equals(x, y), Equals(y, x))
 
-rule_transitivity = MatchRule(And(Equals(x, y), Equals(y, z)), Equals(x, z), equiv=False)
+rule_transitivity = MatchRule(
+    And(Equals(x, y), Equals(y, z)), Equals(x, z), equiv=False
+)
 
 rule_unequality = MatchRule(NotEquals(x, y), Flip(Equals(x, y)))
 

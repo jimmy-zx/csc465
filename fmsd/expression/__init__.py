@@ -11,7 +11,9 @@ class ImportPatchException(Exception):
 
 
 class Expression(Typed):
-    def __init__(self, *children: "Expression", cfg: config.Config | None = None) -> None:
+    def __init__(
+        self, *children: "Expression", cfg: config.Config | None = None
+    ) -> None:
         self.config = cfg or config.config
         self.stack = get_trace() if self.config.trace else None
         self.parent: Expression | None = None
@@ -35,7 +37,9 @@ class Expression(Typed):
     def copy(self) -> "Expression":
         return self
 
-    def eval_var(self, table: VarTable) -> "Expression":  # pylint: disable=unused-argument
+    def eval_var(
+        self, table: VarTable  # pylint: disable=unused-argument
+    ) -> "Expression":
         return self
 
     def variables(self) -> set[str]:
@@ -51,7 +55,9 @@ class Expression(Typed):
     def is_constant(self) -> bool:
         return False
 
-    def context(self, index: list[int]) -> list["Expression"]:  # pylint: disable=unused-argument
+    def context(
+        self, index: list[int]  # pylint: disable=unused-argument
+    ) -> list["Expression"]:
         return []
 
     def get(self, index: list[int]) -> "Expression":

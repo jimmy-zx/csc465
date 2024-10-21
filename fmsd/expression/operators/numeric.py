@@ -1,5 +1,10 @@
-from fmsd.expression.operators import Operator1, Operator2, OperatorWithNumericOperands, \
-    AssociativeOperator, CommutativeOperator
+from fmsd.expression.operators import (
+    Operator1,
+    Operator2,
+    OperatorWithNumericOperands,
+    AssociativeOperator,
+    CommutativeOperator,
+)
 from fmsd.expression.types import Numeric, Binary
 
 
@@ -7,8 +12,13 @@ class Negate(OperatorWithNumericOperands, Operator1, Numeric):
     DELIM = "-"
 
 
-class Plus(OperatorWithNumericOperands, Operator2, Numeric,
-           AssociativeOperator, CommutativeOperator):
+class Plus(
+    OperatorWithNumericOperands,
+    Operator2,
+    Numeric,
+    AssociativeOperator,
+    CommutativeOperator,
+):
     DELIM = "+"
 
 
@@ -16,8 +26,13 @@ class Minus(OperatorWithNumericOperands, Operator2, Numeric):
     DELIM = "-"
 
 
-class Multiply(OperatorWithNumericOperands, Operator2, Numeric,
-               AssociativeOperator, CommutativeOperator):
+class Multiply(
+    OperatorWithNumericOperands,
+    Operator2,
+    Numeric,
+    AssociativeOperator,
+    CommutativeOperator,
+):
     DELIM = "×"
 
 
@@ -29,13 +44,23 @@ class Power(OperatorWithNumericOperands, Operator2, Numeric):
     DELIM = "^"
 
 
-class Max(OperatorWithNumericOperands, Operator2, Numeric,
-          AssociativeOperator, CommutativeOperator):
+class Max(
+    OperatorWithNumericOperands,
+    Operator2,
+    Numeric,
+    AssociativeOperator,
+    CommutativeOperator,
+):
     DELIM = "↑"
 
 
-class Min(OperatorWithNumericOperands, Operator2, Numeric,
-          AssociativeOperator, CommutativeOperator):
+class Min(
+    OperatorWithNumericOperands,
+    Operator2,
+    Numeric,
+    AssociativeOperator,
+    CommutativeOperator,
+):
     DELIM = "↓"
 
 

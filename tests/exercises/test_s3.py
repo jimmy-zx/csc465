@@ -33,13 +33,13 @@ def test_49a():
             In(ZERO, n * Union(ZERO, NAT)) & TRUE,
             In(ZERO, n * Union(ZERO, NAT)) & In(ZERO, NAT),
             In(ZERO, n * Union(ZERO, NAT)) & Equals(Union(ZERO, NAT), NAT),
-            Context(In(ZERO, n * Union(ZERO, NAT)), Equals(Union(ZERO, NAT), NAT)) & Equals(
-                Union(ZERO, NAT), NAT),
-            Context(In(ZERO, n * NAT), Equals(Union(ZERO, NAT), NAT)) & Equals(Union(ZERO, NAT),
-                                                                               NAT),
+            Context(In(ZERO, n * Union(ZERO, NAT)), Equals(Union(ZERO, NAT), NAT))
+            & Equals(Union(ZERO, NAT), NAT),
+            Context(In(ZERO, n * NAT), Equals(Union(ZERO, NAT), NAT))
+            & Equals(Union(ZERO, NAT), NAT),
             In(ZERO, n * NAT) & Equals(Union(ZERO, NAT), NAT),
-            In(ZERO, n * NAT)
-        ]
+            In(ZERO, n * NAT),
+        ],
     )
     assert proof.verify()
 
@@ -55,7 +55,7 @@ def test_49b():
             Context(In(m, ZERO), Equals(ZERO, ZERO * NAT)),
             In(m, ZERO),
             Equals(m, ZERO),
-        ]
+        ],
     )
     assert proof.verify()
 
@@ -73,7 +73,7 @@ def test_49d():
         [
             Context(In(m, ONE * NAT), Equals(ONE * NAT, NAT)),
             Context(In(m, NAT), Equals(ONE * NAT, NAT)),
-            In(m, NAT)
-        ]
+            In(m, NAT),
+        ],
     )
     assert proof.verify()

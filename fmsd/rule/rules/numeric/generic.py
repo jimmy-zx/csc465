@@ -79,9 +79,13 @@ rule_associative_max = MatchRule(x @ MAX @ (y @ MAX @ z), (x @ MAX @ y) @ MAX @ 
 
 rule_associative_min = MatchRule(x @ MIN @ (y @ MIN @ z), (x @ MIN @ y) @ MIN @ z)
 
-rule_distributive_max = MatchRule(x @ MAX @ (y @ MIN @ z), (x @ MAX @ y) @ MIN @ (x @ MAX @ z))
+rule_distributive_max = MatchRule(
+    x @ MAX @ (y @ MIN @ z), (x @ MAX @ y) @ MIN @ (x @ MAX @ z)
+)
 
-rule_distributive_min = MatchRule(x @ MIN @ (y @ MAX @ z), (x @ MIN @ y) @ MAX @ (x @ MIN @ z))
+rule_distributive_min = MatchRule(
+    x @ MIN @ (y @ MAX @ z), (x @ MIN @ y) @ MAX @ (x @ MIN @ z)
+)
 
 rule_connection_max_and = MatchRule((x @ MAX @ y) <= z, (x <= z) & (y <= z))
 

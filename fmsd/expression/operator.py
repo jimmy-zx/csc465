@@ -18,9 +18,9 @@ class Operator(Expression):
                 var_set.update(op.variables())
         return var_set
 
-    def match(self,
-              pattern: "Expression",
-              matched: dict[str, "Expression"]) -> dict[str, "Expression"] | None:
+    def match(
+        self, pattern: "Expression", matched: dict[str, "Expression"]
+    ) -> dict[str, "Expression"] | None:
         if isinstance(pattern, Variable):
             return pattern.vmatch(self, matched)
         if not isinstance(pattern, Operator):

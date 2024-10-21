@@ -38,7 +38,11 @@ def test_single_step_proof():
     """
     src = And(a, Flip(b))
     dst = a
-    proof = ChainProof(src, dst, [
-        TransformProof(src, dst, ExpressionTransform(rule_specialization), []),
-    ])
+    proof = ChainProof(
+        src,
+        dst,
+        [
+            TransformProof(src, dst, ExpressionTransform(rule_specialization), []),
+        ],
+    )
     assert proof.verify()

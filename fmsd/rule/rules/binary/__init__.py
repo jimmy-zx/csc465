@@ -1,6 +1,7 @@
 """
 11.3.1, FMSD
 """
+
 from fmsd.expression import Expression
 from fmsd.expression.constants.binary import TRUE, FALSE
 from fmsd.expression.operators.binary import And, Flip, Or, Implies, ImpliedBy
@@ -85,10 +86,12 @@ rule_associative_or = MatchRule(Or(a, Or(b, c)), Or(Or(a, b), c))
 rule_associative_equals = MatchRule(Equals(a, Equals(b, c)), Equals(Equals(a, b), c))
 
 rule_associative_not_equals = MatchRule(
-    NotEquals(a, NotEquals(b, c)),
-    NotEquals(NotEquals(a, b), c))
+    NotEquals(a, NotEquals(b, c)), NotEquals(NotEquals(a, b), c)
+)
 
-rule_associative_mixed_equals = MatchRule(Equals(a, NotEquals(b, c)), NotEquals(Equals(a, b), c))
+rule_associative_mixed_equals = MatchRule(
+    Equals(a, NotEquals(b, c)), NotEquals(Equals(a, b), c)
+)
 
 rule_commutative_and = MatchRule(And(a, b), And(b, a))
 
@@ -116,23 +119,29 @@ rule_absorption_or = MatchRule(Or(a, And(a, b)), a)
 
 rule_direct_proof = MatchRule(And(Implies(a, b), a), b, equiv=False)
 
-rule_direct_proof_contrapositive = MatchRule(And(Implies(a, b), Flip(b)), Flip(a), equiv=False)
+rule_direct_proof_contrapositive = MatchRule(
+    And(Implies(a, b), Flip(b)), Flip(a), equiv=False
+)
 
 rule_direct_proof_exclusive = MatchRule(And(Or(a, b), Flip(a)), b, equiv=False)
 
 rule_transitive_and = MatchRule(And(And(a, b), And(b, c)), And(a, c), equiv=False)
 
-rule_transitive_implies = MatchRule(And(Implies(a, b), Implies(b, c)), Implies(a, c), equiv=False)
+rule_transitive_implies = MatchRule(
+    And(Implies(a, b), Implies(b, c)), Implies(a, c), equiv=False
+)
 
-rule_transitive_equals = MatchRule(And(Equals(a, b), Equals(b, c)), Equals(a, c), equiv=False)
+rule_transitive_equals = MatchRule(
+    And(Equals(a, b), Equals(b, c)), Equals(a, c), equiv=False
+)
 
 rule_transitive_implies_equals = MatchRule(
-    And(Implies(a, b), Equals(b, c)),
-    Implies(a, c), equiv=False)
+    And(Implies(a, b), Equals(b, c)), Implies(a, c), equiv=False
+)
 
 rule_transitive_equals_implies = MatchRule(
-    And(Equals(a, b), Implies(b, c)),
-    Implies(a, c), equiv=False)
+    And(Equals(a, b), Implies(b, c)), Implies(a, c), equiv=False
+)
 
 
 def helper_distributive(outer, inner) -> Expression:
@@ -152,13 +161,21 @@ rule_distributive_implies_equals = helper_distributive(Implies, Equals)
 
 rule_generalization = MatchRule(Or(a, b), a)
 
-rule_antidistributive_and = MatchRule(Implies(And(a, b), c), Or(Implies(a, c), Implies(b, c)))
-rule_antidistributive_or = MatchRule(Implies(Or(a, b), c), And(Implies(a, c), Implies(b, c)))
+rule_antidistributive_and = MatchRule(
+    Implies(And(a, b), c), Or(Implies(a, c), Implies(b, c))
+)
+rule_antidistributive_or = MatchRule(
+    Implies(Or(a, b), c), And(Implies(a, c), Implies(b, c))
+)
 
 rule_portation = MatchRule(Implies(And(a, b), c), Implies(a, Implies(b, c)))
 
-rule_conflation_and = MatchRule(And(Implies(a, b), Implies(c, d)), Implies(And(a, c), And(b, d)))
-rule_conflation_or = MatchRule(And(Implies(a, b), Implies(c, d)), Implies(Or(a, c), Or(b, d)))
+rule_conflation_and = MatchRule(
+    And(Implies(a, b), Implies(c, d)), Implies(And(a, c), And(b, d))
+)
+rule_conflation_or = MatchRule(
+    And(Implies(a, b), Implies(c, d)), Implies(Or(a, c), Or(b, d))
+)
 
 rule_equality = MatchRule(Equals(a, b), Or(And(a, b), And(Flip(a), Flip(b))))
 rule_difference = MatchRule(NotEquals(a, b), Or(And(Flip(a), b), And(b, Flip(a))))
@@ -166,22 +183,36 @@ rule_difference = MatchRule(NotEquals(a, b), Or(And(Flip(a), b), And(b, Flip(a))
 # Page 236
 
 rule_resolution_from = MatchRule(And(a, c), And(Or(a, b), Or(Flip(b), c)), equiv=False)
-rule_resolution_equiv = MatchRule(And(Or(a, b), Or(Flip(b), c)), Or(And(a, Flip(b)), And(b, c)))
+rule_resolution_equiv = MatchRule(
+    And(Or(a, b), Or(Flip(b), c)), Or(And(a, Flip(b)), And(b, c))
+)
 rule_resolution_to = MatchRule(Or(And(a, Flip(b)), And(b, c)), Or(a, c), equiv=False)
 
-rule_case_creation_implies = MatchRule(Ternary(b, Implies(b, a), Implies(Flip(b), a)), a)
+rule_case_creation_implies = MatchRule(
+    Ternary(b, Implies(b, a), Implies(Flip(b), a)), a
+)
 rule_case_creation_and = MatchRule(Ternary(b, And(b, a), And(Flip(b), a)), a)
 rule_case_creation_equals = MatchRule(Ternary(b, Equals(b, a), NotEquals(b, a)), a)
 
 rule_case_absorption_then_and = MatchRule(Ternary(a, b, c), Ternary(a, And(a, b), c))
-rule_case_absorption_then_implies = MatchRule(Ternary(a, b, c), Ternary(a, Implies(a, b), c))
-rule_case_absorption_then_equals = MatchRule(Ternary(a, b, c), Ternary(a, Equals(a, b), c))
-rule_case_absorption_else_and = MatchRule(Ternary(a, b, c), Ternary(a, b, And(Flip(a), c)))
+rule_case_absorption_then_implies = MatchRule(
+    Ternary(a, b, c), Ternary(a, Implies(a, b), c)
+)
+rule_case_absorption_then_equals = MatchRule(
+    Ternary(a, b, c), Ternary(a, Equals(a, b), c)
+)
+rule_case_absorption_else_and = MatchRule(
+    Ternary(a, b, c), Ternary(a, b, And(Flip(a), c))
+)
 rule_case_absorption_else_or = MatchRule(Ternary(a, b, c), Ternary(a, b, Or(a, c)))
-rule_case_absorption_else_not_equals = MatchRule(Ternary(a, b, c), Ternary(a, b, NotEquals(a, c)))
+rule_case_absorption_else_not_equals = MatchRule(
+    Ternary(a, b, c), Ternary(a, b, NotEquals(a, c))
+)
 
 rule_case_analysis_and = MatchRule(Ternary(a, b, c), Or(And(a, b), And(Flip(a), c)))
-rule_case_analysis_implies = MatchRule(Ternary(a, b, c), And(Implies(a, b), Implies(Flip(a), c)))
+rule_case_analysis_implies = MatchRule(
+    Ternary(a, b, c), And(Implies(a, b), Implies(Flip(a), c))
+)
 
 rule_one_case_then_true = MatchRule(Ternary(a, TRUE, b), Or(a, b))
 rule_one_case_then_false = MatchRule(Ternary(a, FALSE, b), And(Flip(a), b))
@@ -190,7 +221,9 @@ rule_one_case_else_false = MatchRule(Ternary(a, b, FALSE), And(a, b))
 rule_one_case_equals = MatchRule(Ternary(a, b, Flip(b)), Equals(a, b))
 rule_one_case_not_equals = MatchRule(Ternary(a, Flip(b), b), NotEquals(a, b))
 
-rule_case_distributive_flip = MatchRule(Flip(Ternary(a, b, c)), Ternary(a, Flip(b), Flip(c)))
+rule_case_distributive_flip = MatchRule(
+    Flip(Ternary(a, b, c)), Ternary(a, Flip(b), Flip(c))
+)
 
 
 def helper_case_distributive_single(op) -> Expression:
@@ -206,12 +239,18 @@ rule_case_distributive_single_implied_by = helper_case_distributive_single(Impli
 
 
 def helper_case_distributive_multiple(op) -> Expression:
-    return MatchRule(Ternary(a, op(b, c), op(d, e)), op(Ternary(a, b, d), Ternary(a, c, e)))
+    return MatchRule(
+        Ternary(a, op(b, c), op(d, e)), op(Ternary(a, b, d), Ternary(a, c, e))
+    )
 
 
 rule_case_distributive_multiple_and = helper_case_distributive_multiple(And)
 rule_case_distributive_multiple_or = helper_case_distributive_multiple(Or)
 rule_case_distributive_multiple_equals = helper_case_distributive_multiple(Equals)
-rule_case_distributive_multiple_not_equals = helper_case_distributive_multiple(NotEquals)
+rule_case_distributive_multiple_not_equals = helper_case_distributive_multiple(
+    NotEquals
+)
 rule_case_distributive_multiple_implies = helper_case_distributive_multiple(Implies)
-rule_case_distributive_multiple_implied_by = helper_case_distributive_multiple(ImpliedBy)
+rule_case_distributive_multiple_implied_by = helper_case_distributive_multiple(
+    ImpliedBy
+)

@@ -1,6 +1,7 @@
 """
 Ref: https://github.com/sagemath/sage/issues/6245
 """
+
 from typing import Callable, TypeVar, Generic
 
 L = TypeVar("L")
@@ -13,10 +14,9 @@ class InfixOperatorException(Exception):
 
 
 class InfixOperator(Generic[L, R, T]):
-    def __init__(self,
-                 func: Callable[[L, R], T],
-                 lhs: L | None = None,
-                 rhs: R | None = None) -> None:
+    def __init__(
+        self, func: Callable[[L, R], T], lhs: L | None = None, rhs: R | None = None
+    ) -> None:
         self.func = func
         self.lhs = lhs
         self.rhs = rhs
