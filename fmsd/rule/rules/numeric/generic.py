@@ -5,6 +5,7 @@
 import fmsd.utils.patch.binary
 import fmsd.utils.patch.numeric
 from fmsd.expression.constants.binary import TRUE, FALSE
+from fmsd.expression.operators.binary import Implies
 from fmsd.expression.operators.generic import Ternary
 from fmsd.expression.variables import BinaryVariable
 from fmsd.expression.variables import NumericVariable
@@ -23,7 +24,7 @@ rule_reflexivity = MatchRule(x @ EQ @ x, TRUE)
 
 rule_symmetry = MatchRule(x @ EQ @ y, y @ EQ @ x)
 
-rule_transitivity = MatchRule((x @ EQ @ y) & (y @ EQ @ z), x @ EQ @ z, equiv=False)
+rule_transitivity = Implies((x @ EQ @ y) & (y @ EQ @ z), x @ EQ @ z)
 
 rule_unequality = MatchRule((x @ NEQ @ y), ~(x @ EQ @ y))
 
@@ -47,13 +48,13 @@ rule_exclusitivity_lt_ge = MatchRule((x < y) & (x > y), FALSE)
 
 rule_inclusitivity = MatchRule(x <= y, (x < y) | (x @ EQ @ y))
 
-rule_transitivity_le = MatchRule((x <= y) & (y <= z), x <= z, equiv=False)
+rule_transitivity_le = Implies((x <= y) & (y <= z), x <= z)
 
-rule_transitivity_lt = MatchRule((x < y) & (y < z), x < z, equiv=False)
+rule_transitivity_lt = Implies((x < y) & (y < z), x < z)
 
-rule_transitivity_lt_le = MatchRule((x < y) & (y <= z), x < z, equiv=False)
+rule_transitivity_lt_le = Implies((x < y) & (y <= z), x < z)
 
-rule_transitivity_le_lt = MatchRule((x <= y) & (y < z), x < z, equiv=False)
+rule_transitivity_le_lt = Implies((x <= y) & (y < z), x < z)
 
 rule_mirror_ge = MatchRule(x > y, y < x)
 

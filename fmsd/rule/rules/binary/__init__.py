@@ -31,7 +31,7 @@ rule_base_or_rev = MatchRule(Or(TRUE, a), TRUE)
 
 rule_base_implies_true = MatchRule(Implies(a, TRUE), TRUE)
 
-rule_base_implies_false = MatchRule(FALSE, a, equiv=False)
+rule_base_implies_false = Implies(FALSE, a)
 
 rule_mirror = MatchRule(Implies(a, b), ImpliedBy(b, a))
 
@@ -77,7 +77,7 @@ rule_indirect_proof = MatchRule(Implies(Flip(a), FALSE), a)
 
 rule_indirect_proof_contradiction = MatchRule(Implies(Flip(a), a), a)
 
-rule_specialization = MatchRule(And(a, b), a, equiv=False)
+rule_specialization = Implies(And(a, b), a)
 
 rule_associative_and = MatchRule(And(a, And(b, c)), And(And(a, b), c))
 
@@ -117,30 +117,24 @@ rule_absorption_and = MatchRule(And(a, Or(a, b)), a)
 
 rule_absorption_or = MatchRule(Or(a, And(a, b)), a)
 
-rule_direct_proof = MatchRule(And(Implies(a, b), a), b, equiv=False)
+rule_direct_proof = Implies(And(Implies(a, b), a), b)
 
-rule_direct_proof_contrapositive = MatchRule(
-    And(Implies(a, b), Flip(b)), Flip(a), equiv=False
+rule_direct_proof_contrapositive = Implies(And(Implies(a, b), Flip(b)), Flip(a))
+
+rule_direct_proof_exclusive = Implies(And(Or(a, b), Flip(a)), b)
+
+rule_transitive_and = Implies(And(And(a, b), And(b, c)), And(a, c))
+
+rule_transitive_implies = Implies(And(Implies(a, b), Implies(b, c)), Implies(a, c))
+
+rule_transitive_equals = Implies(And(Equals(a, b), Equals(b, c)), Equals(a, c))
+
+rule_transitive_implies_equals = Implies(
+    And(Implies(a, b), Equals(b, c)), Implies(a, c)
 )
 
-rule_direct_proof_exclusive = MatchRule(And(Or(a, b), Flip(a)), b, equiv=False)
-
-rule_transitive_and = MatchRule(And(And(a, b), And(b, c)), And(a, c), equiv=False)
-
-rule_transitive_implies = MatchRule(
-    And(Implies(a, b), Implies(b, c)), Implies(a, c), equiv=False
-)
-
-rule_transitive_equals = MatchRule(
-    And(Equals(a, b), Equals(b, c)), Equals(a, c), equiv=False
-)
-
-rule_transitive_implies_equals = MatchRule(
-    And(Implies(a, b), Equals(b, c)), Implies(a, c), equiv=False
-)
-
-rule_transitive_equals_implies = MatchRule(
-    And(Equals(a, b), Implies(b, c)), Implies(a, c), equiv=False
+rule_transitive_equals_implies = Implies(
+    And(Equals(a, b), Implies(b, c)), Implies(a, c)
 )
 
 
@@ -182,11 +176,11 @@ rule_difference = MatchRule(NotEquals(a, b), Or(And(Flip(a), b), And(b, Flip(a))
 
 # Page 236
 
-rule_resolution_from = MatchRule(And(a, c), And(Or(a, b), Or(Flip(b), c)), equiv=False)
+rule_resolution_from = Implies(And(a, c), And(Or(a, b), Or(Flip(b), c)))
 rule_resolution_equiv = MatchRule(
     And(Or(a, b), Or(Flip(b), c)), Or(And(a, Flip(b)), And(b, c))
 )
-rule_resolution_to = MatchRule(Or(And(a, Flip(b)), And(b, c)), Or(a, c), equiv=False)
+rule_resolution_to = Implies(Or(And(a, Flip(b)), And(b, c)), Or(a, c))
 
 rule_case_creation_implies = MatchRule(
     Ternary(b, Implies(b, a), Implies(Flip(b), a)), a

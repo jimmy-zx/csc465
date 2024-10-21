@@ -3,7 +3,7 @@
 """
 
 from fmsd.expression.constants.binary import TRUE, FALSE
-from fmsd.expression.operators.binary import And, Flip
+from fmsd.expression.operators.binary import And, Flip, Implies
 from fmsd.expression.operators.generic import Equals, NotEquals, Ternary
 from fmsd.rule import MatchRule
 from fmsd.expression.variables import BinaryVariable
@@ -18,8 +18,9 @@ rule_reflexivity = MatchRule(Equals(x, x), TRUE)
 
 rule_symmetry = MatchRule(Equals(x, y), Equals(y, x))
 
-rule_transitivity = MatchRule(
-    And(Equals(x, y), Equals(y, z)), Equals(x, z), equiv=False
+rule_transitivity = Implies(
+    And(Equals(x, y), Equals(y, z)),
+    Equals(x, z),
 )
 
 rule_unequality = MatchRule(NotEquals(x, y), Flip(Equals(x, y)))
