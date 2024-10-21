@@ -7,7 +7,7 @@ import fmsd.utils.patch.binary
 import fmsd.utils.patch.numeric
 from fmsd.expression.operators import CommutativeOperator
 from fmsd.expression.variables import BinaryVariable, NumericVariable
-from fmsd.transform.prop import CommutativeTransform
+from fmsd.transform.transforms.prop import t_commutative
 
 assert fmsd.utils.patch.binary
 assert fmsd.utils.patch.numeric
@@ -33,7 +33,7 @@ z = NumericVariable("z")
     ],
 )
 def test_commutative_binary(op):
-    trf = CommutativeTransform()
+    trf = t_commutative
     assert trf.verify(op(a, b), op(b, a)) == issubclass(op, CommutativeOperator)
 
 
@@ -55,5 +55,5 @@ def test_commutative_binary(op):
     ],
 )
 def test_commutative_numeric(op):
-    trf = CommutativeTransform()
+    trf = t_commutative
     assert trf.verify(op(x, y), op(y, x)) == issubclass(op, CommutativeOperator)

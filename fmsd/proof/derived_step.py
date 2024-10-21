@@ -24,6 +24,16 @@ class TransformProof(Proof):
         assert src == self.dst
         return True
 
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, TransformProof):
+            return False
+        return (
+            self.src == other.src
+            and self.dst == other.dst
+            and self.transform == other.transform
+            and self.index == other.index
+        )
+
 
 class NoTransformationFoundException(Exception):
     def __init__(self, src: Expression, dst: Expression) -> None:
@@ -79,6 +89,8 @@ class DerivedStepProof(Proof):
         return self.derived_proof
 
     def __eq__(self, other) -> bool:
+        if not isinstance(other, DerivedStepProof):
+            return False
         return self.src == other.src and self.dst == other.dst
 
     @staticmethod

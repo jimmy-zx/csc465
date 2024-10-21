@@ -11,3 +11,8 @@ class FunctionTransform(Transform):
 
     def verify(self, src: Expression, dst: Expression) -> bool:
         return self.func(src, dst)
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, FunctionTransform):
+            return False
+        return self.func == other.func

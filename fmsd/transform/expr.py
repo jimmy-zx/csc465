@@ -24,3 +24,8 @@ class ExpressionTransform(Transform):
                 if dst.match(self.expr.lhs, m) == m:
                     return True
         return False
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, ExpressionTransform):
+            return False
+        return self.expr == other.expr
