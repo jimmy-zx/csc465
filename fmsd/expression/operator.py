@@ -25,7 +25,7 @@ class Operator(Expression):
             return pattern.vmatch(self, matched)
         if not isinstance(pattern, Operator):
             return None
-        if type(self) != type(pattern):
+        if type(self) is not type(pattern):
             return None
         for lhs, rhs in zip(self.children, pattern.children):
             if (res := lhs.match(rhs, matched)) is None:
@@ -54,7 +54,7 @@ class Operator(Expression):
                         found.extend(ext)
                         return found
             return None
-        if type(self) != type(other):
+        if type(self) is not type(other):
             return []
         for i, (lhs, rhs) in enumerate(zip(self.children, other.children)):
             if lhs != rhs:
@@ -96,7 +96,7 @@ class Operator(Expression):
         target.set(next_index, repl)
 
     def __eq__(self, other) -> bool:
-        if type(self) != type(other):
+        if type(self) is not type(other):
             return False
         if self.type() != other.type():
             return False

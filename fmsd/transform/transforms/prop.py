@@ -4,7 +4,7 @@ from fmsd.transform.func import FunctionTransform
 
 
 def func_associative(src: Expression, dst: Expression) -> bool:
-    if type(src) != type(dst):
+    if type(src) is not type(dst):
         return False
     if not isinstance(src, AssociativeOperator):
         return False
@@ -17,7 +17,7 @@ t_associative = FunctionTransform(func_associative)
 
 
 def func_commutative(src: Expression, dst: Expression) -> bool:
-    if type(src) != type(dst):
+    if type(src) is not type(dst):
         return False
     if not isinstance(src, CommutativeOperator):
         return False

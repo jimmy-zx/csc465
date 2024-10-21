@@ -9,7 +9,7 @@ class AssociativeTransform(Transform):
         self.name = "associative"
 
     def verify(self, src: Expression, dst: Expression) -> bool:
-        if type(src) != type(dst):
+        if type(src) is not type(dst):
             return False
         if not isinstance(src, AssociativeOperator):
             return False
@@ -24,7 +24,7 @@ class CommutativeTransform(Transform):
         self.name = "commutative"
 
     def verify(self, src: Expression, dst: Expression) -> bool:
-        if type(src) != type(dst):
+        if type(src) is not type(dst):
             return False
         if not isinstance(src, CommutativeOperator):
             return False

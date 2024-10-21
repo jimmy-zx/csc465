@@ -14,7 +14,7 @@ class Constant(Expression):
         return []
 
     def __eq__(self, other) -> bool:
-        if type(self) != type(other):
+        if type(self) is not type(other):
             return False
         if self.type() != other.type():
             return False
