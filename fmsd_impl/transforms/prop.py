@@ -1,5 +1,5 @@
 from fmsd.ast.node import Node
-from fmsd.ast_expression.operator import Associative, Commutative
+from fmsd.ast_ext.operator import Associative, Commutative
 from fmsd.transform.func import FunctionTransform
 
 

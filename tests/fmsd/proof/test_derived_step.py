@@ -1,9 +1,6 @@
 import pytest
 
-import fmsd.utils.patch.binary
-from fmsd_impl.constants.basic import TRUE
-from fmsd_impl.operators.binary import Or
-from fmsd_impl.operators.generic import Equals
+import fmsd_impl.patch.binary
 from fmsd.ast.node import Variable
 from fmsd.proof.derived_step import (
     DerivedStepProof,
@@ -11,9 +8,12 @@ from fmsd.proof.derived_step import (
     DerivedEquivChainProof,
 )
 from fmsd.utils import config
-from fmsd.utils.patchops.infix import EQ
+from fmsd_impl.constants.basic import TRUE
+from fmsd_impl.operators.binary import Or
+from fmsd_impl.operators.generic import Equals
+from fmsd_impl.patch.infix import EQ
 
-assert fmsd.utils.patch.binary
+assert fmsd_impl.patch.binary
 
 a = Variable("a")
 b = Variable("b")

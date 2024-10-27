@@ -1,7 +1,7 @@
 import pytest
 
 from fmsd.ast.node import Variable
-from fmsd.ast_expression.operator import Operator
+from fmsd.ast_ext.operator import Operator
 
 
 def test_init():

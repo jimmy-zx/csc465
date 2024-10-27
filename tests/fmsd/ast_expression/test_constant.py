@@ -1,5 +1,5 @@
 from fmsd.ast.node import Variable
-from fmsd.ast_expression.constant import Constant
+from fmsd.ast_ext.constant import Constant
 
 
 def test_match():

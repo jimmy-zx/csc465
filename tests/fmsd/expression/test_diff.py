@@ -1,9 +1,9 @@
 import pytest
 
-import fmsd.utils.patch.binary
+import fmsd_impl.patch.binary
 from fmsd.ast.node import Node, Variable
 
-assert fmsd.utils.patch.binary
+assert fmsd_impl.patch.binary
 
 a = Variable("a")
 b = Variable("b")

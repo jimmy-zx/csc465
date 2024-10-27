@@ -1,9 +1,9 @@
-import fmsd.utils.patch.binary
+import fmsd_impl.patch.binary
 from fmsd.ast.node import Variable
-from fmsd.utils.patchops.infix import EQ
+from fmsd_impl.patch.infix import EQ
 from fmsd_impl.constants.basic import TRUE, FALSE
 
-assert fmsd.utils.patch.binary
+assert fmsd_impl.patch.binary
 
 
 def test_basic():

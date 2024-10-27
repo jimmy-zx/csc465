@@ -1,4 +1,4 @@
-from fmsd.ast_expression.operator import Operator, Associative, Commutative
+from fmsd.ast_ext.operator import Operator, Associative, Commutative
 
 
 class Flip(Operator):

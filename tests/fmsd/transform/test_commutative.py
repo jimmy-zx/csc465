@@ -1,13 +1,13 @@
 import pytest
 
-import fmsd.utils.patch.binary
+import fmsd_impl.patch.binary
 import fmsd_impl.operators.binary as binop
 import fmsd_impl.operators.generic as genop
 from fmsd.ast.node import Variable
-from fmsd.ast_expression.operator import Commutative
+from fmsd.ast_ext.operator import Commutative
 from fmsd_impl.transforms.prop import t_commutative
 
-assert fmsd.utils.patch.binary
+assert fmsd_impl.patch.binary
 
 a = Variable("a")
 b = Variable("b")

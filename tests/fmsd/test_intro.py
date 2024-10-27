@@ -1,8 +1,8 @@
-import fmsd.utils.patch.binary
+import fmsd_impl.patch.binary
 from fmsd.ast.node import Variable
 from fmsd.proof import ChainProof
 from fmsd.proof.derived_step import DerivedStepProof, TransformProof
-from fmsd.utils.patchops.infix import EQ, NEQ
+from fmsd_impl.patch.infix import EQ, NEQ
 from fmsd_impl.axioms.binary import axiom_base_and
 from fmsd_impl.constants.basic import FALSE
 from fmsd_impl.operators.binary import Or
@@ -10,7 +10,7 @@ from fmsd_impl.operators.generic import Equals, NotEquals
 from fmsd_impl.transforms.expr import ExpressionTransform
 from fmsd_impl.transforms.prop import t_associative
 
-assert fmsd.utils.patch.binary
+assert fmsd_impl.patch.binary
 
 
 def test_intro():

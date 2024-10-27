@@ -1,4 +1,4 @@
-from fmsd.ast_expression.constant import Constant
+from fmsd.ast_ext.constant import Constant
 
 TRUE = Constant("⊤")
 FALSE = Constant("⊥")
