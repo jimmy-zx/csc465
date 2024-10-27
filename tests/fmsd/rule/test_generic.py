@@ -1,8 +1,6 @@
-from fmsd_impl.constants.basic import TRUE as T, FALSE as F
-from fmsd_impl.operators.binary import And, Flip
-from fmsd_impl.operators.generic import Equals, NotEquals, Ternary
 from fmsd.ast.node import Variable
-from fmsd.transform.transforms.axioms.binary_generic import (
+from fmsd.transform.expr import ExpressionTransform
+from fmsd_impl.axioms.binary_generic import (
     axiom_reflexivity,
     axiom_symmetry,
     axiom_transitivity,
@@ -12,7 +10,9 @@ from fmsd.transform.transforms.axioms.binary_generic import (
     axiom_case_base_true,
     axiom_case_base_false,
 )
-from fmsd.transform.expr import ExpressionTransform
+from fmsd_impl.constants.basic import TRUE as T, FALSE as F
+from fmsd_impl.operators.binary import And, Flip
+from fmsd_impl.operators.generic import Equals, NotEquals, Ternary
 
 a = Variable("a")
 x = Variable("x")

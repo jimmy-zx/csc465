@@ -1,16 +1,14 @@
 import fmsd.utils.patch.binary
-from fmsd_impl.constants.basic import FALSE
-from fmsd_impl.operators.binary import Or
-from fmsd_impl.operators.generic import Equals, NotEquals
 from fmsd.ast.node import Variable
 from fmsd.proof import ChainProof
 from fmsd.proof.derived_step import DerivedStepProof, TransformProof
 from fmsd.transform.expr import ExpressionTransform
-from fmsd.transform.transforms.axioms.binary import (
-    axiom_base_and,
-)
 from fmsd.transform.transforms.prop import t_associative
 from fmsd.utils.patchops.infix import EQ, NEQ
+from fmsd_impl.axioms.binary import axiom_base_and
+from fmsd_impl.constants.basic import FALSE
+from fmsd_impl.operators.binary import Or
+from fmsd_impl.operators.generic import Equals, NotEquals
 
 assert fmsd.utils.patch.binary
 

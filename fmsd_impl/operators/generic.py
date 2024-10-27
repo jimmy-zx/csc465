@@ -15,6 +15,4 @@ class Ternary(Operator):
     N = 3
 
     def __str__(self) -> str:
-        return (
-            f"if {self.nodes[0]} then {self.nodes[1]} else {self.nodes[2]} fi"
-        )
+        return f"if {self.nodes[0]} then {self.nodes[1]} else {self.nodes[2]} fi"

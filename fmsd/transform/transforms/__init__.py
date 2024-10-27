@@ -1,4 +1,4 @@
-from fmsd.transform.transforms import axioms
+from fmsd_impl import axioms
 from fmsd.transform.transforms import binary_table
 from fmsd.transform.transforms import prop
 from fmsd.transform import Transform

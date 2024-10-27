@@ -1,5 +1,6 @@
 from fmsd.ast_expression.operator import Operator, Associative, Commutative
 
+
 class Flip(Operator):
     N = 1
     DELIM = "¬"

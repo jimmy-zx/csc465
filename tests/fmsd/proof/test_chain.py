@@ -1,15 +1,15 @@
-from fmsd_impl.constants.basic import TRUE, FALSE
-from fmsd_impl.operators.binary import Implies, And, Flip
 from fmsd.ast.node import Variable
 from fmsd.proof import ChainProof
 from fmsd.proof.derived_step import TransformProof
-from fmsd.transform.transforms.axioms.binary import (
+from fmsd.transform.expr import ExpressionTransform
+from fmsd_impl.axioms.binary import (
     axiom_portation,
     axiom_noncontradiction,
     axiom_base_implies_false,
     axiom_commutative_and,
 )
-from fmsd.transform.expr import ExpressionTransform
+from fmsd_impl.constants.basic import TRUE, FALSE
+from fmsd_impl.operators.binary import Implies, And, Flip
 
 a = Variable("a")
 b = Variable("b")
