@@ -137,7 +137,7 @@ class Variable(Node, CopyOnConstruction):
         self.name = name
 
     def __eq__(self, other) -> bool:
-        if not isinstance(other, Variable):
+        if type(self) is not type(other):
             return False
         return self.name == other.name
 
