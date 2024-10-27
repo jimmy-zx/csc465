@@ -1,8 +1,8 @@
 import fmsd.utils.patch.binary
-from fmsd.expression.constants.binary import FALSE
-from fmsd.expression.operators.binary import Or
-from fmsd.expression.operators.generic import Equals, NotEquals
-from fmsd.expression.variables import BinaryVariable
+from fmsd_impl.constants.basic import FALSE
+from fmsd_impl.operators.binary import Or
+from fmsd_impl.operators.generic import Equals, NotEquals
+from fmsd.ast.node import Variable
 from fmsd.proof import ChainProof
 from fmsd.proof.derived_step import DerivedStepProof, TransformProof
 from fmsd.transform.expr import ExpressionTransform
@@ -17,9 +17,9 @@ assert fmsd.utils.patch.binary
 
 def test_intro():
     # declare a variable
-    x = BinaryVariable("x")
-    y = BinaryVariable("y")
-    z = BinaryVariable("z")
+    x = Variable("x")
+    y = Variable("y")
+    z = Variable("z")
 
     # build AST directly
     Or(x, y)

@@ -2,11 +2,10 @@
 11.3.0, FMSD
 """
 
+from fmsd.ast.node import Variable
 from fmsd_impl.constants.basic import TRUE, FALSE
 from fmsd_impl.operators.binary import And, Flip, Implies
 from fmsd_impl.operators.generic import Equals, NotEquals, Ternary
-from fmsd.ast.node import Variable
-
 
 x = Variable("x")
 y = Variable("y")

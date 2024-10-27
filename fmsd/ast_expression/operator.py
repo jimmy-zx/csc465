@@ -18,9 +18,9 @@ class Operator(Node):
         assert False
 
 
-class Associative:
+class Associative(Node):
     pass
 
 
-class Commutative:
+class Commutative(Node):
     pass

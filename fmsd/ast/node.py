@@ -7,13 +7,12 @@ VarTable = dict[str, "Node"]
 
 class Node(Base["Node"]):
     def __init__(self, *nodes: "Node") -> None:
-        Base.__init__(self)
+        super().__init__()
 
         assert all(isinstance(node, Node) and node.parent is None for node in nodes)
 
         self.nodes = list(
-            node if not isinstance(node, CopyOnConstruction) else node.copy()
-            for node in nodes
+            node if not node.copy_on_construction else node.copy() for node in nodes
         )
         self.parent: Node | None = None
         for node in self.nodes:
@@ -27,6 +26,9 @@ class Node(Base["Node"]):
         if type(self) is not type(other):
             return False
         return self.nodes == other.nodes
+
+    def __hash__(self):
+        return hash((type(self), hash(tuple(self.nodes))))
 
     def __str__(self) -> str:
         return "Node(" + ", ".join(map(str, self.nodes)) + ")"
@@ -43,8 +45,6 @@ class Node(Base["Node"]):
     def match(self, target: "Node", vt: VarTable) -> VarTable | None:
         if type(self) is not type(target):
             return None
-        if self == target:
-            return vt
         if len(self.nodes) != len(target.nodes):
             return None
         for lhs, rhs in zip(self.nodes, target.nodes):
@@ -63,7 +63,7 @@ class Node(Base["Node"]):
         if len(index) == 1:
             original = self.nodes[index[0]]
             assert value.parent is None
-            if isinstance(value, CopyOnConstruction):
+            if value.copy_on_construction:
                 assert isinstance(value, Node)
                 value = value.copy()
             self.nodes[index[0]] = value
@@ -133,13 +133,16 @@ class Node(Base["Node"]):
 
 class Variable(Node, CopyOnConstruction):
     def __init__(self, name: str) -> None:
-        Node.__init__(self)
+        super().__init__()
         self.name = name
 
     def __eq__(self, other) -> bool:
         if type(self) is not type(other):
             return False
         return self.name == other.name
+
+    def __hash__(self):
+        return hash((type(self), self.name))
 
     def __str__(self) -> str:
         return self.name
@@ -154,7 +157,7 @@ class Variable(Node, CopyOnConstruction):
         return vt
 
     def eval(self, vt: VarTable) -> "Node":
-        return vt.get(self.name, self)
+        return vt.get(self.name, self).copy()
 
     def variables(self) -> set[str]:
         return {self.name}

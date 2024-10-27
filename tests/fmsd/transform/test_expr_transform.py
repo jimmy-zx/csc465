@@ -1,7 +1,7 @@
 import pytest
 
-from fmsd.expression.operators.binary import Implies
-from fmsd.expression.operators.generic import Equals
+from fmsd_impl.operators.binary import Implies
+from fmsd_impl.operators.generic import Equals
 from fmsd.transform.expr import ExpressionTransform
 from fmsd.transform.transforms import t_all
 
@@ -11,10 +11,10 @@ def test_match_rule_transform(transform):
     if not isinstance(transform, ExpressionTransform):
         pytest.skip()
     if isinstance(transform.expr, (Equals, Implies)):
-        src = transform.expr.lhs.copy()
-        dst = transform.expr.rhs.copy()
+        src = transform.expr.nodes[0].copy()
+        dst = transform.expr.nodes[1].copy()
         assert transform.verify(src, dst)
     if isinstance(transform.expr, Equals):
-        src = transform.expr.rhs.copy()
-        dst = transform.expr.lhs.copy()
+        src = transform.expr.nodes[1].copy()
+        dst = transform.expr.nodes[0].copy()
         assert transform.verify(src, dst)

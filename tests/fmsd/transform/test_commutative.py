@@ -1,24 +1,21 @@
 import pytest
 
-import fmsd.expression.operators.binary as binop
-import fmsd.expression.operators.generic as genop
-import fmsd.expression.operators.numeric as numop
 import fmsd.utils.patch.binary
-import fmsd.utils.patch.numeric
-from fmsd.expression.operators import CommutativeOperator
-from fmsd.expression.variables import BinaryVariable, NumericVariable
+import fmsd_impl.operators.binary as binop
+import fmsd_impl.operators.generic as genop
+from fmsd.ast.node import Variable
+from fmsd.ast_expression.operator import Commutative
 from fmsd.transform.transforms.prop import t_commutative
 
 assert fmsd.utils.patch.binary
-assert fmsd.utils.patch.numeric
 
-a = BinaryVariable("a")
-b = BinaryVariable("b")
-c = BinaryVariable("c")
+a = Variable("a")
+b = Variable("b")
+c = Variable("c")
 
-x = NumericVariable("x")
-y = NumericVariable("y")
-z = NumericVariable("z")
+x = Variable("x")
+y = Variable("y")
+z = Variable("z")
 
 
 @pytest.mark.parametrize(
@@ -34,26 +31,16 @@ z = NumericVariable("z")
 )
 def test_commutative_binary(op):
     trf = t_commutative
-    assert trf.verify(op(a, b), op(b, a)) == issubclass(op, CommutativeOperator)
+    assert trf.verify(op(a, b), op(b, a)) == issubclass(op, Commutative)
 
 
 @pytest.mark.parametrize(
     "op",
     [
-        numop.Plus,
-        numop.Minus,
-        numop.Multiply,
-        numop.DividedBy,
-        numop.Max,
-        numop.Min,
-        numop.LessThan,
-        numop.LessThanOrEqualsTo,
-        numop.GreaterThan,
-        numop.GreaterThanOrEqualsTo,
         genop.Equals,
         genop.NotEquals,
     ],
 )
 def test_commutative_numeric(op):
     trf = t_commutative
-    assert trf.verify(op(x, y), op(y, x)) == issubclass(op, CommutativeOperator)
+    assert trf.verify(op(x, y), op(y, x)) == issubclass(op, Commutative)

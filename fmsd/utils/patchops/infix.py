@@ -1,36 +1,35 @@
-from fmsd.expression.operators.generic import Equals, NotEquals
-from fmsd.expression.operators.numeric import Max, Min
-from fmsd.expression import Expression
+from fmsd_impl.operators.generic import Equals, NotEquals
+
+# from fmsd.expression.operators.numeric import Max, Min
+from fmsd.ast.node import Node
 from fmsd.utils.patchop import InfixOperator
 
 # pylint: disable=invalid-name
 
 
 # noinspection PyPep8Naming
-@InfixOperator[Expression, Expression, Expression]
+@InfixOperator[Node, Node, Node]
 def EQ(lhs, rhs):
     return Equals(lhs, rhs)
 
 
 # noinspection PyPep8Naming
-@InfixOperator[Expression, Expression, Expression]
+@InfixOperator[Node, Node, Node]
 def NEQ(lhs, rhs):
     return NotEquals(lhs, rhs)
 
 
-@InfixOperator[Expression, Expression, Expression]
-def MAX(lhs, rhs):
-    return Max(lhs, rhs)
-
-
-@InfixOperator[Expression, Expression, Expression]
-def MIN(lhs, rhs):
-    return Min(lhs, rhs)
+# @InfixOperator[Node, Node, Node]
+# def MAX(lhs, rhs):
+#     return Max(lhs, rhs)
+#
+#
+# @InfixOperator[Node, Node, Node]
+# def MIN(lhs, rhs):
+#     return Min(lhs, rhs)
 
 
 __all__ = [
     "EQ",
     "NEQ",
-    "MAX",
-    "MIN",
 ]

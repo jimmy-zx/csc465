@@ -1,7 +1,7 @@
-from fmsd.expression.constants.binary import TRUE as T, FALSE as F
-from fmsd.expression.operators.binary import And, Flip
-from fmsd.expression.operators.generic import Equals, NotEquals, Ternary
-from fmsd.expression.variables import BinaryVariable
+from fmsd_impl.constants.basic import TRUE as T, FALSE as F
+from fmsd_impl.operators.binary import And, Flip
+from fmsd_impl.operators.generic import Equals, NotEquals, Ternary
+from fmsd.ast.node import Variable
 from fmsd.transform.transforms.axioms.binary_generic import (
     axiom_reflexivity,
     axiom_symmetry,
@@ -14,10 +14,10 @@ from fmsd.transform.transforms.axioms.binary_generic import (
 )
 from fmsd.transform.expr import ExpressionTransform
 
-a = BinaryVariable("a")
-x = BinaryVariable("x")
-y = BinaryVariable("y")
-z = BinaryVariable("z")
+a = Variable("a")
+x = Variable("x")
+y = Variable("y")
+z = Variable("z")
 
 
 def test_reflexivity():

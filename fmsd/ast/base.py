@@ -8,6 +8,7 @@ T = TypeVar("T")
 class Base(Generic[T]):
     def __init__(self) -> None:
         self.stack = get_trace()
+        self.copy_on_construction = False
 
     def __eq__(self, other) -> bool:
         if type(self) is not type(other):
@@ -73,4 +74,8 @@ class Base(Generic[T]):
 
 
 class CopyOnConstruction:
-    pass
+    def __init__(self) -> None:
+        self.copy_on_construction = False
+
+    def _init_copy_on_construction(self):
+        self.copy_on_construction = True

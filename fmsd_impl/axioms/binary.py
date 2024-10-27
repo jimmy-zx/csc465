@@ -2,7 +2,7 @@
 11.3.1, FMSD
 """
 
-from fmsd.ast.node import Node, Variable
+from fmsd.ast.node import Variable, Node
 from fmsd_impl.constants.basic import TRUE, FALSE
 from fmsd_impl.operators.binary import And, Flip, Or, Implies, ImpliedBy
 from fmsd_impl.operators.generic import Equals, NotEquals, Ternary

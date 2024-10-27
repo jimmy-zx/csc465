@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from fmsd.expression import Expression
+from fmsd.ast.node import Node
 
 
 class Transform(ABC):
@@ -8,7 +8,7 @@ class Transform(ABC):
         self.name: str | None = None
 
     @abstractmethod
-    def verify(self, src: Expression, dst: Expression) -> bool: ...
+    def verify(self, src: Node, dst: Node) -> bool: ...
 
     def __str__(self) -> str:
         if self.name is not None:

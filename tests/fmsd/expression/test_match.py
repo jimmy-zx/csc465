@@ -1,33 +1,29 @@
 import fmsd.utils.patch.binary
-from fmsd.expression.constants.binary import TRUE, FALSE
-from fmsd.expression.variables import (
-    BinaryVariable,
-    NumericVariable,
-    NumericSingularVariable,
-)
+from fmsd.ast.node import Variable
 from fmsd.utils.patchops.infix import EQ
+from fmsd_impl.constants.basic import TRUE, FALSE
 
 assert fmsd.utils.patch.binary
 
 
 def test_basic():
-    a = BinaryVariable("a")
+    a = Variable("a")
     pattern = TRUE & a
-    assert (TRUE & FALSE).match(pattern, {}) == {"a": FALSE}
-    assert (FALSE & a).match(pattern, {}) is None
-    assert (TRUE & a).match(pattern, {}) == {"a": a}
-    assert (TRUE & (TRUE | FALSE)).match(pattern, {}) == {"a": TRUE | FALSE}
-    assert pattern.eval_var({"a": TRUE}) == TRUE & TRUE
-    assert pattern.eval_var({"a": FALSE}) == TRUE & FALSE
-    assert pattern.eval_var({}) == TRUE & a
+    assert pattern.match(TRUE & a, {}) == {"a": a}
+    assert pattern.match(TRUE & FALSE, {}) == {"a": FALSE}
+    assert pattern.match(FALSE & a, {}) is None
+    assert pattern.match(TRUE & (TRUE | FALSE), {}) == {"a": TRUE | FALSE}
+    assert pattern.eval({"a": TRUE}) == TRUE & TRUE
+    assert pattern.eval({"a": FALSE}) == TRUE & FALSE
+    assert pattern.eval({}) == TRUE & a
 
 
 def test_recursion():
-    a = BinaryVariable("a")
-    b = BinaryVariable("b")
-    c = BinaryVariable("c")
+    a = Variable("a")
+    b = Variable("b")
+    c = Variable("c")
     pattern = a & (b | c)
-    assert (TRUE & (FALSE | TRUE)).match(pattern, {}) == {
+    assert pattern.match(TRUE & (FALSE | TRUE), {}) == {
         "a": TRUE,
         "b": FALSE,
         "c": TRUE,
@@ -35,27 +31,8 @@ def test_recursion():
 
 
 def test_case():
-    a = BinaryVariable("a")
-    b = BinaryVariable("b")
-    c = BinaryVariable("c")
+    a = Variable("a")
+    b = Variable("b")
+    c = Variable("c")
     pattern = a @ EQ @ b
-    assert (b @ EQ @ c).match(pattern, {}) == {"a": b, "b": c}
-
-
-def test_typing():
-    a = BinaryVariable("a")
-    b = BinaryVariable("b")
-    x = NumericVariable("x")
-    y = NumericVariable("y")
-    assert a.match(x, {}) is None
-    assert a.match(a, {}) == {"a": a}
-    assert (a @ EQ @ b).match(x @ EQ @ y, {}) is None
-
-
-def test_singular():
-    num = NumericVariable("num")
-    sin = NumericSingularVariable("sin")
-    assert num.match(num, {}) == {"num": num}
-    assert sin.match(num, {}) == {"num": sin}
-    assert num.match(sin, {}) is None
-    assert sin.match(sin, {}) == {"sin": sin}
+    assert pattern.match(b @ EQ @ c, {}) == {"a": b, "b": c}
