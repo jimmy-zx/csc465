@@ -20,6 +20,7 @@ from fmsd_impl.transforms.axioms.binary import (
 from fmsd_impl.constants.basic import TRUE as T, FALSE as F
 from fmsd_impl.operators.binary import And, Or, Implies, ImpliedBy, Flip
 from fmsd_impl.operators.generic import Equals, NotEquals
+from fmsd_impl.transforms.binary_table import func_rule_table
 
 a = Variable("a")
 b = Variable("b")
@@ -28,10 +29,10 @@ y = Variable("y")
 z = Variable("z")
 
 
-# def test_binary():
-#     assert T == T
-#     assert func_rule_table(Flip(F)) == T
-#     assert func_rule_table(NotEquals(T, F)) == T
+def test_binary():
+    assert T == T
+    assert func_rule_table(Flip(F)) == T
+    assert func_rule_table(NotEquals(T, F)) == T
 
 
 def test_excluded_middle():
