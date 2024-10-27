@@ -3,7 +3,7 @@ from fmsd.ast.node import Variable
 from fmsd.proof import ChainProof
 from fmsd.proof.derived_step import DerivedStepProof, TransformProof
 from fmsd_impl.patch.infix import EQ, NEQ
-from fmsd_impl.axioms.binary import axiom_base_and
+from fmsd_impl.transforms.axioms.binary import axiom_base_and
 from fmsd_impl.constants.basic import FALSE
 from fmsd_impl.operators.binary import Or
 from fmsd_impl.operators.generic import Equals, NotEquals

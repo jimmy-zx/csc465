@@ -36,12 +36,3 @@ class InfixOperator(Generic[L, R, T]):
         if self.lhs is not None:
             raise InfixOperatorException("lhs already occupied")
         return InfixOperator(self.func, lhs, None)
-
-
-class PrefixOperator(Generic[L, T]):
-    def __init__(self, func: Callable[[L], T]) -> None:
-        self.func = func
-
-    def __matmul__(self, rhs: L) -> T:
-        assert rhs is not None
-        return self.func(rhs)

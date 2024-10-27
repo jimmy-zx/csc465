@@ -2,11 +2,11 @@ from fmsd.ast.node import Variable
 from fmsd.proof import ChainProof
 from fmsd.proof.derived_step import TransformProof
 from fmsd_impl.transforms.expr import ExpressionTransform
-from fmsd_impl.axioms.binary import (
+from fmsd_impl.transforms.axioms.binary import (
     axiom_conflation_and,
     axiom_specialization,
 )
-from fmsd_impl.axioms.binary_generic import axiom_symmetry
+from fmsd_impl.transforms.axioms.binary_generic import axiom_symmetry
 from fmsd_impl.operators.binary import Implies, And, Flip
 from fmsd_impl.operators.generic import Equals
 

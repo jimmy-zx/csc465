@@ -1,6 +1,6 @@
 from fmsd.ast.node import Variable
 from fmsd_impl.transforms.expr import ExpressionTransform
-from fmsd_impl.axioms.binary import (
+from fmsd_impl.transforms.axioms.binary import (
     axiom_excluded_middle,
     axiom_noncontradiction,
     axiom_base_and,
