@@ -1,7 +1,7 @@
 from fmsd.ast.node import Variable
 from fmsd.proof import ChainProof
 from fmsd.proof.derived_step import TransformProof
-from fmsd.transform.expr import ExpressionTransform
+from fmsd_impl.transforms.expr import ExpressionTransform
 from fmsd_impl.axioms.binary import (
     axiom_conflation_and,
     axiom_specialization,

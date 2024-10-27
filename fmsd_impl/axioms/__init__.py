@@ -10,7 +10,7 @@ from fmsd_impl.axioms import (
     context,
 )
 from fmsd.transform import Transform
-from fmsd.transform.expr import ExpressionTransform
+from fmsd_impl.transforms.expr import ExpressionTransform
 
 modules = [
     binary,

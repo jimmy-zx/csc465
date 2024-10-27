@@ -1,8 +1,8 @@
 from fmsd.ast.node import Node
 from fmsd.proof import Proof, ChainProof, EquivProof, ProofException
 from fmsd.transform import Transform
-from fmsd.transform.expr import ExpressionTransform
-from fmsd.transform.transforms import t_all
+from fmsd_impl.transforms.expr import ExpressionTransform
+from fmsd_impl.transforms import t_all
 
 
 class TransformProof(Proof):

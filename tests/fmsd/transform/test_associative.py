@@ -5,7 +5,7 @@ import fmsd_impl.operators.generic as genop
 import fmsd.utils.patch.binary
 from fmsd.ast_expression.operator import Associative, Commutative
 from fmsd.ast.node import Variable
-from fmsd.transform.transforms.prop import t_associative
+from fmsd_impl.transforms.prop import t_associative
 
 assert fmsd.utils.patch.binary
 
