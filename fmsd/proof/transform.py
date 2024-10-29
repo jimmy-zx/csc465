@@ -1,13 +1,13 @@
 from fmsd.ast import Node
-from fmsd.proof.proof import Proof
+from fmsd.proof.proof import Proof, StepProof
 from fmsd.transform.transform import Transform
 
 
-class TransformProof(Proof):
+class TransformProof(StepProof):
     def __init__(
         self, src: Node, dst: Node, transform: Transform, index: list[int]
     ) -> None:
-        Proof.__init__(self, src, dst, transform.name or "")
+        super().__init__(src, dst, (transform.name or "").rsplit("::", 1)[-1])
         self.transform = transform
         self.index = index
 

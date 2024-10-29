@@ -17,7 +17,7 @@ class Constant(Node, CopyOnConstruction):
     def __hash__(self):
         return hash((type(self), self.name))
 
-    def __str__(self) -> str:
+    def print(self, depth: int = 0) -> str:
         return self.name
 
     def copy(self) -> Self:

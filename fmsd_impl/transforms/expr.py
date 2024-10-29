@@ -6,8 +6,8 @@ from fmsd_impl.operators.binary import Implies
 
 
 class ExpressionTransform(Transform):
-    def __init__(self, expr: Node) -> None:
-        Transform.__init__(self)
+    def __init__(self, expr: Node, *args, **kw) -> None:
+        super().__init__(*args, **kw)
         self.expr = expr
 
     def verify(self, src: Node, dst: Node) -> bool:

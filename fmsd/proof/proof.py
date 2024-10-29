@@ -1,4 +1,7 @@
+import itertools
 from abc import ABC, abstractmethod
+
+from typing_extensions import Sequence
 
 from fmsd.ast import Node
 
@@ -20,9 +23,29 @@ class Proof(ABC):
         return self
 
 
-class EquivProof(Proof):
+class StepProof(Proof, ABC):
+    DELIM = "==>"
+
+    def steps(self) -> Sequence[Proof]:
+        return [self]
+
+    def __str__(self) -> str:
+        return f"\n{self.DELIM}".join(
+            itertools.chain(
+                (f"\t{proof.src}\t({proof.hint})" for proof in self.steps()),
+                (f"\t{self.dst}",),
+            )
+        )
+
+    def __repr__(self) -> str:
+        return str(self)
+
+
+class EquivProof(StepProof):
+    DELIM = "==="
+
     def __init__(self, src: Node, dst: Node, fwd: Proof, bwd: Proof) -> None:
-        Proof.__init__(self, src, dst, fwd.hint)
+        super().__init__(src, dst, fwd.hint)
         self.fwd = fwd
         self.bwd = bwd
 
@@ -46,9 +69,6 @@ class EquivProof(Proof):
             self.src, self.dst, self.fwd.formalize(), self.bwd.formalize()
         )
 
-    def __str__(self) -> str:
-        return str(self.fwd)
-
     def __eq__(self, other) -> bool:
         if not isinstance(other, EquivProof):
             return False
@@ -58,3 +78,8 @@ class EquivProof(Proof):
             and self.fwd == other.fwd
             and self.bwd == other.bwd
         )
+
+    def steps(self) -> Sequence[Proof]:
+        if hasattr(self.fwd, "steps"):
+            return self.fwd.steps()
+        return [self]

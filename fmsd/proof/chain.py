@@ -1,12 +1,14 @@
 from typing import Sequence
 
 from fmsd.ast import Node
-from fmsd.proof.proof import Proof, ProofException, EquivProof
+from fmsd.proof.proof import Proof, ProofException, EquivProof, StepProof
 
 
-class ChainProof(Proof):
+class ChainProof(StepProof):
+    DELIM = "==>"
+
     def __init__(self, src: Node, dst: Node, proofs: Sequence[Proof]) -> None:
-        Proof.__init__(self, src, dst)
+        super().__init__(src, dst, ",".join(proof.hint for proof in proofs))
         self.proofs = proofs
 
     def verify(self) -> bool:
@@ -26,6 +28,9 @@ class ChainProof(Proof):
             self.src, self.dst, [proof.formalize() for proof in self.proofs]
         )
 
+    def steps(self) -> Sequence[Proof]:
+        return self.proofs
+
     def __eq__(self, other):
         if not isinstance(other, ChainProof):
             return False
@@ -35,16 +40,9 @@ class ChainProof(Proof):
             and self.proofs == other.proofs
         )
 
-    def __str__(self) -> str:
-        s = f"\n\t{self.src}"
-        for proof in self.proofs:
-            s += f"\t{proof.hint}\n=>\t{proof}"
-        return s
-
 
 class ChainEquivProof(ChainProof):
-    def __init__(self, src: Node, dst: Node, proofs: Sequence[EquivProof]) -> None:
-        ChainProof.__init__(self, src, dst, proofs)
+    DELIM = "==="
 
     def verify(self) -> bool:
         for proof in self.proofs:
@@ -53,12 +51,6 @@ class ChainEquivProof(ChainProof):
 
     def formalize(self) -> "Proof":
         return ChainProof.formalize(self)
-
-    def __str__(self) -> str:
-        s = f"\n\t{self.src}"
-        for proof in self.proofs:
-            s += f"\t{proof.hint}\n=\t{proof}"
-        return s
 
     def __eq__(self, other) -> bool:
         if not isinstance(other, ChainEquivProof):

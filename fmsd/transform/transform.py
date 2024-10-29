@@ -5,8 +5,8 @@ from fmsd.ast import Node
 
 
 class Transform(ABC):
-    def __init__(self) -> None:
-        self.name: str | None = None
+    def __init__(self, name: str | None = None) -> None:
+        self.name: str | None = name
 
     @abstractmethod
     def verify(self, src: Node, dst: Node) -> bool: ...
@@ -21,8 +21,8 @@ class Transform(ABC):
 
 
 class FunctionTransform(Transform):
-    def __init__(self, func: Callable[[Node, Node], bool]) -> None:
-        Transform.__init__(self)
+    def __init__(self, func: Callable[[Node, Node], bool], *args, **kw) -> None:
+        super().__init__(*args, **kw)
         self.func = func
 
     def verify(self, src: Node, dst: Node) -> bool:

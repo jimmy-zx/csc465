@@ -5,7 +5,7 @@ from fmsd.ast_ext.operator import Operator
 class Context(Operator):
     N = 2
 
-    def __str__(self) -> str:
+    def print(self, depth: int = 0) -> str:
         return f"Context({self.nodes[0]},{self.nodes[1]})"
 
     def context(self) -> list["Node"]:

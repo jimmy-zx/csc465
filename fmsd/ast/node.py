@@ -1,4 +1,4 @@
-from typing import Self, Iterator
+from typing import Self, Iterator, final
 
 from fmsd.ast.base import Base, CopyOnConstruction
 
@@ -30,8 +30,12 @@ class Node(Base["Node"]):
     def __hash__(self):
         return hash((type(self), hash(tuple(self.nodes))))
 
+    @final
     def __str__(self) -> str:
-        return "Node(" + ", ".join(map(str, self.nodes)) + ")"
+        return self.print()
+
+    def print(self, depth: int = 0) -> str:
+        return "Node(" + ", ".join(node.print(depth + 1) for node in self.nodes) + ")"
 
     def copy(self) -> Self:
         return type(self)(*(node.copy() for node in self.nodes))
@@ -144,7 +148,7 @@ class Variable(Node, CopyOnConstruction):
     def __hash__(self):
         return hash((type(self), self.name))
 
-    def __str__(self) -> str:
+    def print(self, depth: int = 0) -> str:
         return self.name
 
     def copy(self) -> Self:

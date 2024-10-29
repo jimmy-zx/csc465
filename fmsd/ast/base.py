@@ -1,13 +1,13 @@
 from typing import TypeVar, Generic, Self
 
-from fmsd.utils.trace import get_trace
+from fmsd.utils.config import config
 
 T = TypeVar("T")
 
 
 class Base(Generic[T]):
     def __init__(self) -> None:
-        self.stack = get_trace()
+        self.stack = config.get_trace()
         self.copy_on_construction = False
 
     def __eq__(self, other) -> bool:

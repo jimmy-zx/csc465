@@ -1,6 +1,6 @@
 from fmsd.ast.node import Node
 from fmsd.proof.chain import ChainProof
-from fmsd.proof.proof import ProofException, Proof, EquivProof
+from fmsd.proof.proof import ProofException, Proof, EquivProof, StepProof
 from fmsd.proof.transform import TransformProof
 from fmsd.transform.transform import Transform
 from fmsd_impl.transforms import t_all
@@ -28,9 +28,9 @@ class NoTransformationFoundException(Exception):
         Exception.__init__(self, "\n".join(msgs))
 
 
-class DerivedStepProof(Proof):
+class DerivedStepProof(StepProof):
     def __init__(self, src: Node, dst: Node) -> None:
-        Proof.__init__(self, src, dst, "")
+        super().__init__(src, dst, "")
         self.derived_proof: Proof | None = None
 
     def verify(self) -> bool:
