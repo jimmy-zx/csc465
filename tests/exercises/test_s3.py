@@ -1,5 +1,5 @@
 from fmsd.ast.node import Variable
-from fmsd.proof.derived_step import DerivedChainProof
+from fmsd.proof.derived import DerivedChainProof
 from fmsd.utils.config import config
 from fmsd_impl.constants.basic import TRUE, NAT, ZERO, INFINITY, ONE
 from fmsd_impl.operators.bunch import In, Union

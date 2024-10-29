@@ -9,3 +9,8 @@ class Config:  # pylint: disable=too-few-public-methods
 
 
 config = Config()
+
+__all__ = [
+    "Config",
+    "config",
+]

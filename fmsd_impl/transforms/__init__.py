@@ -1,5 +1,5 @@
+from fmsd.transform.transform import Transform
 from fmsd_impl.transforms import binary_table, prop, axioms
-from fmsd.transform import Transform
 
 modules = [binary_table, prop, axioms]
 
@@ -16,6 +16,7 @@ for mod in modules:
         t_all[fqname] = getattr(mod, name)
         t_all[fqname].name = fqname
 
+__all__ = ["t_all"]
 
 if __name__ == "__main__":
     print("\n".join(t_all.keys()))

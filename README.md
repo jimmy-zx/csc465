@@ -8,8 +8,9 @@
 ```python
 import fmsd_impl.patch.binary
 from fmsd.ast.node import Variable
-from fmsd.proof import ChainProof
-from fmsd.proof.derived_step import DerivedStepProof, TransformProof
+from fmsd.proof.chain import ChainProof
+from fmsd.proof.derived import DerivedStepProof
+from fmsd.proof.transform import TransformProof
 from fmsd_impl.patch.infix import EQ, NEQ
 from fmsd_impl.transforms.axioms.binary import axiom_base_and
 from fmsd_impl.constants.basic import FALSE

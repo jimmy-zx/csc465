@@ -1,5 +1,5 @@
 from fmsd.ast.node import Node
-from fmsd.transform.func import FunctionTransform
+from fmsd.transform.transform import FunctionTransform
 from fmsd_impl.constants.basic import TRUE, FALSE
 from fmsd_impl.operators.binary import Flip, And, Or, Implies, ImpliedBy
 from fmsd_impl.operators.generic import Equals, NotEquals, Ternary

@@ -13,3 +13,8 @@ def get_trace():
         if frame.function == "__init__":
             continue
         return frame
+
+
+__all__ = [
+    "get_trace",
+]

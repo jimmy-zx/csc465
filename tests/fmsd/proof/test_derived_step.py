@@ -2,7 +2,7 @@ import pytest
 
 import fmsd_impl.patch.binary
 from fmsd.ast.node import Variable
-from fmsd.proof.derived_step import (
+from fmsd.proof.derived import (
     DerivedStepProof,
     DerivedChainProof,
     DerivedEquivChainProof,

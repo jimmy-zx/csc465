@@ -9,7 +9,7 @@ from fmsd_impl.transforms.axioms import (
     binary_generic,
     context,
 )
-from fmsd.transform import Transform
+from fmsd.transform.transform import Transform
 from fmsd_impl.transforms.expr import ExpressionTransform
 
 modules = [

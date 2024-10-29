@@ -1,36 +1,10 @@
 from fmsd.ast.node import Node
-from fmsd.proof import Proof, ChainProof, EquivProof, ProofException
-from fmsd.transform import Transform
-from fmsd_impl.transforms.expr import ExpressionTransform
+from fmsd.proof.chain import ChainProof
+from fmsd.proof.proof import ProofException, Proof, EquivProof
+from fmsd.proof.transform import TransformProof
+from fmsd.transform.transform import Transform
 from fmsd_impl.transforms import t_all
-
-
-class TransformProof(Proof):
-    def __init__(
-        self, src: Node, dst: Node, transform: Transform, index: list[int]
-    ) -> None:
-        Proof.__init__(self, src, dst, transform.name or "")
-        self.transform = transform
-        self.index = index
-
-    def verify(self, debug: bool = False) -> bool:
-        assert self.transform.verify(self.src.get(self.index), self.dst.get(self.index))
-        if not self.index:
-            return True
-        src = self.src.copy()
-        src.set(self.index, self.dst.get(self.index).copy())
-        assert src == self.dst
-        return True
-
-    def __eq__(self, other) -> bool:
-        if not isinstance(other, TransformProof):
-            return False
-        return (
-            self.src == other.src
-            and self.dst == other.dst
-            and self.transform == other.transform
-            and self.index == other.index
-        )
+from fmsd_impl.transforms.expr import ExpressionTransform
 
 
 class NoTransformationFoundException(Exception):
@@ -59,7 +33,7 @@ class DerivedStepProof(Proof):
         Proof.__init__(self, src, dst, "")
         self.derived_proof: Proof | None = None
 
-    def verify(self, debug: bool = False) -> bool:
+    def verify(self) -> bool:
         idx = self.src.diff(self.dst)
         if idx is None:
             return True

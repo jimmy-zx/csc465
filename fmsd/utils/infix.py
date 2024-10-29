@@ -36,3 +36,8 @@ class InfixOperator(Generic[L, R, T]):
         if self.lhs is not None:
             raise InfixOperatorException("lhs already occupied")
         return InfixOperator(self.func, lhs, None)
+
+
+__all__ = [
+    "InfixOperator",
+]
