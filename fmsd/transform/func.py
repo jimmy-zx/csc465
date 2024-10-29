@@ -1,15 +1,15 @@
 from typing import Callable
 
-from fmsd.expression import Expression
+from fmsd.ast.node import Node
 from fmsd.transform import Transform
 
 
 class FunctionTransform(Transform):
-    def __init__(self, func: Callable[[Expression, Expression], bool]) -> None:
+    def __init__(self, func: Callable[[Node, Node], bool]) -> None:
         Transform.__init__(self)
         self.func = func
 
-    def verify(self, src: Expression, dst: Expression) -> bool:
+    def verify(self, src: Node, dst: Node) -> bool:
         return self.func(src, dst)
 
     def __eq__(self, other) -> bool:

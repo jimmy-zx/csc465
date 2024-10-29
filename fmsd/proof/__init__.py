@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Sequence
 
-from fmsd.expression import Expression
+from fmsd.ast.node import Node
 
 
 class ProofException(Exception):
@@ -9,7 +9,7 @@ class ProofException(Exception):
 
 
 class Proof(ABC):
-    def __init__(self, src: Expression, dst: Expression, hint: str = "") -> None:
+    def __init__(self, src: Node, dst: Node, hint: str = "") -> None:
         self.src = src
         self.dst = dst
         self.hint = hint
@@ -22,9 +22,7 @@ class Proof(ABC):
 
 
 class EquivProof(Proof):
-    def __init__(
-        self, src: Expression, dst: Expression, fwd: Proof, bwd: Proof
-    ) -> None:
+    def __init__(self, src: Node, dst: Node, fwd: Proof, bwd: Proof) -> None:
         Proof.__init__(self, src, dst, fwd.hint)
         self.fwd = fwd
         self.bwd = bwd
@@ -64,9 +62,7 @@ class EquivProof(Proof):
 
 
 class ChainProof(Proof):
-    def __init__(
-        self, src: Expression, dst: Expression, proofs: Sequence[Proof]
-    ) -> None:
+    def __init__(self, src: Node, dst: Node, proofs: Sequence[Proof]) -> None:
         Proof.__init__(self, src, dst)
         self.proofs = proofs
 
@@ -104,9 +100,7 @@ class ChainProof(Proof):
 
 
 class ChainEquivProof(ChainProof):
-    def __init__(
-        self, src: Expression, dst: Expression, proofs: Sequence[EquivProof]
-    ) -> None:
+    def __init__(self, src: Node, dst: Node, proofs: Sequence[EquivProof]) -> None:
         ChainProof.__init__(self, src, dst, proofs)
 
     def verify(self, debug: bool = False) -> bool:

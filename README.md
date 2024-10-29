@@ -6,28 +6,26 @@
 
 [//]: <> (MARKER_START__tests/fmsd/test_intro.py)
 ```python
-import fmsd.utils.patch.binary
-from fmsd.expression.constants.binary import FALSE
-from fmsd.expression.operators.binary import Or
-from fmsd.expression.operators.generic import Equals, NotEquals
-from fmsd.expression.variables import BinaryVariable
+import fmsd_impl.patch.binary
+from fmsd.ast.node import Variable
 from fmsd.proof import ChainProof
 from fmsd.proof.derived_step import DerivedStepProof, TransformProof
-from fmsd.transform.expr import ExpressionTransform
-from fmsd.transform.transforms.axioms.binary import (
-    axiom_base_and,
-)
-from fmsd.transform.transforms.prop import t_associative
-from fmsd.utils.patchops.infix import EQ, NEQ
+from fmsd_impl.patch.infix import EQ, NEQ
+from fmsd_impl.transforms.axioms.binary import axiom_base_and
+from fmsd_impl.constants.basic import FALSE
+from fmsd_impl.operators.binary import Or
+from fmsd_impl.operators.generic import Equals, NotEquals
+from fmsd_impl.transforms.expr import ExpressionTransform
+from fmsd_impl.transforms.prop import t_associative
 
-assert fmsd.utils.patch.binary
+assert fmsd_impl.patch.binary
 
 
 def test_intro():
     # declare a variable
-    x = BinaryVariable("x")
-    y = BinaryVariable("y")
-    z = BinaryVariable("z")
+    x = Variable("x")
+    y = Variable("y")
+    z = Variable("z")
 
     # build AST directly
     Or(x, y)

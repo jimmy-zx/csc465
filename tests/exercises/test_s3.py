@@ -1,15 +1,15 @@
-from fmsd.expression.constants.binary import TRUE
-from fmsd.expression.constants.bunch import NAT
-from fmsd.expression.constants.numeric import ZERO, INFINITY, NEG_INFINITY, ONE
-from fmsd.expression.operators.bunch import In, Union
-from fmsd.expression.operators.context import Context
-from fmsd.expression.operators.generic import Equals
-from fmsd.expression.variables import NumericSingularVariable
+from fmsd.ast.node import Variable
 from fmsd.proof.derived_step import DerivedChainProof
+from fmsd.utils.config import config
+from fmsd_impl.constants.basic import TRUE, NAT, ZERO, INFINITY, ONE
+from fmsd_impl.operators.bunch import In, Union
+from fmsd_impl.operators.context import Context
+from fmsd_impl.operators.generic import Equals
 
 
 def test_49a():
-    n = NumericSingularVariable("n")
+    n = Variable("n")
+    config.trace = True
     proof = DerivedChainProof(
         In(n, NAT),
         In(ZERO, n * NAT),
@@ -18,11 +18,11 @@ def test_49a():
             In(n, NAT) & In(n, NAT),
             (n < INFINITY) & (n >= ZERO),
             (n < INFINITY) & ((n >= ZERO) & TRUE),
-            (n < INFINITY) & ((n >= ZERO) & (NEG_INFINITY < ZERO)),
-            (n < INFINITY) & ((ZERO <= n) & (NEG_INFINITY < ZERO)),
-            (n < INFINITY) & ((NEG_INFINITY < ZERO) & (ZERO <= n)),
-            (n < INFINITY) & (NEG_INFINITY < n),
-            (NEG_INFINITY < n) & (n < INFINITY),
+            (n < INFINITY) & ((n >= ZERO) & (-INFINITY < ZERO)),
+            (n < INFINITY) & ((ZERO <= n) & (-INFINITY < ZERO)),
+            (n < INFINITY) & ((-INFINITY < ZERO) & (ZERO <= n)),
+            (n < INFINITY) & (-INFINITY < n),
+            (-INFINITY < n) & (n < INFINITY),
             Equals(n * ZERO, ZERO),
             Equals(ZERO, n * ZERO),
             In(ZERO, n * ZERO),
@@ -45,7 +45,7 @@ def test_49a():
 
 
 def test_49b():
-    m = NumericSingularVariable("m")
+    m = Variable("m")
     proof = DerivedChainProof(
         # adding a local context here
         Context(In(m, ZERO * NAT), Equals(ZERO, ZERO * NAT)),
@@ -60,13 +60,8 @@ def test_49b():
     assert proof.verify()
 
 
-def test_49c():
-    # TODO: no proofs yet
-    pass
-
-
 def test_49d():
-    m = NumericSingularVariable("m")
+    m = Variable("m")
     proof = DerivedChainProof(
         Context(In(m, ONE * NAT), Equals(ONE * NAT, NAT)),
         In(m, NAT),

@@ -1,14 +1,13 @@
 import pytest
 
-import fmsd.utils.patch.binary
-from fmsd.expression import Expression
-from fmsd.expression.variables import BinaryVariable
+import fmsd_impl.patch.binary
+from fmsd.ast.node import Node, Variable
 
-assert fmsd.utils.patch.binary
+assert fmsd_impl.patch.binary
 
-a = BinaryVariable("a")
-b = BinaryVariable("b")
-c = BinaryVariable("c")
+a = Variable("a")
+b = Variable("b")
+c = Variable("c")
 
 
 @pytest.mark.parametrize(
@@ -19,7 +18,7 @@ c = BinaryVariable("c")
         (a & b, b & a, []),
     ],
 )
-def test_symmetric_diff(lhs: Expression, rhs: Expression, idx: list[int] | None):
+def test_symmetric_diff(lhs: Node, rhs: Node, idx: list[int] | None):
     assert lhs.diff(rhs) == idx
     assert rhs.diff(lhs) == idx
 
@@ -30,7 +29,7 @@ def test_symmetric_diff(lhs: Expression, rhs: Expression, idx: list[int] | None)
         ((a | b) & c, (a | b) & c),
     ],
 )
-def test_no_diff(lhs: Expression, rhs: Expression):
+def test_no_diff(lhs: Node, rhs: Node):
     assert lhs.diff(rhs) is None
     assert rhs.diff(lhs) is None
 
@@ -40,12 +39,9 @@ def test_start():
     rhs = ((a | b) & b) & (a | c)
     assert lhs.diff(rhs) == []
     assert rhs.diff(lhs) == []
-    assert lhs.diff(rhs, start=1) == [0, 0]
-    assert lhs.diff(rhs, start=3) is None
 
 
 def test_mult_diff():
     lhs = (a | b) & (a | c)
     rhs = (b | a) & (b | c)
     assert lhs.diff(rhs) == []
-    assert lhs.diff(rhs, 1) == [0]

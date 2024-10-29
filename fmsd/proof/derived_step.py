@@ -1,15 +1,13 @@
-import itertools
-
-from fmsd.expression import Expression
+from fmsd.ast.node import Node
 from fmsd.proof import Proof, ChainProof, EquivProof, ProofException
 from fmsd.transform import Transform
-from fmsd.transform.expr import ExpressionTransform
-from fmsd.transform.transforms import t_all
+from fmsd_impl.transforms.expr import ExpressionTransform
+from fmsd_impl.transforms import t_all
 
 
 class TransformProof(Proof):
     def __init__(
-        self, src: Expression, dst: Expression, transform: Transform, index: list[int]
+        self, src: Node, dst: Node, transform: Transform, index: list[int]
     ) -> None:
         Proof.__init__(self, src, dst, transform.name or "")
         self.transform = transform
@@ -20,7 +18,7 @@ class TransformProof(Proof):
         if not self.index:
             return True
         src = self.src.copy()
-        src.set(self.index, self.dst.get(self.index))
+        src.set(self.index, self.dst.get(self.index).copy())
         assert src == self.dst
         return True
 
@@ -36,7 +34,7 @@ class TransformProof(Proof):
 
 
 class NoTransformationFoundException(Exception):
-    def __init__(self, src: Expression, dst: Expression) -> None:
+    def __init__(self, src: Node, dst: Node) -> None:
         diff = src.diff(dst)
         assert diff is not None
         msgs = [f"Failed to find transformation for {src.get(diff)} to {dst.get(diff)}"]
@@ -57,7 +55,7 @@ class NoTransformationFoundException(Exception):
 
 
 class DerivedStepProof(Proof):
-    def __init__(self, src: Expression, dst: Expression) -> None:
+    def __init__(self, src: Node, dst: Node) -> None:
         Proof.__init__(self, src, dst, "")
         self.derived_proof: Proof | None = None
 
@@ -95,47 +93,52 @@ class DerivedStepProof(Proof):
 
     @staticmethod
     def refine_once(
-        src: Expression, dst: Expression, transforms: dict[str, Transform]
-    ) -> tuple[Transform, Expression, list[int]] | None:
-        assert src.diff(dst) is not None
-        for i in itertools.count(start=0):
-            idx = src.diff(dst, start=i)
-            if idx is None:
-                break
-            if (
-                res := DerivedStepProof.verify_transforms(
-                    src.get(idx), dst.get(idx), src.context(idx), transforms
-                )
-            ) is not None:
-                if not idx:
-                    refined = dst
-                else:
-                    refined = src.copy()
-                    refined.set(idx, dst.get(idx))
-
-                return res, refined, idx
+        src: Node, dst: Node, transforms: dict[str, Transform]
+    ) -> tuple[Transform, Node, list[int]] | None:
         idx = src.diff(dst)
-        while idx:
-            idx.pop()
+        end = src.weak_diff(dst)
+        assert idx is not None
+        assert end is not None
+        while True:
             if (
                 res := DerivedStepProof.verify_transforms(
-                    src.get(idx), dst.get(idx), src.context(idx), transforms
+                    src.get(idx), dst.get(idx), src.get(idx).context(), transforms
                 )
             ) is not None:
                 if not idx:
                     refined = dst
                 else:
                     refined = src.copy()
-                    refined.set(idx, dst.get(idx))
-
+                    refined.set(idx, dst.get(idx).copy())
                 return res, refined, idx
+
+            if len(idx) == len(end):
+                break
+            idx.append(end[len(idx)])
+        idx = src.diff(dst)
+        assert idx is not None
+        while True:
+            if (
+                res := DerivedStepProof.verify_transforms(
+                    src.get(idx), dst.get(idx), src.get(idx).context(), transforms
+                )
+            ) is not None:
+                if not idx:
+                    refined = dst
+                else:
+                    refined = src.copy()
+                    refined.set(idx, dst.get(idx).copy())
+                return res, refined, idx
+            if not idx:
+                break
+            idx.pop()
         return None
 
     @staticmethod
     def verify_transforms(
-        src: Expression,
-        dst: Expression,
-        context: list[Expression],
+        src: Node,
+        dst: Node,
+        context: list[Node],
         transforms: dict[str, Transform],
     ) -> Transform | None:
         for trf in transforms.values():
@@ -150,9 +153,7 @@ class DerivedStepProof(Proof):
 
 
 class DerivedChainProof(ChainProof):
-    def __init__(
-        self, src: Expression, dst: Expression, steps: list[Expression]
-    ) -> None:
+    def __init__(self, src: Node, dst: Node, steps: list[Node]) -> None:
         ChainProof.__init__(
             self,
             src,
@@ -162,9 +163,7 @@ class DerivedChainProof(ChainProof):
 
 
 class DerivedEquivChainProof(EquivProof):
-    def __init__(
-        self, src: Expression, dst: Expression, steps: list[Expression]
-    ) -> None:
+    def __init__(self, src: Node, dst: Node, steps: list[Node]) -> None:
         EquivProof.__init__(
             self,
             src,

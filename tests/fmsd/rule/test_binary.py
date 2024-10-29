@@ -1,8 +1,6 @@
-from fmsd.expression.constants.binary import TRUE as T, FALSE as F
-from fmsd.expression.operators.binary import And, Or, Implies, ImpliedBy, Flip
-from fmsd.expression.operators.generic import Equals, NotEquals
-from fmsd.expression.variables import BinaryVariable
-from fmsd.transform.transforms.axioms.binary import (
+from fmsd.ast.node import Variable
+from fmsd_impl.transforms.expr import ExpressionTransform
+from fmsd_impl.transforms.axioms.binary import (
     axiom_excluded_middle,
     axiom_noncontradiction,
     axiom_base_and,
@@ -19,14 +17,16 @@ from fmsd.transform.transforms.axioms.binary import (
     axiom_base_implies_false,
     axiom_contrapositive,
 )
-from fmsd.transform.expr import ExpressionTransform
-from fmsd.transform.transforms.binary_table import func_rule_table
+from fmsd_impl.constants.basic import TRUE as T, FALSE as F
+from fmsd_impl.operators.binary import And, Or, Implies, ImpliedBy, Flip
+from fmsd_impl.operators.generic import Equals, NotEquals
+from fmsd_impl.transforms.binary_table import func_rule_table
 
-a = BinaryVariable("a")
-b = BinaryVariable("b")
-x = BinaryVariable("x")
-y = BinaryVariable("y")
-z = BinaryVariable("z")
+a = Variable("a")
+b = Variable("b")
+x = Variable("x")
+y = Variable("y")
+z = Variable("z")
 
 
 def test_binary():
