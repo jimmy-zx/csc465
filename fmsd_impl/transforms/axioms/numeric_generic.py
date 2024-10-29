@@ -71,13 +71,9 @@ axiom_idempotence_max = Equals(Max(x, x), x)
 
 axiom_idempotence_min = Equals(Min(x, x), x)
 
-axiom_distributive_max = Equals(
-    Max(x, Min(y, z)), Min(Max(x, y), Max(x, z))
-)
+axiom_distributive_max = Equals(Max(x, Min(y, z)), Min(Max(x, y), Max(x, z)))
 
-axiom_distributive_min = Equals(
-    Min(x, Max(y, z)), Max(Min(x, y), Min(x, z))
-)
+axiom_distributive_min = Equals(Min(x, Max(y, z)), Max(Min(x, y), Min(x, z)))
 
 axiom_connection_max_and = Equals(Max(x, y) <= z, (x <= z) & (y <= z))
 

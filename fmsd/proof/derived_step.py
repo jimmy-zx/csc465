@@ -115,6 +115,23 @@ class DerivedStepProof(Proof):
             if len(idx) == len(end):
                 break
             idx.append(end[len(idx)])
+        idx = src.diff(dst)
+        assert idx is not None
+        while True:
+            if (
+                res := DerivedStepProof.verify_transforms(
+                    src.get(idx), dst.get(idx), src.get(idx).context(), transforms
+                )
+            ) is not None:
+                if not idx:
+                    refined = dst
+                else:
+                    refined = src.copy()
+                    refined.set(idx, dst.get(idx).copy())
+                return res, refined, idx
+            if not idx:
+                break
+            idx.pop()
         return None
 
     @staticmethod

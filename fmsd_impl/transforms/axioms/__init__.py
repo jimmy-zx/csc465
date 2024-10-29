@@ -1,8 +1,14 @@
 from fmsd_impl.transforms.axioms import (
     numeric,
 )
-from fmsd_impl.transforms.axioms import binary, bunch, numeric_generic, constants, binary_generic, \
-    context
+from fmsd_impl.transforms.axioms import (
+    binary,
+    bunch,
+    numeric_generic,
+    constants,
+    binary_generic,
+    context,
+)
 from fmsd.transform import Transform
 from fmsd_impl.transforms.expr import ExpressionTransform
 

@@ -12,9 +12,9 @@ class Operator(Node):
     def __str__(self) -> str:
         assert self.DELIM is not None
         if self.N == 1:
-            return f"{self.DELIM}({self.nodes[0]})"
+            return f"{self.DELIM}{self.nodes[0]}"
         if self.N == 2:
-            return f"({self.nodes[0]}){self.DELIM}({self.nodes[1]})"
+            return f"({self.nodes[0]}{self.DELIM}{self.nodes[1]})"
         assert False
 
 

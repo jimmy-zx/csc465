@@ -46,8 +46,8 @@ def test_associative(op):
         op, Associative
     )
     assert trf.verify(op(a, op(b, op(c, d))), op(op(b, a), op(c, d))) == (
-            issubclass(op, Associative) and issubclass(op, Commutative)
+        issubclass(op, Associative) and issubclass(op, Commutative)
     )
     assert trf.verify(op(a, op(b, op(c, d))), op(op(op(b, a), c), d)) == (
-            issubclass(op, Associative) and issubclass(op, Commutative)
+        issubclass(op, Associative) and issubclass(op, Commutative)
     )

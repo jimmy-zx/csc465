@@ -7,7 +7,7 @@ class Negate(Operator):
 
 
 class Plus(Operator, Commutative, Associative):
-    N =  2
+    N = 2
     DELIM = "+"
 
 

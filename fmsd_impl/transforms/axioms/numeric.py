@@ -44,9 +44,7 @@ axiom_cancellation_sub = Implies(
 )
 axiom_inverse = Implies((-INFINITY < x) & (x < INFINITY), (x - x) @ EQ @ ZERO)
 axiom_absorption_sub_pos = Implies(x < INFINITY, (INFINITY - x) @ EQ @ INFINITY)
-axiom_absorption_sub_neg = Implies(
-    -INFINITY < x, (-INFINITY - x) @ EQ @ -INFINITY
-)
+axiom_absorption_sub_neg = Implies(-INFINITY < x, (-INFINITY - x) @ EQ @ -INFINITY)
 
 axiom_base_mul = Implies((-INFINITY < x) & (x < INFINITY), (x * ZERO) @ EQ @ ZERO)
 axiom_identity_mul = Equals((x * ONE) @ EQ @ x, TRUE)
@@ -82,9 +80,9 @@ axiom_annihilation_neg = Implies(
     (-INFINITY < x) & (x < INFINITY), (x / -INFINITY) @ EQ @ ZERO
 )
 
-axiom_base_pow = Implies((-INFINITY < x) & (x < INFINITY), (x ** ZERO) @ EQ @ ONE)
-axiom_identity_pow = Equals(x ** ONE, x)
-axiom_adding_pow = Equals(x ** (y + z), (x ** y) * (x ** z))
+axiom_base_pow = Implies((-INFINITY < x) & (x < INFINITY), (x**ZERO) @ EQ @ ONE)
+axiom_identity_pow = Equals(x**ONE, x)
+axiom_adding_pow = Equals(x ** (y + z), (x**y) * (x**z))
 
 # temp fix for pycharm typing issue
 assert isinstance(ZERO, Node)
@@ -119,4 +117,4 @@ axiom_distributivity_min_neg = Equals(
     x <= ZERO, (x * Min(y, z)) @ EQ @ Max(x * y, x * z)
 )
 
-axiom_exp = Equals(x ** (y * z), (x ** y) ** z)
+axiom_exp = Equals(x ** (y * z), (x**y) ** z)

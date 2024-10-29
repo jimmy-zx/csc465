@@ -39,4 +39,3 @@ b = Variable("b")
 def test_commutative(op):
     trf = t_commutative
     assert trf.verify(op(a, b), op(b, a)) == issubclass(op, Commutative)
-
