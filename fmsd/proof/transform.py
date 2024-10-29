@@ -1,0 +1,31 @@
+from fmsd.ast import Node
+from fmsd.proof.proof import Proof
+from fmsd.transform.transform import Transform
+
+
+class TransformProof(Proof):
+    def __init__(
+        self, src: Node, dst: Node, transform: Transform, index: list[int]
+    ) -> None:
+        Proof.__init__(self, src, dst, transform.name or "")
+        self.transform = transform
+        self.index = index
+
+    def verify(self) -> bool:
+        assert self.transform.verify(self.src.get(self.index), self.dst.get(self.index))
+        if not self.index:
+            return True
+        src = self.src.copy()
+        src.set(self.index, self.dst.get(self.index).copy())
+        assert src == self.dst
+        return True
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, TransformProof):
+            return False
+        return (
+            self.src == other.src
+            and self.dst == other.dst
+            and self.transform == other.transform
+            and self.index == other.index
+        )
