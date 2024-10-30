@@ -1,4 +1,5 @@
-from fmsd.ast_ext.operator import Operator, Commutative, Associative
+from fmsd.ast_ext.operator import Operator
+from fmsd_impl.operators.props import Associative, Commutative
 
 
 class Set(Operator):

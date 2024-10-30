@@ -87,11 +87,11 @@ def test_intro():
 
 ### Laws
 
-- [ ] Generic
+- [x] Generic
 - [x] Binary
 - [x] Numbers
 - [x] Bunches
-- [ ] Sets
+- [x] Sets
 - [ ] Strings
 - [ ] Lists
 - [ ] Functions
@@ -104,80 +104,25 @@ def test_intro():
 - [ ] Names
 - [ ] Distribution
 
-### Recommended exercises
+## Architecture
 
-#### L0
-
-- [ ] 0
-- [ ] 2
-
-#### L1
-
-- [ ] 14
-- [ ] 17
-
-#### L2
-
-- [x] 6[f](tests/fmsd/proof/test_step.py),[m](tests/fmsd/proof/test_derived_step.py),[p](tests/fmsd/proof/test_derived_step.py),[s](tests/fmsd/proof/test_derived_step.py)
-- [x] 7c
-- [x] 22
-
-#### L3
-
-- [x] 49 (partial)
-- [ ] 53
-
-#### L4
-
-- [ ] 64
-
-## Structure
-
-### Syntax tree
+- core `fmsd`
 
 ```
-Expression
-| Constant - symbols that does not instantiates
-| Variable - symbols that can be instantiated
-| Operator - symbols that contain one or more operators, and can be evaluated
+| ast: basic building unit
+| | Node: a tree node of arbitrary (0+) children
+| | Variable: a named leaf node that indicates it should be replaced
+| ast_ext: extension to ast
+| | Constant: a named leaf node
+| | Operator: helper for creating operators (node with fixed number of children)
+| transform: verifies equivalency
+| | Transform: interface to specify src node can be converted to dst node
+| proof: complex transforms
+| | Proof: interface for a complex transform (src => dst)
+| | TransformProof: wrapper for proofs with a single transform
+| | DerivedStepProof: automatically find transforms given src and dst
 ```
 
-See `fmsd/expression`.
-
-#### Typing
-
-```
-BinaryExpression - anything that only evaluates to binary
-| BinaryConstant - ⊤ and ⊥ 
-| BinaryVariable
-| BinaryOperator - ∧∨⇒⇐=⧧ and (if ... then ... else ... fi)
-```
-
-See `fmsd/expression/types.py`
-
-### Rule
-
-A rule transforms an expression to an equivalent expression.
-
-See `fmsd/rule`.
-
-### Proof
-
-A proof verifies if two expressions (input and output) are the same, given the hints provided by human.
-
-```
-Proof
-| StepProof - zero or more steps that applies to the input, single direction (input -> output)
-| ChainProof - zero or more proofs that applies to the input, single direction
-| EquivProof - a pair of proofs that applies to (input -> output) and (output -> input)
-| EquivChainProof - zero or more EquivProof that applies to input and output
-```
-
-#### Step
-
-A step is a rule that is applied on a part of expression.
-
-Example: `(a=b)=c` becomes `(b=a)=c` when rule commutative is applied on index `0, 0`.
 
 ## Link to course website
 

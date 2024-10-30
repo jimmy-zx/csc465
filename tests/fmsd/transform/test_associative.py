@@ -4,7 +4,7 @@ import fmsd_impl.operators.binary as binop
 import fmsd_impl.operators.generic as genop
 import fmsd_impl.operators.numeric as numop
 from fmsd.ast.node import Variable
-from fmsd.ast_ext.operator import Associative, Commutative
+from fmsd_impl.operators.props import Associative, Commutative
 from fmsd_impl.transforms.prop import t_associative
 
 a = Variable("a")

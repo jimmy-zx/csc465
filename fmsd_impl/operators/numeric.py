@@ -1,4 +1,5 @@
-from fmsd.ast_ext.operator import Operator, Associative, Commutative
+from fmsd.ast_ext.operator import Operator
+from fmsd_impl.operators.props import Associative, Commutative
 
 
 class Negate(Operator):

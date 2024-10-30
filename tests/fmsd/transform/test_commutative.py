@@ -4,7 +4,7 @@ import fmsd_impl.patch.binary
 import fmsd_impl.operators.binary as binop
 import fmsd_impl.operators.generic as genop
 from fmsd.ast.node import Variable
-from fmsd.ast_ext.operator import Commutative
+from fmsd_impl.operators.props import Commutative
 from fmsd_impl.transforms.prop import t_commutative
 import fmsd_impl.operators.numeric as numop
 

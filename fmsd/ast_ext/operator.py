@@ -21,11 +21,3 @@ class Operator(Node):
                 + config.truecolor(depth, ")")
             )
         assert False
-
-
-class Associative(Node):
-    pass
-
-
-class Commutative(Node):
-    pass
