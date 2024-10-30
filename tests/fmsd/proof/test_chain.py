@@ -1,19 +1,19 @@
-from fmsd.expression.constants.binary import TRUE, FALSE
-from fmsd.expression.operators.binary import Implies, And, Flip
-from fmsd.expression.variables import BinaryVariable
-from fmsd.proof import ChainProof
-from fmsd.proof.derived_step import TransformProof
-from fmsd.transform.transforms.axioms.binary import (
+from fmsd.ast.node import Variable
+from fmsd.proof.chain import ChainProof
+from fmsd.proof.transform import TransformProof
+from fmsd_impl.transforms.expr import ExpressionTransform
+from fmsd_impl.transforms.axioms.binary import (
     axiom_portation,
     axiom_noncontradiction,
     axiom_base_implies_false,
     axiom_commutative_and,
 )
-from fmsd.transform.expr import ExpressionTransform
+from fmsd_impl.constants.basic import TRUE, FALSE
+from fmsd_impl.operators.binary import Implies, And, Flip
 
-a = BinaryVariable("a")
-b = BinaryVariable("b")
-c = BinaryVariable("c")
+a = Variable("a")
+b = Variable("b")
+c = Variable("c")
 
 
 def test_multi_step_proof():

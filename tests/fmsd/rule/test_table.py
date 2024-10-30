@@ -1,10 +1,10 @@
 import pytest
 
-from fmsd.expression import Expression
-from fmsd.expression.constants.binary import TRUE as T, FALSE as F
-from fmsd.expression.operators.binary import Flip, And, Or, Implies, ImpliedBy
-from fmsd.expression.operators.generic import Equals, NotEquals, Ternary
-from fmsd.transform.transforms.binary_table import func_rule_table
+from fmsd.ast.node import Node
+from fmsd_impl.constants.basic import TRUE as T, FALSE as F
+from fmsd_impl.operators.binary import Flip, And, Or, Implies, ImpliedBy
+from fmsd_impl.operators.generic import Equals, NotEquals, Ternary
+from fmsd_impl.transforms.binary_table import func_rule_table
 
 
 @pytest.mark.parametrize(
@@ -46,5 +46,5 @@ from fmsd.transform.transforms.binary_table import func_rule_table
         (Ternary, [F, F, F], F),
     ],
 )
-def test_table(op: type, operands: list[Expression], res: Expression):
+def test_table(op: type, operands: list[Node], res: Node):
     assert func_rule_table(op(*operands)) == res

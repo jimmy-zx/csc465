@@ -1,19 +1,13 @@
-import fmsd.utils.patch.binary
-import fmsd.utils.patch.numeric
-from fmsd.expression.constants.binary import TRUE
-from fmsd.expression.constants.bunch import NAT
-from fmsd.expression.constants.numeric import ZERO
-from fmsd.expression.operators.bunch import In, Union
-from fmsd.expression.variables import NumericSingularVariable
-from fmsd.transform.expr import ExpressionTransform
-from fmsd.transform.transforms.axioms.bunch import axiom_generalization
-
-assert fmsd.utils.patch.binary
-assert fmsd.utils.patch.numeric
+from fmsd.ast.node import Variable
+from fmsd_impl.operators.bunch import Union
+from fmsd_impl.transforms.axioms.bunch import axiom_generalization
+from fmsd_impl.transforms.expr import ExpressionTransform
+from fmsd_impl.constants.basic import TRUE, ZERO, NAT
+from fmsd_impl.operators.bunch import In
 
 
 def test_generalization():
-    n = NumericSingularVariable("n")
-    src = TRUE
-    dst = In(n * ZERO, Union(n * ZERO, n * NAT))
-    assert ExpressionTransform(axiom_generalization).verify(src, dst)
+    n = Variable("n")
+    assert ExpressionTransform(axiom_generalization).verify(
+        TRUE, In(n * ZERO, Union(n * ZERO, n * NAT))
+    )

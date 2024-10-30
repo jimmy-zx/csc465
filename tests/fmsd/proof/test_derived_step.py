@@ -1,23 +1,23 @@
 import pytest
 
-import fmsd.utils.patch.binary
-from fmsd.expression.constants.binary import TRUE
-from fmsd.expression.operators.binary import Or
-from fmsd.expression.operators.generic import Equals
-from fmsd.expression.variables import BinaryVariable
-from fmsd.proof.derived_step import (
+import fmsd_impl.patch.binary
+from fmsd.ast.node import Variable
+from fmsd.proof.derived import (
     DerivedStepProof,
     DerivedChainProof,
     DerivedEquivChainProof,
 )
 from fmsd.utils import config
-from fmsd.utils.patchops.infix import EQ
+from fmsd_impl.constants.basic import TRUE
+from fmsd_impl.operators.binary import Or
+from fmsd_impl.operators.generic import Equals
+from fmsd_impl.patch.infix import EQ
 
-assert fmsd.utils.patch.binary
+assert fmsd_impl.patch.binary
 
-a = BinaryVariable("a")
-b = BinaryVariable("b")
-c = BinaryVariable("c")
+a = Variable("a")
+b = Variable("b")
+c = Variable("c")
 
 
 def test_simple():

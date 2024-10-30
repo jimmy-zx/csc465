@@ -1,18 +1,18 @@
-from fmsd.expression.operators.binary import Implies, And, Flip
-from fmsd.expression.operators.generic import Equals
-from fmsd.expression.variables import BinaryVariable
-from fmsd.proof import ChainProof
-from fmsd.proof.derived_step import TransformProof
-from fmsd.transform.transforms.axioms.binary import (
+from fmsd.ast.node import Variable
+from fmsd.proof.chain import ChainProof
+from fmsd.proof.transform import TransformProof
+from fmsd_impl.transforms.expr import ExpressionTransform
+from fmsd_impl.transforms.axioms.binary import (
     axiom_conflation_and,
     axiom_specialization,
 )
-from fmsd.transform.transforms.axioms.binary_generic import axiom_symmetry
-from fmsd.transform.expr import ExpressionTransform
+from fmsd_impl.transforms.axioms.generic import axiom_symmetry
+from fmsd_impl.operators.binary import Implies, And, Flip
+from fmsd_impl.operators.generic import Equals
 
-a = BinaryVariable("a")
-b = BinaryVariable("b")
-c = BinaryVariable("c")
+a = Variable("a")
+b = Variable("b")
+c = Variable("c")
 
 
 def test_child():

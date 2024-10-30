@@ -1,11 +1,11 @@
-import fmsd.utils.patch.binary
-from fmsd.expression.variables import BinaryVariable
+import fmsd_impl.patch.binary
+from fmsd.ast.node import Variable
 
-assert fmsd.utils.patch.binary
+assert fmsd_impl.patch.binary
 
-a = BinaryVariable("a")
-b = BinaryVariable("b")
-c = BinaryVariable("c")
+a = Variable("a")
+b = Variable("b")
+c = Variable("c")
 
 
 def test_get():
