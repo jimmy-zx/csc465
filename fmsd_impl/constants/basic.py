@@ -12,3 +12,5 @@ NULL = Constant("null")
 NAT = Constant("nat")
 XINT = Constant("xint")
 XREAL = Constant("xreal")
+
+NIL = Constant("nil")

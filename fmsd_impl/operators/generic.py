@@ -15,4 +15,8 @@ class Ternary(Operator):
     N = 3
 
     def print(self, depth: int = 0) -> str:
-        return f"if {self.nodes[0]} then {self.nodes[1]} else {self.nodes[2]} fi"
+        return (
+            f"if {self.nodes[0].print(depth + 1)} "
+            f"then {self.nodes[1].print(depth + 1)} "
+            f"else {self.nodes[2].print(depth + 1)} fi"
+        )
