@@ -1,5 +1,5 @@
 from fmsd.ast import Node
-from fmsd.proof.proof import Proof, StepProof
+from fmsd.proof.proof import StepProof
 from fmsd.transform.transform import Transform
 
 
