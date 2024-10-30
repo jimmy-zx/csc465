@@ -6,7 +6,7 @@ from fmsd_impl.transforms.axioms.binary import (
     axiom_conflation_and,
     axiom_specialization,
 )
-from fmsd_impl.transforms.axioms.binary_generic import axiom_symmetry
+from fmsd_impl.transforms.axioms.generic import axiom_symmetry
 from fmsd_impl.operators.binary import Implies, And, Flip
 from fmsd_impl.operators.generic import Equals
 
