@@ -2,13 +2,13 @@
 11.3.0, FMSD
 """
 
-import fmsd_impl.patch.numeric
 import fmsd_impl.patch.binary
+import fmsd_impl.patch.numeric
+from fmsd.ast.node import Variable
 from fmsd_impl.constants.basic import TRUE, FALSE
 from fmsd_impl.operators.binary import Implies
 from fmsd_impl.operators.generic import Ternary, Equals
 from fmsd_impl.operators.numeric import Max, Min
-from fmsd.ast.node import Variable
 from fmsd_impl.patch.infix import EQ, NEQ
 
 assert fmsd_impl.patch.numeric

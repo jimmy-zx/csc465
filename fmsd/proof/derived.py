@@ -3,8 +3,7 @@ from fmsd.proof.chain import ChainProof
 from fmsd.proof.proof import ProofException, Proof, EquivProof, StepProof
 from fmsd.proof.transform import TransformProof
 from fmsd.transform.transform import Transform
-from fmsd_impl.transforms import t_all
-from fmsd_impl.transforms.expr import ExpressionTransform
+from fmsd.utils.impl import impl
 
 
 class NoTransformationFoundException(Exception):
@@ -34,13 +33,14 @@ class DerivedStepProof(StepProof):
         self.derived_proof: Proof | None = None
 
     def verify(self) -> bool:
+        assert impl is not None
         idx = self.src.diff(self.dst)
         if idx is None:
             return True
         steps = []
         src = self.src
         while src != self.dst:
-            if (res := self.refine_once(src, self.dst, t_all)) is None:
+            if (res := self.refine_once(src, self.dst, impl.t_all())) is None:
                 idx = src.diff(self.dst)
                 assert idx is not None
                 raise NoTransformationFoundException(self.src, self.dst)
@@ -115,11 +115,12 @@ class DerivedStepProof(StepProof):
         context: list[Node],
         transforms: dict[str, Transform],
     ) -> Transform | None:
+        assert impl is not None
         for trf in transforms.values():
             if trf.verify(src, dst):
                 return trf
         for ctx in context:
-            trf = ExpressionTransform(ctx)
+            trf = impl.node_to_transform(ctx)
             trf.name = "context"
             if trf.verify(src, dst):
                 return trf

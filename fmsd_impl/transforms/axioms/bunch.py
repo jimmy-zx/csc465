@@ -1,6 +1,7 @@
 import fmsd_impl.patch.binary
 import fmsd_impl.patch.numeric
 from fmsd.ast.node import Node
+from fmsd.ast.node import Variable
 from fmsd_impl.constants.basic import NULL, NAT, XINT, XREAL, ZERO, ONE, INFINITY
 from fmsd_impl.operators.binary import Flip, Implies
 from fmsd_impl.operators.bunch import (
@@ -12,7 +13,6 @@ from fmsd_impl.operators.bunch import (
     BunchInterval,
 )
 from fmsd_impl.operators.generic import Equals
-from fmsd.ast.node import Variable
 
 assert fmsd_impl.patch.binary
 assert fmsd_impl.patch.numeric

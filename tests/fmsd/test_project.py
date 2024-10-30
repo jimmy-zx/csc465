@@ -13,10 +13,6 @@ def test_import_all(file):
     spec.loader.exec_module(mod)
 
 
-def test_mypy():
-    subprocess.run(["mypy", "fmsd", "tests"], check=True)
-
-
 def test_tree_clean():
     # https://unix.stackexchange.com/questions/155046/determine-if-git-working-directory-is-clean-from-a-script
     p = subprocess.run(
@@ -53,13 +49,17 @@ def test_readme_intro():
     assert data == new_data
 
 
+def test_mypy():
+    subprocess.run(["mypy", "fmsd", "fmsd_impl", "tests"], check=True)
+
+
 def test_pylint():
-    subprocess.run(["pylint", "fmsd", "tests"], check=True)
+    subprocess.run(["pylint", "fmsd", "fmsd_impl", "tests"], check=True)
 
 
 def test_flake8():
-    subprocess.run(["flake8", "fmsd", "tests"], check=True)
+    subprocess.run(["flake8", "fmsd", "fmsd_impl", "tests"], check=True)
 
 
 def test_black():
-    subprocess.run(["black", "fmsd", "tests", "--check"], check=True)
+    subprocess.run(["black", "fmsd", "fmsd_impl", "tests", "--check"], check=True)
