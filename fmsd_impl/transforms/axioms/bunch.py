@@ -69,7 +69,7 @@ axiom_induction = In(NULL, A)
 axiom_identity_left = Equals(Union(A, NULL), A)
 axiom_identity_right = Equals(Union(NULL, A), A)
 axiom_base_left = Equals(Intersect(A, NULL), NULL)
-axiom_base_right = Equals(Intersect(NULL, A), A)
+axiom_base_right = Equals(Intersect(NULL, A), NULL)
 axiom_size_empty = Equals(Equals(Count(A), ZERO), Equals(A, NULL))
 
 axiom_interval_content = Equals(

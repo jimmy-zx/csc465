@@ -1,6 +1,7 @@
 from typing import Self, Iterator, final
 
 from fmsd.ast.base import Base, CopyOnConstruction
+from fmsd.utils.config import config
 
 VarTable = dict[str, "Node"]
 
@@ -32,7 +33,7 @@ class Node(Base["Node"]):
 
     @final
     def __str__(self) -> str:
-        return self.print()
+        return self.print(depth=config.max_level + 1)
 
     def print(self, depth: int = 0) -> str:
         return "Node(" + ", ".join(node.print(depth + 1) for node in self.nodes) + ")"

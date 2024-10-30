@@ -1,10 +1,29 @@
 from fmsd.ast.node import Variable
+from fmsd.ast_ext import Constant
 from fmsd.proof.derived import DerivedChainProof
 from fmsd.utils.config import config
-from fmsd_impl.constants.basic import TRUE, NAT, ZERO, INFINITY, ONE
+from fmsd_impl.constants.basic import TRUE, NAT, ZERO, INFINITY, ONE, NULL
+from fmsd_impl.operators import Intersect, Count
 from fmsd_impl.operators.bunch import In, Union
 from fmsd_impl.operators.context import Context
 from fmsd_impl.operators.generic import Equals
+from fmsd_impl.operators.set_ import Size, Contents, Set, SetIn
+
+
+def test_42():
+    SEVEN = Constant("7")
+    proof = DerivedChainProof(
+        TRUE,
+        ~In(SEVEN, NULL),
+        [
+            TRUE,
+            Equals(Count(NULL), ZERO),
+            Equals(Count(Intersect(NULL, SEVEN)), ZERO),
+            Equals(Count(Intersect(SEVEN, NULL)), ZERO),
+            ~In(SEVEN, NULL),
+        ],
+    )
+    assert proof.verify()
 
 
 def test_49a():
@@ -70,5 +89,30 @@ def test_49d():
             Context(In(m, NAT), Equals(ONE * NAT, NAT)),
             In(m, NAT),
         ],
+    )
+    assert proof.verify()
+
+
+def test_55a():
+    S = Variable("S")
+    proof = DerivedChainProof(
+        TRUE,
+        Equals(Size(S), Count(Contents(S))),
+        [
+            TRUE,
+            Equals(Size(Set(Contents(S))), Count(Contents(S))),
+            Equals(Size(S), Count(Contents(S))),
+        ],
+    )
+    assert proof.verify()
+
+
+def test_55b():
+    A = Variable("A")
+    S = Variable("S")
+    proof = DerivedChainProof(
+        SetIn(A, S),
+        In(A, Contents(S)),
+        [SetIn(A, S), SetIn(A, Set(Contents(S))), In(A, Contents(S))],
     )
     assert proof.verify()

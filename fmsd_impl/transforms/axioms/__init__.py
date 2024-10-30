@@ -6,6 +6,7 @@ from fmsd_impl.transforms.axioms import (
     constants,
     binary_generic,
     context,
+    set_,
 )
 from fmsd_impl.transforms.axioms import (
     numeric,
@@ -20,6 +21,7 @@ modules = [
     context,
     numeric,
     numeric_generic,
+    set_,
 ]
 
 t_all: dict[str, Transform] = {}

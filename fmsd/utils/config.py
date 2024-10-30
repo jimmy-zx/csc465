@@ -13,6 +13,7 @@ class Config:  # pylint: disable=too-few-public-methods
         self.trace = trace
         self.debug = debug
         self.levels = levels
+        self.max_level = levels * 6
 
     def get_trace(self):
         if not self.trace:
