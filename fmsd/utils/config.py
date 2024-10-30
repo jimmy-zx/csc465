@@ -8,7 +8,7 @@ class Config:  # pylint: disable=too-few-public-methods
         self,
         trace: bool = False,
         debug: bool = False,
-        levels: int = 6,
+        levels: int = 3,
     ) -> None:
         self.trace = trace
         self.debug = debug
@@ -26,6 +26,9 @@ class Config:  # pylint: disable=too-few-public-methods
             return frame
 
     def truecolor(self, level: int, text: str) -> str:
+        if level % 2 == 1:
+            return text
+        level //= 2
         brightness = min(255 // self.levels * (level // 3), 255)
         bg_buf = [0, 0, 0]
         bg_buf[level % 3] = 255

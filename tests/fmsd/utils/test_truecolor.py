@@ -6,9 +6,9 @@ assert fmsd_impl.patch
 
 
 def test_levels():
-    for i in range(config.levels * 3):
-        print(config.truecolor(i, "hello"))
-        print("world")
+    for i in range(config.levels * 6):
+        print(config.truecolor(i, "h"), end="")
+        print("l", end="")
 
 
 def test_construction():
