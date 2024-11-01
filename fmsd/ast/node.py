@@ -1,4 +1,4 @@
-from typing import Self, Iterator, final
+from typing import Iterator, Self, final
 
 from fmsd.ast.base import Base, CopyOnConstruction
 from fmsd.utils.config import config

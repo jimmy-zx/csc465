@@ -5,11 +5,16 @@ from pathlib import Path
 
 import pytest
 
+TARGET_FILES = ["fmsd", "fmsd_impl", "tests", "setup.py"]
+
 
 @pytest.mark.parametrize("file", Path("fmsd").rglob("*.py"))
 def test_import_all(file):
     spec = importlib.util.spec_from_file_location("sample", file)
+    assert spec is not None
     mod = importlib.util.module_from_spec(spec)
+    assert mod is not None
+    assert spec.loader is not None
     spec.loader.exec_module(mod)
 
 
@@ -50,16 +55,34 @@ def test_readme_intro():
 
 
 def test_mypy():
-    subprocess.run(["mypy", "fmsd", "fmsd_impl", "tests"], check=True)
+    subprocess.run(["mypy"] + TARGET_FILES, check=True)
 
 
 def test_pylint():
-    subprocess.run(["pylint", "fmsd", "fmsd_impl", "tests"], check=True)
+    subprocess.run(["pylint"] + TARGET_FILES, check=True)
 
 
 def test_flake8():
-    subprocess.run(["flake8", "fmsd", "fmsd_impl", "tests"], check=True)
+    subprocess.run(["flake8"] + TARGET_FILES, check=True)
 
 
 def test_black():
-    subprocess.run(["black", "fmsd", "fmsd_impl", "tests", "--check"], check=True)
+    subprocess.run(["black", "--check"] + TARGET_FILES, check=True)
+
+
+def test_import_linter():
+    subprocess.run(["lint-imports"], check=True)
+
+
+def test_isort():
+    p = subprocess.run(
+        ["isort", "fmsd", "fmsd_impl", "tests", "--diff"],
+        check=True,
+        capture_output=True,
+    )
+    status = p.stdout == b""
+    assert status
+
+
+def test_build():
+    subprocess.run(["make", "build"], check=True)

@@ -29,7 +29,7 @@ class SubsetEq(Operator):
     DELIM = "⊆"
 
 
-class Power(Operator):
+class SetPower(Operator):
     N = 1
     DELIM = "ϟ"
 
@@ -41,3 +41,15 @@ class SetUnion(Operator, Commutative, Associative):
 
 class SetIntersect(Operator, Commutative, Associative):
     DELIM = "∩"
+
+
+__all__ = [
+    "Set",
+    "Contents",
+    "Size",
+    "SetIn",
+    "SubsetEq",
+    "SetPower",
+    "SetUnion",
+    "SetIntersect",
+]

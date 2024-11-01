@@ -2,8 +2,8 @@ import pytest
 
 from fmsd_impl.operators.binary import Implies
 from fmsd_impl.operators.generic import Equals
-from fmsd_impl.transforms.expr import ExpressionTransform
 from fmsd_impl.transforms import t_all
+from fmsd_impl.transforms.expr import ExpressionTransform
 
 
 @pytest.mark.parametrize("transform", t_all.values(), ids=lambda t: t.name)

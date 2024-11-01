@@ -1,8 +1,7 @@
-from fmsd_impl.operators.generic import Equals, NotEquals
-
 # from fmsd.expression.operators.numeric import Max, Min
 from fmsd.ast.node import Node
 from fmsd.utils.infix import InfixOperator
+from fmsd_impl.operators.generic import Equals, NotEquals
 
 # pylint: disable=invalid-name
 

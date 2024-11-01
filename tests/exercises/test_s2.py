@@ -1,6 +1,6 @@
 import fmsd_impl.patch.binary
 from fmsd.ast.node import Variable
-from fmsd.proof.derived import DerivedEquivChainProof, DerivedChainProof
+from fmsd.proof.derived import DerivedChainProof, DerivedEquivChainProof
 from fmsd_impl.constants.basic import TRUE
 from fmsd_impl.operators.generic import Ternary
 

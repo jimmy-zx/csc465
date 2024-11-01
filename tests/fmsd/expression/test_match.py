@@ -1,7 +1,7 @@
 import fmsd_impl.patch.binary
 from fmsd.ast.node import Variable
+from fmsd_impl.constants.basic import FALSE, TRUE
 from fmsd_impl.patch.infix import EQ
-from fmsd_impl.constants.basic import TRUE, FALSE
 
 assert fmsd_impl.patch.binary
 

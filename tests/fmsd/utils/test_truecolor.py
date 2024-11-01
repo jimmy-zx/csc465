@@ -1,6 +1,6 @@
+import fmsd_impl.patch
 from fmsd.ast import Variable
 from fmsd.utils.config import config
-import fmsd_impl.patch
 
 assert fmsd_impl.patch
 

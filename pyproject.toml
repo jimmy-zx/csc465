@@ -1,5 +1,75 @@
+[project]
+name = "fmsd"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pylint",
+    "flake8",
+    "black",
+    "pytest",
+    "mypy",
+    "coverage",
+    "import-linter",
+    "isort",
+]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/jimmy-zx/csc465"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = [
+    "fmsd*",
+    "fmsd_impl*"
+]
+
 [tool.pylint."messages control"]
 disable = ["raw-checker-failed", "bad-inline-option", "locally-disabled", "file-ignored", "suppressed-message", "useless-suppression", "deprecated-pragma", "use-implicit-booleaness-not-comparison-to-string", "use-implicit-booleaness-not-comparison-to-zero", "use-symbolic-message-instead", "missing-module-docstring", "missing-class-docstring", "missing-function-docstring", "unidiomatic-typecheck", "comparison-with-itself", "duplicate-code", "too-many-ancestors", "too-few-public-methods", "abstract-method", "fixme", "invalid-name", "consider-using-f-string"]
 
-[mypy]
+[tool.mypy]
 check_untyped_defs = true
+
+[tool.isort]
+profile = "black"
+
+[tool.importlinter]
+root_packages = ["fmsd", "fmsd_impl"]
+
+[[tool.importlinter.contracts]]
+name = "fmsd internal"
+type = "layers"
+layers = [
+    "fmsd.proof",
+    "fmsd.ast_ext | fmsd.transform",
+    "fmsd.ast"
+]
+
+[[tool.importlinter.contracts]]
+name = "fmsd external"
+type = "forbidden"
+source_modules = ["fmsd"]
+forbidden_modules = ["fmsd_impl"]
+
+[[tool.importlinter.contracts]]
+name = "fmsd_impl internal"
+type = "independence"
+modules = ["fmsd_impl.constants", "fmsd_impl.operators"]
+
+[[tool.importlinter.contracts]]
+name = "fmsd_impl.transforms"
+type = "forbidden"
+source_modules = ["fmsd_impl.transforms"]
+forbidden_modules = [
+    "fmsd_impl.constants.*",
+    "fmsd_impl.operators.*",
+]
+allow_indirect_imports = true

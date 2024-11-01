@@ -1,13 +1,13 @@
 from fmsd_impl.constants.basic import (
-    TRUE,
     FALSE,
-    ZERO,
-    ONE,
     INFINITY,
-    NULL,
     NAT,
+    NULL,
+    ONE,
+    TRUE,
     XINT,
     XREAL,
+    ZERO,
 )
 
 __all__ = [
