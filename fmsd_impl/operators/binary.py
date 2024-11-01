@@ -25,3 +25,12 @@ class Implies(Operator):
 class ImpliedBy(Operator):
     N = 2
     DELIM = "⇐"
+
+
+__all__ = [
+    "Flip",
+    "And",
+    "Or",
+    "Implies",
+    "ImpliedBy",
+]

@@ -1,55 +1,8 @@
-from fmsd_impl.operators.binary import Flip, And, Or, Implies, ImpliedBy
-from fmsd_impl.operators.bunch import (
-    Union,
-    Intersect,
-    In,
-    Includes,
-    BunchInterval,
-    Count,
-)
-from fmsd_impl.operators.context import Context
-from fmsd_impl.operators.generic import Equals, NotEquals, Ternary
-from fmsd_impl.operators.numeric import (
-    Negate,
-    Plus,
-    Minus,
-    Multiply,
-    DividedBy,
-    Power,
-    Max,
-    Min,
-    LessThan,
-    LessThanOrEqualsTo,
-    GreaterThan,
-    GreaterThanOrEqualsTo,
-)
-
-__all__ = [
-    "Equals",
-    "NotEquals",
-    "Ternary",
-    "Context",
-    "Flip",
-    "And",
-    "Or",
-    "Implies",
-    "ImpliedBy",
-    "Negate",
-    "Plus",
-    "Minus",
-    "Multiply",
-    "DividedBy",
-    "Power",
-    "Max",
-    "Min",
-    "LessThan",
-    "LessThanOrEqualsTo",
-    "GreaterThan",
-    "GreaterThanOrEqualsTo",
-    "Union",
-    "Intersect",
-    "In",
-    "Includes",
-    "BunchInterval",
-    "Count",
-]
+from fmsd_impl.operators.binary import *
+from fmsd_impl.operators.bunch import *
+from fmsd_impl.operators.context import *
+from fmsd_impl.operators.generic import *
+from fmsd_impl.operators.numeric import *
+from fmsd_impl.operators.set_ import *
+from fmsd_impl.operators.string import *
+from fmsd_impl.operators.props import *

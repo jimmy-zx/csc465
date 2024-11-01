@@ -20,3 +20,10 @@ class Ternary(Operator):
             f"then {self.nodes[1].print(depth + 1)} "
             f"else {self.nodes[2].print(depth + 1)} fi"
         )
+
+
+__all__ = [
+    "Equals",
+    "NotEquals",
+    "Ternary",
+]

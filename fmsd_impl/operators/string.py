@@ -41,3 +41,14 @@ class Replace(Operator):
 class StringRange(Operator):
     N = 2
     DELIM = ";.."
+
+
+__all__ = [
+    "Join",
+    "Length",
+    "Subscript",
+    "Duplicate",
+    "Star",
+    "Replace",
+    "StringRange",
+]

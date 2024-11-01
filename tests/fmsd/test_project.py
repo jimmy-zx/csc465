@@ -9,7 +9,10 @@ import pytest
 @pytest.mark.parametrize("file", Path("fmsd").rglob("*.py"))
 def test_import_all(file):
     spec = importlib.util.spec_from_file_location("sample", file)
+    assert spec is not None
     mod = importlib.util.module_from_spec(spec)
+    assert mod is not None
+    assert spec.loader is not None
     spec.loader.exec_module(mod)
 
 
@@ -63,3 +66,7 @@ def test_flake8():
 
 def test_black():
     subprocess.run(["black", "fmsd", "fmsd_impl", "tests", "--check"], check=True)
+
+
+def test_import_linter():
+    subprocess.run(["lint-imports"], check=True)

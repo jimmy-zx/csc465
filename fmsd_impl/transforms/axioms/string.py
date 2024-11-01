@@ -1,12 +1,13 @@
 import fmsd_impl.patch
 from fmsd.ast import Variable
-from fmsd_impl.constants.basic import NIL, INFINITY, ONE, ZERO, NAT
-from fmsd_impl.operators import Ternary
-from fmsd_impl.operators.binary import And, Implies
-from fmsd_impl.operators.bunch import Count
-from fmsd_impl.operators.generic import Equals
-from fmsd_impl.operators.set_ import Set
-from fmsd_impl.operators.string import (
+from fmsd_impl.constants import NIL, INFINITY, ONE, ZERO, NAT
+from fmsd_impl.operators import (
+    Ternary,
+    And,
+    Implies,
+    Count,
+    Equals,
+    Set,
     Join,
     Length,
     Subscript,

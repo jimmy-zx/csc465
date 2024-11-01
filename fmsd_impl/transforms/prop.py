@@ -1,6 +1,6 @@
 from fmsd.ast.node import Node
 from fmsd.transform.transform import FunctionTransform
-from fmsd_impl.operators.props import Associative, Commutative
+from fmsd_impl.operators import Associative, Commutative
 
 
 def func_associative(src: Node, dst: Node) -> bool:

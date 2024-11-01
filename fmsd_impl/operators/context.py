@@ -12,3 +12,8 @@ class Context(Operator):
         return [self.nodes[1]] + (
             self.parent.context() if self.parent is not None else []
         )
+
+
+__all__ = [
+    "Context",
+]

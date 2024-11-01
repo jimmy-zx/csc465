@@ -3,9 +3,17 @@
 """
 
 from fmsd.ast.node import Node, Variable
-from fmsd_impl.constants.basic import TRUE, FALSE
-from fmsd_impl.operators.binary import And, Flip, Or, Implies, ImpliedBy
-from fmsd_impl.operators.generic import Equals, NotEquals, Ternary
+from fmsd_impl.constants import TRUE, FALSE
+from fmsd_impl.operators import (
+    And,
+    Flip,
+    Or,
+    Implies,
+    ImpliedBy,
+    Equals,
+    NotEquals,
+    Ternary,
+)
 
 a = Variable("a")
 b = Variable("b")

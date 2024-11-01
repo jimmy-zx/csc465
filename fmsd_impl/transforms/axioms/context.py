@@ -1,6 +1,4 @@
-from fmsd_impl.operators.context import Context
-from fmsd_impl.operators.generic import Equals
-from fmsd_impl.operators.binary import And, Implies
+from fmsd_impl.operators import Context, Equals, And, Implies
 from fmsd.ast.node import Variable
 
 a = Variable("a")

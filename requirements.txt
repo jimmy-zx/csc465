@@ -4,3 +4,4 @@ black
 pytest
 mypy
 coverage
+import-linter
