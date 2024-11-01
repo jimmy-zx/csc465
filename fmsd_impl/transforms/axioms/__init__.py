@@ -7,7 +7,6 @@ from fmsd_impl.transforms.axioms import (
     generic,
     numeric,
     set_,
-    string,
 )
 from fmsd_impl.transforms.expr import ExpressionTransform
 
@@ -19,7 +18,6 @@ modules = [
     numeric,
     generic,
     set_,
-    string,
 ]
 
 t_all: dict[str, Transform] = {}

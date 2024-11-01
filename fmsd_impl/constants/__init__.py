@@ -2,7 +2,6 @@ from fmsd_impl.constants.basic import (
     FALSE,
     INFINITY,
     NAT,
-    NIL,
     NULL,
     ONE,
     TRUE,
@@ -21,5 +20,4 @@ __all__ = [
     "NAT",
     "XINT",
     "XREAL",
-    "NIL",
 ]
