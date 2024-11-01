@@ -1,5 +1,5 @@
+from fmsd.ast.node import Node, Variable
 from fmsd_impl.operators.context import Context
-from fmsd.ast.node import Variable, Node
 
 
 def test_context():

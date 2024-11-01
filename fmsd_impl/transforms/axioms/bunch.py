@@ -1,18 +1,17 @@
 import fmsd_impl.patch.binary
 import fmsd_impl.patch.numeric
-from fmsd.ast.node import Node
-from fmsd.ast.node import Variable
-from fmsd_impl.constants import NULL, NAT, XINT, XREAL, ZERO, ONE, INFINITY
+from fmsd.ast.node import Node, Variable
+from fmsd_impl.constants import INFINITY, NAT, NULL, ONE, XINT, XREAL, ZERO
 from fmsd_impl.operators import (
-    In,
-    Union,
-    Intersect,
-    Includes,
-    Count,
     BunchInterval,
+    Count,
+    Equals,
     Flip,
     Implies,
-    Equals,
+    In,
+    Includes,
+    Intersect,
+    Union,
 )
 
 assert fmsd_impl.patch.binary

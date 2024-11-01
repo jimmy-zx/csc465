@@ -3,9 +3,9 @@ import pytest
 import fmsd_impl.patch.binary
 from fmsd.ast.node import Variable
 from fmsd.proof.derived import (
-    DerivedStepProof,
     DerivedChainProof,
     DerivedEquivChainProof,
+    DerivedStepProof,
 )
 from fmsd.utils import config
 from fmsd_impl.constants.basic import TRUE

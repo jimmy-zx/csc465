@@ -1,7 +1,7 @@
 from typing import Sequence
 
 from fmsd.ast import Node
-from fmsd.proof.proof import Proof, ProofException, EquivProof, StepProof
+from fmsd.proof.proof import EquivProof, Proof, ProofException, StepProof
 
 
 class ChainProof(StepProof):

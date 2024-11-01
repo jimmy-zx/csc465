@@ -1,26 +1,27 @@
 from fmsd.ast.node import Variable
-from fmsd_impl.transforms.expr import ExpressionTransform
+from fmsd_impl.constants.basic import FALSE as F
+from fmsd_impl.constants.basic import TRUE as T
+from fmsd_impl.operators.binary import And, Flip, ImpliedBy, Implies, Or
+from fmsd_impl.operators.generic import Equals, NotEquals
 from fmsd_impl.transforms.axioms.binary import (
-    axiom_excluded_middle,
-    axiom_noncontradiction,
     axiom_base_and,
+    axiom_base_implies_false,
+    axiom_base_implies_true,
     axiom_base_or,
-    axiom_mirror,
+    axiom_contrapositive,
     axiom_double_negation,
     axiom_duality_and,
     axiom_duality_or,
+    axiom_excluded_middle,
     axiom_exclusion,
-    axiom_material_implication,
     axiom_inclusion_and,
     axiom_inclusion_or,
-    axiom_base_implies_true,
-    axiom_base_implies_false,
-    axiom_contrapositive,
+    axiom_material_implication,
+    axiom_mirror,
+    axiom_noncontradiction,
 )
-from fmsd_impl.constants.basic import TRUE as T, FALSE as F
-from fmsd_impl.operators.binary import And, Or, Implies, ImpliedBy, Flip
-from fmsd_impl.operators.generic import Equals, NotEquals
 from fmsd_impl.transforms.binary_table import func_rule_table
+from fmsd_impl.transforms.expr import ExpressionTransform
 
 a = Variable("a")
 b = Variable("b")

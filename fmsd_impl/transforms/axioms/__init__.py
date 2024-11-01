@@ -2,14 +2,12 @@ from fmsd.transform.transform import Transform
 from fmsd_impl.transforms.axioms import (
     binary,
     bunch,
-    generic,
     constants,
     context,
+    generic,
+    numeric,
     set_,
     string,
-)
-from fmsd_impl.transforms.axioms import (
-    numeric,
 )
 from fmsd_impl.transforms.expr import ExpressionTransform
 

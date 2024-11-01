@@ -1,6 +1,4 @@
-from fmsd_impl.patch import binary
-from fmsd_impl.patch import numeric
-
+from fmsd_impl.patch import binary, numeric
 from fmsd_impl.patch.infix import EQ, NEQ
 
 assert binary

@@ -3,15 +3,15 @@
 """
 
 from fmsd.ast.node import Node, Variable
-from fmsd_impl.constants import TRUE, FALSE
+from fmsd_impl.constants import FALSE, TRUE
 from fmsd_impl.operators import (
     And,
-    Flip,
-    Or,
-    Implies,
-    ImpliedBy,
     Equals,
+    Flip,
+    ImpliedBy,
+    Implies,
     NotEquals,
+    Or,
     Ternary,
 )
 

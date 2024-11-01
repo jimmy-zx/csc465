@@ -1,19 +1,19 @@
 from fmsd.ast import Variable
 from fmsd_impl.operators import (
-    Set,
     Contents,
+    Count,
+    Equals,
+    In,
+    Intersect,
+    NotEquals,
+    Set,
     SetIn,
     SetIntersect,
-    SetUnion,
-    SubsetEq,
-    Size,
     SetPower,
-    Equals,
-    NotEquals,
-    In,
-    Count,
+    SetUnion,
+    Size,
+    SubsetEq,
     Union,
-    Intersect,
 )
 
 S = Variable("S")

@@ -1,5 +1,5 @@
 from fmsd.transform.transform import Transform
-from fmsd_impl.transforms import binary_table, prop, axioms
+from fmsd_impl.transforms import axioms, binary_table, prop
 
 modules = [binary_table, prop, axioms]
 

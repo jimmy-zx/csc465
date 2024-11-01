@@ -1,20 +1,20 @@
 import fmsd_impl.patch
 from fmsd.ast import Variable
-from fmsd_impl.constants import NIL, INFINITY, ONE, ZERO, NAT
+from fmsd_impl.constants import INFINITY, NAT, NIL, ONE, ZERO
 from fmsd_impl.operators import (
-    Ternary,
     And,
-    Implies,
     Count,
+    Duplicate,
     Equals,
-    Set,
+    Implies,
     Join,
     Length,
-    Subscript,
     Replace,
-    Duplicate,
+    Set,
     Star,
     StringRange,
+    Subscript,
+    Ternary,
 )
 
 assert fmsd_impl.patch

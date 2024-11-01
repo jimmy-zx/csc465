@@ -1,6 +1,6 @@
 from fmsd.ast.node import Node
 from fmsd.proof.chain import ChainProof
-from fmsd.proof.proof import ProofException, Proof, EquivProof, StepProof
+from fmsd.proof.proof import EquivProof, Proof, ProofException, StepProof
 from fmsd.proof.transform import TransformProof
 from fmsd.transform.transform import Transform
 from fmsd.utils.impl import impl

@@ -1,4 +1,4 @@
-from fmsd.ast.node import Variable, Node
+from fmsd.ast.node import Node, Variable
 
 
 def test_eq():

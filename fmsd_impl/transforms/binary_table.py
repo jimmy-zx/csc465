@@ -1,14 +1,14 @@
 from fmsd.ast.node import Node
 from fmsd.transform.transform import FunctionTransform
-from fmsd_impl.constants import TRUE, FALSE
+from fmsd_impl.constants import FALSE, TRUE
 from fmsd_impl.operators import (
-    Flip,
     And,
-    Or,
-    Implies,
-    ImpliedBy,
     Equals,
+    Flip,
+    ImpliedBy,
+    Implies,
     NotEquals,
+    Or,
     Ternary,
 )
 

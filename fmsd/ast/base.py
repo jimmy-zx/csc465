@@ -1,4 +1,4 @@
-from typing import TypeVar, Generic, Self
+from typing import Generic, Self, TypeVar
 
 from fmsd.utils.config import config
 

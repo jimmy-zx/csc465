@@ -1,5 +1,5 @@
-from fmsd_impl.operators import Context, Equals, And, Implies
 from fmsd.ast.node import Variable
+from fmsd_impl.operators import And, Context, Equals, Implies
 
 a = Variable("a")
 b = Variable("b")

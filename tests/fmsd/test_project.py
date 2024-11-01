@@ -70,3 +70,13 @@ def test_black():
 
 def test_import_linter():
     subprocess.run(["lint-imports"], check=True)
+
+
+def test_isort():
+    p = subprocess.run(
+        ["isort", "fmsd", "fmsd_impl", "tests", "--diff"],
+        check=True,
+        capture_output=True,
+    )
+    status = p.stdout == b""
+    assert status

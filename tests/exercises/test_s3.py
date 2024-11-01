@@ -2,12 +2,12 @@ from fmsd.ast.node import Variable
 from fmsd.ast_ext import Constant
 from fmsd.proof.derived import DerivedChainProof
 from fmsd.utils.config import config
-from fmsd_impl.constants.basic import TRUE, NAT, ZERO, INFINITY, ONE, NULL
-from fmsd_impl.operators import Intersect, Count
+from fmsd_impl.constants.basic import INFINITY, NAT, NULL, ONE, TRUE, ZERO
+from fmsd_impl.operators import Count, Intersect
 from fmsd_impl.operators.bunch import In, Union
 from fmsd_impl.operators.context import Context
 from fmsd_impl.operators.generic import Equals
-from fmsd_impl.operators.set_ import Size, Contents, Set, SetIn
+from fmsd_impl.operators.set_ import Contents, Set, SetIn, Size
 
 
 def test_42():

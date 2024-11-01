@@ -5,8 +5,8 @@
 import fmsd_impl.patch.binary
 import fmsd_impl.patch.numeric
 from fmsd.ast.node import Node, Variable
-from fmsd_impl.constants import TRUE, ZERO, ONE, INFINITY
-from fmsd_impl.operators import Implies, Equals, Max, Min
+from fmsd_impl.constants import INFINITY, ONE, TRUE, ZERO
+from fmsd_impl.operators import Equals, Implies, Max, Min
 from fmsd_impl.patch.infix import EQ, NEQ
 
 assert fmsd_impl.patch.binary

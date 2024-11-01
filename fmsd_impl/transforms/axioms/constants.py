@@ -1,13 +1,8 @@
 import fmsd_impl.patch.binary
 import fmsd_impl.patch.numeric
 from fmsd.ast.node import Variable
-from fmsd_impl.constants import NAT, ZERO, ONE, INFINITY
-from fmsd_impl.operators import (
-    In,
-    Union,
-    Implies,
-    Equals,
-)
+from fmsd_impl.constants import INFINITY, NAT, ONE, ZERO
+from fmsd_impl.operators import Equals, Implies, In, Union
 
 assert fmsd_impl.patch.binary
 assert fmsd_impl.patch.numeric

@@ -1,16 +1,16 @@
 # type: ignore
 from fmsd.ast.node import Node
 from fmsd_impl.operators.numeric import (
-    Negate,
-    Plus,
-    Minus,
-    Multiply,
     DividedBy,
-    Power,
-    LessThan,
-    LessThanOrEqualsTo,
     GreaterThan,
     GreaterThanOrEqualsTo,
+    LessThan,
+    LessThanOrEqualsTo,
+    Minus,
+    Multiply,
+    Negate,
+    Plus,
+    Power,
 )
 
 # pylint: disable=unnecessary-lambda

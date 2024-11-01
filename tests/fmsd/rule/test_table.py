@@ -1,8 +1,9 @@
 import pytest
 
 from fmsd.ast.node import Node
-from fmsd_impl.constants.basic import TRUE as T, FALSE as F
-from fmsd_impl.operators.binary import Flip, And, Or, Implies, ImpliedBy
+from fmsd_impl.constants.basic import FALSE as F
+from fmsd_impl.constants.basic import TRUE as T
+from fmsd_impl.operators.binary import And, Flip, ImpliedBy, Implies, Or
 from fmsd_impl.operators.generic import Equals, NotEquals, Ternary
 from fmsd_impl.transforms.binary_table import func_rule_table
 

@@ -2,7 +2,7 @@
 Ref: https://github.com/sagemath/sage/issues/6245
 """
 
-from typing import Callable, TypeVar, Generic
+from typing import Callable, Generic, TypeVar
 
 L = TypeVar("L")
 R = TypeVar("R")

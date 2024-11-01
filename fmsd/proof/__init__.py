@@ -1,11 +1,11 @@
-from fmsd.proof.chain import ChainProof, ChainEquivProof
+from fmsd.proof.chain import ChainEquivProof, ChainProof
 from fmsd.proof.derived import (
-    DerivedStepProof,
     DerivedChainProof,
     DerivedEquivChainProof,
+    DerivedStepProof,
     NoTransformationFoundException,
 )
-from fmsd.proof.proof import Proof, EquivProof, ProofException
+from fmsd.proof.proof import EquivProof, Proof, ProofException
 from fmsd.proof.transform import TransformProof
 
 __all__ = [

@@ -1,6 +1,6 @@
 # type: ignore
 from fmsd.ast.node import Node
-from fmsd_impl.operators.binary import Flip, And, Or, Implies, ImpliedBy
+from fmsd_impl.operators.binary import And, Flip, ImpliedBy, Implies, Or
 
 # pylint: disable=unnecessary-lambda
 
