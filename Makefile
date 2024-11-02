@@ -13,14 +13,14 @@ format: black isort
 
 test: pytest
 
-target_files = fmsd fmsd_impl tests setup.py
+target_files = fmsd fmsd_impl tests setup.py build_isolated.py
 
 black:
-	black $(target_files)
+	python3 -m black $(target_files)
 
 isort:
-	isort $(target_files)
+	python3 -m isort $(target_files)
 
 pytest:
-	pytest
+	python3 -m pytest
 

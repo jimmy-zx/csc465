@@ -7,17 +7,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-dependencies = [
-    "pylint",
-    "flake8",
-    "black",
-    "pytest",
-    "mypy",
-    "coverage",
-    "import-linter",
-    "isort",
-]
-dynamic = ["version"]
+dynamic = ["version", "dependencies"]
 
 [project.urls]
 Homepage = "https://github.com/jimmy-zx/csc465"
@@ -25,6 +15,9 @@ Homepage = "https://github.com/jimmy-zx/csc465"
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
 
 [tool.setuptools.packages.find]
 include = [

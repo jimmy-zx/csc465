@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-TARGET_FILES = ["fmsd", "fmsd_impl", "tests", "setup.py"]
+TARGET_FILES = ["fmsd", "fmsd_impl", "tests", "setup.py", "build_isolated.py"]
 
 
 @pytest.mark.parametrize("file", Path("fmsd").rglob("*.py"))
@@ -59,7 +59,7 @@ def test_mypy():
 
 
 def test_pylint():
-    subprocess.run(["pylint"] + TARGET_FILES, check=True)
+    subprocess.run(["pylint", "-j", "0"] + TARGET_FILES, check=True)
 
 
 def test_flake8():

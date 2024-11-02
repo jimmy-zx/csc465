@@ -1,5 +1,5 @@
 from fmsd.ast_ext.operator import Operator
-from fmsd_impl.operators.props import Associative, Commutative
+from fmsd_impl.operators.props import Associative, Commutative, Idempotent
 
 
 class Set(Operator):
@@ -34,12 +34,12 @@ class SetPower(Operator):
     DELIM = "ϟ"
 
 
-class SetUnion(Operator, Commutative, Associative):
+class SetUnion(Operator, Commutative, Associative, Idempotent):
     N = 2
     DELIM = "∪"
 
 
-class SetIntersect(Operator, Commutative, Associative):
+class SetIntersect(Operator, Commutative, Associative, Idempotent):
     DELIM = "∩"
 
 

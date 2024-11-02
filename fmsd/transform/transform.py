@@ -32,3 +32,8 @@ class FunctionTransform(Transform):
         if not isinstance(other, FunctionTransform):
             return False
         return self.func == other.func
+
+
+class SymmetricFunctionTransform(FunctionTransform):
+    def verify(self, src: Node, dst: Node) -> bool:
+        return self.func(src, dst) or self.func(dst, src)

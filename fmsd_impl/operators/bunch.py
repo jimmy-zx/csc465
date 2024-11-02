@@ -1,13 +1,13 @@
 from fmsd.ast_ext.operator import Operator
-from fmsd_impl.operators.props import Associative, Commutative
+from fmsd_impl.operators.props import Associative, Commutative, Idempotent
 
 
-class Union(Operator, Associative, Commutative):
+class Union(Operator, Associative, Commutative, Idempotent):
     N = 2
     DELIM = ","
 
 
-class Intersect(Operator, Associative, Commutative):
+class Intersect(Operator, Associative, Commutative, Idempotent):
     N = 2
     DELIM = "‘"
 

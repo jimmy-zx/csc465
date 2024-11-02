@@ -1,5 +1,5 @@
 from fmsd.ast_ext.operator import Operator
-from fmsd_impl.operators.props import Associative, Commutative
+from fmsd_impl.operators.props import Associative, Commutative, Idempotent
 
 
 class Negate(Operator):
@@ -32,12 +32,12 @@ class Power(Operator):
     DELIM = "^"
 
 
-class Max(Operator, Commutative, Associative):
+class Max(Operator, Commutative, Associative, Idempotent):
     N = 2
     DELIM = "↑"
 
 
-class Min(Operator, Commutative, Associative):
+class Min(Operator, Commutative, Associative, Idempotent):
     N = 2
     DELIM = "↓"
 
