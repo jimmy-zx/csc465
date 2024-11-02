@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-TARGET_FILES = ["fmsd", "fmsd_impl", "tests", "setup.py"]
+TARGET_FILES = ["fmsd", "fmsd_impl", "tests", "setup.py", "build_isolated.py"]
 
 
 @pytest.mark.parametrize("file", Path("fmsd").rglob("*.py"))

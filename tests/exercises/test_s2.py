@@ -1,7 +1,6 @@
 import fmsd_impl.patch.binary
 from fmsd.ast.node import Variable
 from fmsd.proof.derived import DerivedChainProof, DerivedEquivChainProof
-from fmsd.utils.config import config
 from fmsd_impl.constants.basic import TRUE
 from fmsd_impl.operators.generic import Ternary
 
@@ -51,7 +50,6 @@ def test_22a():
     """
     Exercise 22a
     """
-    config.trace = True
     p = Variable("p")  # play tennis
     w = Variable("w")  # watch tennis
     r = Variable("r")  # read tennis
