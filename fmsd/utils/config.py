@@ -13,7 +13,7 @@ class Config:  # pylint: disable=too-few-public-methods
         self.trace = trace
         self.debug = debug
         self.levels = levels
-        self.max_level = levels * 6
+        self.max_level = levels * 6 + 1
 
     def get_trace(self):
         if not self.trace:
@@ -27,6 +27,8 @@ class Config:  # pylint: disable=too-few-public-methods
             return frame
 
     def truecolor(self, level: int, text: str) -> str:
+        if level >= self.max_level:
+            return text
         if level % 2 == 1:
             return text
         level //= 2

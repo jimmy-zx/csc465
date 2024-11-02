@@ -11,10 +11,9 @@ assert fmsd_impl.patch
 def test_count():
     with pytest.raises(NoTransformationFoundException):
         DerivedStepProof(
-            ONE + ONE + ONE, ONE + ONE,
+            ONE + ONE + ONE,
+            ONE + ONE,
         ).verify()
     a = Variable("a")
     b = Variable("b")
-    assert DerivedStepProof(
-        (a + b) + a, (a + a) + b
-    ).verify()
+    assert DerivedStepProof((a + b) + a, (a + a) + b).verify()
