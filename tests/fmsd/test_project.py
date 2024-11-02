@@ -59,7 +59,7 @@ def test_mypy():
 
 
 def test_pylint():
-    subprocess.run(["pylint"] + TARGET_FILES, check=True)
+    subprocess.run(["pylint", "-j", "0"] + TARGET_FILES, check=True)
 
 
 def test_flake8():
