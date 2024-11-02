@@ -1,3 +1,5 @@
+from collections import Counter
+
 from fmsd.ast.node import Node
 from fmsd.transform.transform import FunctionTransform
 from fmsd_impl.operators import Associative, Commutative
@@ -10,7 +12,7 @@ def func_associative(src: Node, dst: Node) -> bool:
         return False
     if not isinstance(src, Commutative):
         return src.flatten() == dst.flatten()
-    return set(src.flatten()) == set(dst.flatten())
+    return Counter(src.flatten()) == Counter(dst.flatten())
 
 
 t_associative = FunctionTransform(func_associative)
@@ -21,7 +23,7 @@ def func_commutative(src: Node, dst: Node) -> bool:
         return False
     if not isinstance(src, Commutative):
         return False
-    return set(src.nodes) == set(dst.nodes)
+    return src.nodes[1] == dst.nodes[0] and dst.nodes[1] == src.nodes[0]
 
 
 t_commutative = FunctionTransform(func_commutative)
