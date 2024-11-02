@@ -1,5 +1,5 @@
 from fmsd.ast_ext.operator import Operator
-from fmsd_impl.operators.props import Associative, Commutative
+from fmsd_impl.operators.props import Associative, Commutative, Idempotent
 
 
 class Flip(Operator):
@@ -7,12 +7,12 @@ class Flip(Operator):
     DELIM = "¬"
 
 
-class And(Operator, Associative, Commutative):
+class And(Operator, Associative, Commutative, Idempotent):
     N = 2
     DELIM = "∧"
 
 
-class Or(Operator, Associative, Commutative):
+class Or(Operator, Associative, Commutative, Idempotent):
     N = 2
     DELIM = "∨"
 

@@ -17,3 +17,13 @@ def test_count():
     a = Variable("a")
     b = Variable("b")
     assert DerivedStepProof((a + b) + a, (a + a) + b).verify()
+
+
+def test_idempotent():
+    a = Variable("a")
+    b = Variable("b")
+    assert DerivedStepProof(a, a & a & a).verify()
+    assert DerivedStepProof(
+        a & b,
+        a & (a & b) & (b & b),
+    ).verify()

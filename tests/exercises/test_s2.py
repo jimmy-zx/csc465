@@ -76,7 +76,6 @@ def test_22a():
             ((~p | ~r) >> w) & (~p | ~r) & stmt3 & stmt4,
             w & stmt3 & stmt4,
             w & (~p | ~w) & (~w | ~r),
-            w & w & (~p | ~w) & (~w | ~r),
             w & w & w & (~p | ~w) & (~w | ~r),
             ((~p | ~w) & w) & ((~w | ~r) & w) & w,
             ((~w | ~p) & ~~w) & ((~w | ~r) & ~~w) & w,

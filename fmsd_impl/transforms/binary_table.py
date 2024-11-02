@@ -53,11 +53,9 @@ def func_rule_table(
     assert False
 
 
-def rule_table_wrapper(src: Node, dst: Node) -> bool:
+@FunctionTransform
+def t_rule_table(src: Node, dst: Node) -> bool:
     try:
         return func_rule_table(src) == dst
     except AssertionError:
         return False
-
-
-t_rule_table = FunctionTransform(rule_table_wrapper)
