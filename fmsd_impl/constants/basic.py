@@ -12,3 +12,15 @@ NULL = Constant("null")
 NAT = Constant("nat")
 XINT = Constant("xint")
 XREAL = Constant("xreal")
+
+__all__ = [
+    "TRUE",
+    "FALSE",
+    "ZERO",
+    "ONE",
+    "INFINITY",
+    "NULL",
+    "NAT",
+    "XINT",
+    "XREAL",
+]

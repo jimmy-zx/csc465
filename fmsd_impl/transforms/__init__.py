@@ -1,7 +1,7 @@
 from fmsd.transform.transform import Transform
-from fmsd_impl.transforms import axioms, binary_table, prop
+from fmsd_impl.transforms import axioms, binary_table, number, prop
 
-modules = [binary_table, prop, axioms]
+modules = [binary_table, prop, axioms, number]
 
 t_all: dict[str, Transform] = {}
 

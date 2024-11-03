@@ -1,9 +1,10 @@
-from typing import Self
+from typing import Self, final
 
 from fmsd.ast.base import CopyOnConstruction
 from fmsd.ast.node import Node, VarTable
 
 
+@final
 class Constant(Node, CopyOnConstruction):
     def __init__(self, name: str) -> None:
         super().__init__()

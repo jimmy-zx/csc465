@@ -127,9 +127,6 @@ class Node(Base["Node"]):
     def validate(self) -> bool:
         return all(node.parent == self and node.validate() for node in self.nodes)
 
-    def __iter__(self) -> Iterator["Node"]:
-        return iter(self.nodes)
-
     def walk_preorder(self) -> Iterator["Node"]:
         yield self
         for node in self.nodes:

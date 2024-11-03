@@ -27,14 +27,26 @@ class Base(Generic[T]):
     def __and__(self, other: T) -> T:
         raise NotImplementedError()
 
+    def __rand__(self, other: T) -> T:
+        return NotImplemented
+
     def __or__(self, other: T) -> T:
         raise NotImplementedError()
+
+    def __ror__(self, other: T) -> T:
+        return NotImplemented
 
     def __rshift__(self, other: T) -> T:
         raise NotImplementedError()
 
+    def __rrshift__(self, other: T) -> T:
+        return NotImplemented
+
     def __lshift__(self, other: T) -> T:
         raise NotImplementedError()
+
+    def __rlshift__(self, other: T) -> T:
+        return NotImplemented
 
     def __neg__(self) -> T:
         raise NotImplementedError()
@@ -42,17 +54,32 @@ class Base(Generic[T]):
     def __add__(self, other: T) -> T:
         raise NotImplementedError()
 
+    def __radd__(self, other: T) -> T:
+        return NotImplemented
+
     def __sub__(self, other: T) -> T:
         raise NotImplementedError()
+
+    def __rsub__(self, other: T) -> T:
+        return NotImplemented
 
     def __mul__(self, other: T) -> T:
         raise NotImplementedError()
 
+    def __rmul__(self, other: T) -> T:
+        return NotImplemented
+
     def __truediv__(self, other: T) -> T:
         raise NotImplementedError()
 
+    def __rtruediv__(self, other: T) -> T:
+        return NotImplemented
+
     def __pow__(self, power: T) -> T:
         raise NotImplementedError()
+
+    def __rpow__(self, other: T) -> T:
+        return NotImplemented
 
     def __lt__(self, other: T) -> T:
         raise NotImplementedError()
