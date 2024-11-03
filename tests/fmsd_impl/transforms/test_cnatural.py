@@ -8,16 +8,23 @@ import fmsd_impl.patch
 from fmsd.ast import Node
 from fmsd.ast_ext import Constant
 from fmsd.proof import DerivedEquivChainProof
-from fmsd_impl.constants import INFINITY, NAT, ONE, TRUE, ZERO
+from fmsd_impl.constants import FALSE, INFINITY, NAT, ONE, TRUE, ZERO
 from fmsd_impl.operators import (
     Context,
     DividedBy,
     Equals,
+    GreaterThan,
+    GreaterThanOrEqualsTo,
     Implies,
     In,
+    LessThan,
+    LessThanOrEqualsTo,
+    Max,
+    Min,
     Minus,
     Multiply,
     Plus,
+    Power,
 )
 
 assert fmsd_impl.patch
@@ -106,16 +113,57 @@ def test_natural_set():
         (Minus, operator.sub),
         (Multiply, operator.mul),
         (DividedBy, operator.floordiv),
+        (Max, max),
+        (Min, min),
+        (Power, pow),
     ],
 )
-def test_natural_closed_op(op: type[Node], func: Callable[[int, int], int]):
-    r = random.randint(0, 2**16)
-    l = r * random.randint(1, 2**16)
+def test_natural_op(op: type[Node], func: Callable[[int, int], int]):
+    r = random.randint(0, 2**8)
+    l = r * random.randint(1, 2**8)
     assert DerivedEquivChainProof(
         op(Constant(str(l)), Constant(str(r))),
         Constant(str(func(l, r))),
         [
             op(Constant(str(l)), Constant(str(r))),
             Constant(str(func(l, r))),
+        ],
+    ).verify()
+
+
+@pytest.mark.parametrize(
+    ("op", "func"),
+    [
+        (LessThan, operator.lt),
+        (LessThanOrEqualsTo, operator.le),
+        (GreaterThan, operator.gt),
+        (GreaterThanOrEqualsTo, operator.ge),
+    ],
+)
+def test_natural_binop(op: type[Node], func: Callable[[int, int], bool]):
+    def bool_to_bin(val: bool) -> Node:
+        if val:
+            return TRUE
+        return FALSE
+
+    l = random.randint(0, 2**16)
+    r = random.randint(0, 2**16)
+
+    assert DerivedEquivChainProof(
+        op(Constant(str(l)), Constant(str(r))),
+        bool_to_bin(func(l, r)),
+        [
+            op(Constant(str(l)), Constant(str(r))),
+            bool_to_bin(func(l, r)),
+        ],
+    ).verify()
+
+    r, l = l, r
+    assert DerivedEquivChainProof(
+        op(Constant(str(l)), Constant(str(r))),
+        bool_to_bin(func(l, r)),
+        [
+            op(Constant(str(l)), Constant(str(r))),
+            bool_to_bin(func(l, r)),
         ],
     ).verify()

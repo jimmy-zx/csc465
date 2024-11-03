@@ -3,8 +3,21 @@ from typing import Callable
 from fmsd.ast import Variable
 from fmsd.ast.node import Node
 from fmsd.transform.transform import SymmetricFunctionTransform
-from fmsd_impl.constants import INFINITY, NAT, ONE, TRUE, to_natural
-from fmsd_impl.operators import DividedBy, In, Minus, Multiply, Plus
+from fmsd_impl.constants import INFINITY, NAT, ONE, TRUE, to_bin, to_natural
+from fmsd_impl.operators import (
+    DividedBy,
+    GreaterThan,
+    GreaterThanOrEqualsTo,
+    In,
+    LessThan,
+    LessThanOrEqualsTo,
+    Max,
+    Min,
+    Minus,
+    Multiply,
+    Plus,
+    Power,
+)
 
 
 @SymmetricFunctionTransform
@@ -78,4 +91,46 @@ t_natural_multiply = SymmetricFunctionTransform(
 )
 t_natural_divided_by = SymmetricFunctionTransform(
     map_natural_op(DividedBy, lambda x, y, r: y != 0 and x / y == r)
+)
+t_natural_max = SymmetricFunctionTransform(
+    map_natural_op(Max, lambda x, y, r: max(x, y) == r)
+)
+t_natural_min = SymmetricFunctionTransform(
+    map_natural_op(Min, lambda x, y, r: min(x, y) == r)
+)
+t_natural_pow = SymmetricFunctionTransform(
+    map_natural_op(Power, lambda x, y, r: pow(x, y) == r)
+)
+
+
+def map_natural_binop(
+    op: type[Node], func: Callable[[int, int, bool], bool]
+) -> Callable[[Node, Node], bool]:
+    def wrapper(src: Node, dst: Node) -> bool:
+        l = Variable("l")
+        r = Variable("r")
+        if (vt := op(l, r).match(src, {})) is None:
+            return False
+        if (lv := to_natural(vt["l"])) is None:
+            return False
+        if (rv := to_natural(vt["r"])) is None:
+            return False
+        if (res := to_bin(dst)) is None:
+            return False
+        return func(lv, rv, res)
+
+    return wrapper
+
+
+t_natural_lt = SymmetricFunctionTransform(
+    map_natural_binop(LessThan, lambda x, y, r: (x < y) == r)
+)
+t_natural_le = SymmetricFunctionTransform(
+    map_natural_binop(LessThanOrEqualsTo, lambda x, y, r: (x <= y) == r)
+)
+t_natural_gt = SymmetricFunctionTransform(
+    map_natural_binop(GreaterThan, lambda x, y, r: (x > y) == r)
+)
+t_natural_ge = SymmetricFunctionTransform(
+    map_natural_binop(GreaterThanOrEqualsTo, lambda x, y, r: (x >= y) == r)
 )
