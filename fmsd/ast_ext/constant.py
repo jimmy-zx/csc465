@@ -1,4 +1,4 @@
-from typing import Self, final
+from typing import final
 
 from fmsd.ast.base import CopyOnConstruction
 from fmsd.ast.node import Node, VarTable
@@ -21,7 +21,7 @@ class Constant(Node, CopyOnConstruction):
     def print(self, depth: int = 0) -> str:
         return self.name
 
-    def copy(self) -> Self:
+    def copy(self, copy_on_construction: bool = True) -> "Node":
         return type(self)(self.name)
 
     def match(self, target: "Node", vt: VarTable) -> VarTable | None:

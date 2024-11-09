@@ -28,3 +28,6 @@ class ExpressionTransform(Transform):
         if not isinstance(other, ExpressionTransform):
             return False
         return self.expr == other.expr
+
+    def __hash__(self):
+        return hash((type(self), self.expr))

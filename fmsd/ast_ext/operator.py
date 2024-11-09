@@ -21,3 +21,9 @@ class Operator(Node):
                 + config.truecolor(depth, ")")
             )
         assert False
+
+    @classmethod
+    def bin_list(cls, *operands: Node) -> Node:
+        if len(operands) == 1:
+            return operands[0]
+        return cls(cls.bin_list(*operands[:-1]), operands[-1])

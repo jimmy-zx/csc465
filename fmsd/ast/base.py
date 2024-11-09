@@ -1,4 +1,4 @@
-from typing import Generic, Self, TypeVar
+from typing import Generic, TypeVar
 
 from fmsd.utils.config import config
 
@@ -96,8 +96,8 @@ class Base(Generic[T]):
     def __matmul__(self, other):
         return NotImplemented
 
-    def copy(self) -> Self:
-        return self
+    def copy(self, copy_on_construction: bool = True) -> T:
+        raise NotImplementedError()
 
 
 class CopyOnConstruction:

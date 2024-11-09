@@ -11,6 +11,9 @@ class Transform(ABC):
     @abstractmethod
     def verify(self, src: Node, dst: Node) -> bool: ...
 
+    @abstractmethod
+    def __hash__(self): ...
+
     def __str__(self) -> str:
         if self.name is not None:
             return self.name
@@ -32,6 +35,9 @@ class FunctionTransform(Transform):
         if not isinstance(other, FunctionTransform):
             return False
         return self.func == other.func
+
+    def __hash__(self):
+        return hash((type(self), self.func))
 
 
 class SymmetricFunctionTransform(FunctionTransform):

@@ -13,6 +13,8 @@ NAT = Constant("nat")
 XINT = Constant("xint")
 XREAL = Constant("xreal")
 
+NIL = Constant("nil")
+
 __all__ = [
     "TRUE",
     "FALSE",
@@ -23,4 +25,5 @@ __all__ = [
     "NAT",
     "XINT",
     "XREAL",
+    "NIL",
 ]

@@ -5,6 +5,7 @@ from fmsd.ast.node import Node
 from fmsd.transform.transform import SymmetricFunctionTransform
 from fmsd_impl.constants import INFINITY, NAT, ONE, TRUE, to_bin, to_natural
 from fmsd_impl.operators import (
+    BunchInterval,
     DividedBy,
     GreaterThan,
     GreaterThanOrEqualsTo,
@@ -38,15 +39,23 @@ def t_natural_construction(src: Node, dst: Node) -> bool:
 
 
 @SymmetricFunctionTransform
-def t_natural_range(src: Node, dst: Node) -> bool:
+def t_natural_limit(src: Node, dst: Node) -> bool:
     if src != TRUE:
         return False
     x = Variable("x")
-    if (vt := ((-INFINITY < x) & (x < INFINITY)).match(dst, {})) is None:
-        return False
-    if to_natural(vt["x"]) is None:
-        return False
-    return True
+    if (vt := ((-INFINITY < x) & (x < INFINITY)).match(dst, {})) is not None:
+        if to_natural(vt["x"]) is None:
+            return False
+        return True
+    if (vt := (-INFINITY < x).match(dst, {})) is not None:
+        if to_natural(vt["x"]) is None:
+            return False
+        return True
+    if (vt := (x < INFINITY).match(dst, {})) is not None:
+        if to_natural(vt["x"]) is None:
+            return False
+        return True
+    return False
 
 
 @SymmetricFunctionTransform
@@ -59,6 +68,22 @@ def t_natural(src: Node, dst: Node) -> bool:
     if to_natural(vt["x"]) is None:
         return False
     return True
+
+
+@SymmetricFunctionTransform
+def t_natural_range(src: Node, dst: Node) -> bool:
+    x = Variable("x")
+    l = Variable("l")
+    r = Variable("r")
+    if (vt := In(x, BunchInterval(l, r)).match(dst, {})) is None:
+        return False
+    if (xv := to_natural(vt["x"])) is None:
+        return False
+    if (lv := to_natural(vt["l"])) is None:
+        return False
+    if (rv := to_natural(vt["r"])) is None:
+        return False
+    return to_bin(src) == (lv <= xv < rv)
 
 
 def map_natural_op(

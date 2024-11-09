@@ -1,4 +1,4 @@
-from typing import Iterator, Self, final
+from typing import Iterator, final
 
 from fmsd.ast.base import Base, CopyOnConstruction
 from fmsd.utils.config import config
@@ -38,8 +38,10 @@ class Node(Base["Node"]):
     def print(self, depth: int = 0) -> str:
         return "Node(" + ", ".join(node.print(depth + 1) for node in self.nodes) + ")"
 
-    def copy(self) -> Self:
-        return type(self)(*(node.copy() for node in self.nodes))
+    def copy(self, copy_on_construction: bool = True) -> "Node":
+        res = type(self)(*(node.copy() for node in self.nodes))
+        res.copy_on_construction = res.copy_on_construction or copy_on_construction
+        return res
 
     def variables(self) -> set[str]:
         return set().union(*(node.variables() for node in self.nodes))
@@ -149,7 +151,7 @@ class Variable(Node, CopyOnConstruction):
     def print(self, depth: int = 0) -> str:
         return self.name
 
-    def copy(self) -> Self:
+    def copy(self, copy_on_construction: bool = True) -> "Node":
         return type(self)(self.name)
 
     def match(self, target: "Node", vt: VarTable) -> VarTable | None:

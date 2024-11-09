@@ -20,7 +20,7 @@ from fmsd_impl.transforms.axioms.binary import (
     axiom_mirror,
     axiom_noncontradiction,
 )
-from fmsd_impl.transforms.cbinary import func_rule_table
+from fmsd_impl.transforms.constant.cbinary import func_rule_table
 from fmsd_impl.transforms.expr import ExpressionTransform
 
 a = Variable("a")

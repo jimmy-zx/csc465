@@ -1,7 +1,8 @@
 from fmsd.transform.transform import Transform
-from fmsd_impl.transforms import axioms, cbinary, cnatural, prop
+from fmsd_impl.transforms import axioms, prop
+from fmsd_impl.transforms.constant import cbinary, clength, cnatural, cstring
 
-modules = [cbinary, prop, axioms, cnatural]
+modules = [cbinary, prop, axioms, cnatural, clength, cstring]
 
 t_all: dict[str, Transform] = {}
 

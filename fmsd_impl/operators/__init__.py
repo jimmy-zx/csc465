@@ -5,3 +5,4 @@ from fmsd_impl.operators.generic import *
 from fmsd_impl.operators.numeric import *
 from fmsd_impl.operators.props import *
 from fmsd_impl.operators.set_ import *
+from fmsd_impl.operators.string import *

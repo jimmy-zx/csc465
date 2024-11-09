@@ -2,6 +2,7 @@ from fmsd.ast.node import Node
 from fmsd.proof.chain import ChainProof
 from fmsd.proof.proof import EquivProof, Proof, ProofException, StepProof
 from fmsd.proof.transform import TransformProof
+from fmsd.transform import TransformManager
 from fmsd.transform.transform import Transform
 from fmsd.utils.impl import impl
 
@@ -40,7 +41,9 @@ class DerivedStepProof(StepProof):
         steps = []
         src = self.src
         while src != self.dst:
-            if (res := self.refine_once(src, self.dst, impl.t_all())) is None:
+            if (
+                res := self.refine_once(src, self.dst, impl.transform_manager())
+            ) is None:
                 idx = src.diff(self.dst)
                 assert idx is not None
                 raise NoTransformationFoundException(self.src, self.dst)
@@ -67,7 +70,7 @@ class DerivedStepProof(StepProof):
 
     @staticmethod
     def refine_once(
-        src: Node, dst: Node, transforms: dict[str, Transform]
+        src: Node, dst: Node, transform_manager: TransformManager
     ) -> tuple[Transform, Node, list[int]] | None:
         idx = src.diff(dst)
         end = src.weak_diff(dst)
@@ -76,7 +79,10 @@ class DerivedStepProof(StepProof):
         while True:
             if (
                 res := DerivedStepProof.verify_transforms(
-                    src.get(idx), dst.get(idx), src.get(idx).context(), transforms
+                    src.get(idx),
+                    dst.get(idx),
+                    src.get(idx).context(),
+                    transform_manager,
                 )
             ) is not None:
                 if not idx:
@@ -94,7 +100,10 @@ class DerivedStepProof(StepProof):
         while True:
             if (
                 res := DerivedStepProof.verify_transforms(
-                    src.get(idx), dst.get(idx), src.get(idx).context(), transforms
+                    src.get(idx),
+                    dst.get(idx),
+                    src.get(idx).context(),
+                    transform_manager,
                 )
             ) is not None:
                 if not idx:
@@ -110,14 +119,12 @@ class DerivedStepProof(StepProof):
 
     @staticmethod
     def verify_transforms(
-        src: Node,
-        dst: Node,
-        context: list[Node],
-        transforms: dict[str, Transform],
+        src: Node, dst: Node, context: list[Node], transform_manager: TransformManager
     ) -> Transform | None:
         assert impl is not None
-        for trf in transforms.values():
+        for i, trf in enumerate(transform_manager):
             if trf.verify(src, dst):
+                transform_manager.hit(trf, i)
                 return trf
         for ctx in context:
             trf = impl.node_to_transform(ctx)
