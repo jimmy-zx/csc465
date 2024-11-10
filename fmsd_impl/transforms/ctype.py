@@ -1,6 +1,7 @@
 from fmsd.ast import Node
 from fmsd.ast_ext import Constant
-from fmsd_impl.constants.basic import FALSE, TRUE
+from fmsd_impl.constants import FALSE, TRUE
+from fmsd_impl.operators import Join, List
 
 
 def to_natural(node: Node) -> int | None:
@@ -23,4 +24,10 @@ def to_bin(node: Node) -> bool | None:
     return None
 
 
-__all__ = ["to_natural", "to_bin"]
+def to_list(node: Node) -> list | Node:
+    if not isinstance(node, List) or not isinstance(node.nodes[0], Join):
+        return node
+    return [to_list(child) for child in node.nodes[0].flatten()]
+
+
+__all__ = ["to_natural", "to_bin", "to_list"]

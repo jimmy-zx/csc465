@@ -8,7 +8,7 @@ class Operator(Node):
 
     def _init_operator(self) -> None:
         if self.N is not None:
-            assert len(self.nodes) == self.N
+            assert len(self.nodes) == self.N, f"{len(self.nodes)} != {self.N}"
 
     def print(self, depth: int = 0) -> str:
         assert self.DELIM is not None

@@ -5,6 +5,7 @@ from fmsd_impl.transforms.axioms import (
     constants,
     context,
     generic,
+    list_,
     numeric,
     set_,
     string,
@@ -20,6 +21,7 @@ modules = [
     generic,
     set_,
     string,
+    list_,
 ]
 
 t_all: dict[str, Transform] = {}
@@ -29,5 +31,10 @@ for mod in modules:
         if not name.startswith("axiom_"):
             continue
         fqname = mod.__name__ + "::" + name
-        t_all[fqname] = ExpressionTransform(getattr(mod, name))
+        try:
+            t_all[fqname] = ExpressionTransform(getattr(mod, name))
+        except Exception as ex:
+            raise ValueError(
+                f"Invalid expression {fqname}: {getattr(mod, name)}"
+            ) from ex
         t_all[fqname].name = fqname

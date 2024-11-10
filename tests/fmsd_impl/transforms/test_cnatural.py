@@ -57,15 +57,11 @@ def test_natural_construction():
         [
             Equals(ONE - ONE, ZERO),
             Implies(TRUE, Equals(ONE - ONE, ZERO)),
-            Implies((TRUE & TRUE) & TRUE, Equals(ONE - ONE, ZERO)),
-            Implies(
-                ((-INFINITY < ZERO) & (ZERO < ONE)) & (ONE < INFINITY),
-                Equals(ONE - ONE, ZERO),
-            ),
+            Implies(TRUE & TRUE, Equals(ONE - ONE, ZERO)),
             Implies((-INFINITY < ONE) & (ONE < INFINITY), Equals(ONE - ONE, ZERO)),
             TRUE,
         ],
-    )
+    ).verify()
     assert DerivedEquivChainProof(
         Context(Constant("4") - ONE, Equals(ONE - ONE, ZERO)),
         Context(Constant("3"), Equals(ONE - ONE, ZERO)),

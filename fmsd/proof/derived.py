@@ -58,7 +58,7 @@ class DerivedStepProof(StepProof):
         return True
 
     def formalize(self) -> "Proof":
-        if not self.derived_proof:
+        if self.derived_proof is None:
             assert self.verify()
         assert self.derived_proof is not None
         return self.derived_proof
@@ -153,3 +153,14 @@ class DerivedEquivChainProof(EquivProof):
             DerivedChainProof(src, dst, steps),
             DerivedChainProof(dst, src, steps[::-1]),
         )
+
+
+class DynamicProofFactory:
+    def __init__(self, steps: list[Node] | None = None) -> None:
+        self.steps = steps or []
+
+    def s(self, node: Node) -> None:
+        self.steps.append(node)
+
+    def generate(self, cls) -> Proof:
+        return cls(self.steps[0], self.steps[-1], self.steps)

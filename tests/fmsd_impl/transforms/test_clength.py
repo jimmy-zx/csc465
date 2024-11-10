@@ -3,7 +3,7 @@ import pytest
 from fmsd.ast import Node, Variable
 from fmsd.ast_ext import Constant
 from fmsd.proof import DerivedEquivChainProof
-from fmsd_impl.constants import ONE, TRUE, ZERO
+from fmsd_impl.constants import INFINITY, ONE, TRUE, ZERO
 from fmsd_impl.operators import (
     And,
     Context,
@@ -38,7 +38,7 @@ def test_constant_length():
             Context(ONE, TRUE),
             ONE,
         ],
-    )
+    ).verify()
 
 
 def test_list_length():
@@ -48,7 +48,9 @@ def test_list_length():
         [
             Length(Join(Join(ONE, ONE), Join(ONE, Join(ONE, ONE)))),
             Length(Join(ONE, ONE)) + Length(Join(ONE, Join(ONE, ONE))),
+            (Length(ONE) + Length(ONE)) + (Length(ONE) + Length(Join(ONE, ONE))),
             Length(ONE) + Length(ONE) + Length(ONE) + Length(Join(ONE, ONE)),
+            Length(ONE) + Length(ONE) + Length(ONE) + (Length(ONE) + Length(ONE)),
             Length(ONE) + Length(ONE) + Length(ONE) + Length(ONE) + Length(ONE),
             Context(
                 Length(ONE) + Length(ONE) + Length(ONE) + Length(ONE) + Length(ONE),
@@ -63,7 +65,7 @@ def test_list_length():
             ONE + ONE + ONE + ONE + ONE,
             Constant("5"),
         ],
-    )
+    ).verify()
 
 
 def test_list_index():
@@ -80,34 +82,58 @@ def test_list_index():
             ONE + ONE,
             Constant("2"),
         ],
-    )
-    theorem_length = Equals(Length(Join(a, b)), Constant("2"))
-    join_form = Join(Join(Join(a, b), c), d)
-    theorem_length.copy_on_construction = True
-    join_form.copy_on_construction = True
+    ).verify()
+
+    two = Constant("2")
+    left = Join(a, b).copy()
+    s = Join(Join(left, c), d).copy()
+    length = Equals(Length(left), two).copy()
+    s_two = Subscript(s, two).copy()
     assert DerivedEquivChainProof(
-        Context(Subscript(Join(a, Join(b, Join(c, d))), Constant("2")), theorem_length),
-        Context(c, theorem_length),
+        Context(s_two, length),
+        Context(c, length),
         [
+            Context(s_two, length),
+            Context(Context(s_two, TRUE), length),
             Context(
-                Subscript(Join(a, Join(b, Join(c, d))), Constant("2")), theorem_length
+                Context(
+                    s_two,
+                    ((Length(left) < INFINITY) & Equals(Length(c), ONE))
+                    >> Equals(Subscript(s, Length(left)), c),
+                ),
+                length,
             ),
-            Context(join_form, theorem_length),
-            Context(Context(join_form, TRUE), theorem_length),
             Context(
-                Context(join_form, Implies(theorem_length, Equals(join_form, c))),
-                theorem_length,
+                Context(
+                    s_two,
+                    ((two < INFINITY) & Equals(Length(c), ONE)) >> Equals(s_two, c),
+                ),
+                length,
             ),
-            Context(Context(join_form, Equals(join_form, c)), theorem_length),
-            Context(Context(c, Equals(join_form, c)), theorem_length),
+            Context(Context(s_two, (TRUE & TRUE) >> Equals(s_two, c)), length),
+            Context(Context(s_two, TRUE >> Equals(s_two, c)), length),
+            Context(Context(s_two, Equals(s_two, c)), length),
+            Context(Context(c, Equals(s_two, c)), length),
+            Context(Context(c, TRUE >> Equals(s_two, c)), length),
+            Context(Context(c, (TRUE & TRUE) >> Equals(s_two, c)), length),
             Context(
-                Context(c, Implies(theorem_length, Equals(join_form, c))),
-                theorem_length,
+                Context(
+                    c, ((two < INFINITY) & Equals(Length(c), ONE)) >> Equals(s_two, c)
+                ),
+                length,
             ),
-            Context(Context(c, TRUE), theorem_length),
-            Context(c, theorem_length),
+            Context(
+                Context(
+                    c,
+                    ((Length(left) < INFINITY) & Equals(Length(c), ONE))
+                    >> Equals(Subscript(s, Length(left)), c),
+                ),
+                length,
+            ),
+            Context(Context(c, TRUE), length),
+            Context(c, length),
         ],
-    )
+    ).verify()
 
 
 @pytest.mark.parametrize(
@@ -138,4 +164,4 @@ def test_op_length(op: type[Node]):
             >> Equals(Length(op(x, y)), ONE),
             TRUE,
         ],
-    )
+    ).verify()

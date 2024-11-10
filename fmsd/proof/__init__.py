@@ -3,6 +3,7 @@ from fmsd.proof.derived import (
     DerivedChainProof,
     DerivedEquivChainProof,
     DerivedStepProof,
+    DynamicProofFactory,
     NoTransformationFoundException,
 )
 from fmsd.proof.proof import EquivProof, Proof, ProofException
@@ -19,4 +20,5 @@ __all__ = [
     "DerivedChainProof",
     "DerivedEquivChainProof",
     "NoTransformationFoundException",
+    "DynamicProofFactory",
 ]

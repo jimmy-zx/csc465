@@ -1,6 +1,6 @@
 from fmsd.ast import Node, Variable
 from fmsd.transform.transform import SymmetricFunctionTransform
-from fmsd_impl.constants import FALSE, INFINITY, ONE, TRUE, ZERO, to_natural
+from fmsd_impl.constants import FALSE, INFINITY, ONE, TRUE, ZERO
 from fmsd_impl.operators import (
     And,
     Equals,
@@ -15,6 +15,7 @@ from fmsd_impl.operators import (
     Or,
     Plus,
 )
+from fmsd_impl.transforms.ctype import to_natural
 
 
 @SymmetricFunctionTransform
@@ -38,19 +39,19 @@ def t_unit_length(src: Node, dst: Node) -> bool:
         return False
     x = Variable("x")
     y = Variable("y")
-    r = Variable("y")
+    r = Variable("r")
     if (
         vt := (
             (Equals(Length(x), ONE) & Equals(Length(y), ONE)) >> Equals(Length(r), ONE)
         ).match(src, {})
     ) is None:
         return False
-    if len(r.nodes) != 2:
+    if len(vt["r"].nodes) != 2:
         return False
-    if set(r.nodes) != {vt["x"], vt["y"]}:
+    if set(vt["r"].nodes) != {vt["x"], vt["y"]}:
         return False
     if not isinstance(
-        r,
+        vt["r"],
         (
             And,
             Or,

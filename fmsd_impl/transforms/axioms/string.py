@@ -9,6 +9,7 @@ from fmsd_impl.operators import (
     Implies,
     Join,
     Length,
+    List,
     Replace,
     Set,
     Size,
@@ -41,11 +42,16 @@ axiom_nil_left = Equals(Join(NIL, S), S)
 axiom_length_nil = Equals(Length(NIL), ZERO)
 axiom_length_join = Equals(Length(Join(S, T)), Length(S) + Length(T))
 
-axiom_subscript_nil = Equals(Subscript(S, NIL), NIL)
-axiom_subscript_distributive = Equals(
-    Subscript(S, Join(T, U)), Join(Subscript(S, T), Subscript(S, U))
+axiom_subscript_null = Equals(Subscript(S, NULL), NULL)
+axiom_subscript_bunch = Equals(
+    Subscript(S, Union(A, B)), Union(Subscript(S, A), Subscript(S, B))
 )
 axiom_subscript_set = Equals(Subscript(S, Set(A)), Set(Subscript(S, A)))
+axiom_subscript_nil = Equals(Subscript(S, NIL), NIL)
+axiom_subscript_string = Equals(
+    Subscript(S, Join(T, U)), Join(Subscript(S, T), Subscript(S, U))
+)
+axiom_subscript_list = Equals(Subscript(S, List(T)), List(Subscript(S, T)))
 
 axiom_order_nil = NIL <= S
 axiom_order_length = Implies(

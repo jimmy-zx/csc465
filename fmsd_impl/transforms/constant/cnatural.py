@@ -3,7 +3,7 @@ from typing import Callable
 from fmsd.ast import Variable
 from fmsd.ast.node import Node
 from fmsd.transform.transform import SymmetricFunctionTransform
-from fmsd_impl.constants import INFINITY, NAT, ONE, TRUE, to_bin, to_natural
+from fmsd_impl.constants import INFINITY, NAT, ONE, TRUE
 from fmsd_impl.operators import (
     BunchInterval,
     DividedBy,
@@ -19,6 +19,7 @@ from fmsd_impl.operators import (
     Plus,
     Power,
 )
+from fmsd_impl.transforms.ctype import to_bin, to_natural
 
 
 @SymmetricFunctionTransform

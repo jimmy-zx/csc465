@@ -5,6 +5,7 @@ from fmsd_impl.constants.basic import FALSE, TRUE
 from fmsd_impl.operators.binary import And, Flip, Implies
 from fmsd_impl.transforms.axioms.binary import (
     axiom_base_implies_false,
+    axiom_base_implies_true,
     axiom_commutative_and,
     axiom_noncontradiction,
     axiom_portation,
@@ -37,7 +38,7 @@ def test_multi_step_proof():
                 step2, step3, ExpressionTransform(axiom_noncontradiction), [0]
             ),
             TransformProof(
-                step3, dst, ExpressionTransform(axiom_base_implies_false), []
+                step3, dst, ExpressionTransform(axiom_base_implies_true), []
             ),
         ],
     )

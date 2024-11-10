@@ -5,7 +5,6 @@ from fmsd_impl.operators.binary import And, Flip, ImpliedBy, Implies, Or
 from fmsd_impl.operators.generic import Equals, NotEquals
 from fmsd_impl.transforms.axioms.binary import (
     axiom_base_and,
-    axiom_base_implies_false,
     axiom_base_implies_true,
     axiom_base_or,
     axiom_contrapositive,
@@ -50,7 +49,7 @@ def test_base():
     assert ExpressionTransform(axiom_base_and).verify(And(a, F), F)
     assert ExpressionTransform(axiom_base_or).verify(Or(a, T), T)
     assert ExpressionTransform(axiom_base_implies_true).verify(Implies(a, T), T)
-    assert ExpressionTransform(axiom_base_implies_false).verify(Implies(F, a), T)
+    assert ExpressionTransform(axiom_base_implies_true).verify(Implies(F, a), T)
 
 
 def test_mirror():

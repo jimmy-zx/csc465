@@ -22,5 +22,4 @@ isort:
 	python3 -m isort $(target_files)
 
 pytest:
-	python3 -m pytest
-
+	python3 -m pytest -W error

@@ -1,4 +1,5 @@
 import itertools
+import warnings
 from abc import ABC, abstractmethod
 
 from typing_extensions import Sequence
@@ -22,6 +23,14 @@ class Proof(ABC):
     def formalize(self) -> "Proof":
         return self
 
+    def __bool__(self) -> bool:
+        """
+        To prevent cases like `assert Proof()`
+        with missing `.verify()`
+        """
+        warnings.warn("Asserting proof without verify")
+        return self.verify()
+
 
 class StepProof(Proof, ABC):
     DELIM = "==>"
@@ -33,6 +42,17 @@ class StepProof(Proof, ABC):
         return f"\n{self.DELIM}".join(
             itertools.chain(
                 (f"\t{proof.src}\t({proof.hint})" for proof in self.steps()),
+                (f"\t{self.dst}",),
+            )
+        )
+
+    def print(self, depth: int = 0) -> str:
+        return f"\n{self.DELIM}".join(
+            itertools.chain(
+                (
+                    f"\t{proof.src.print(depth + 1)}\t({proof.hint})"
+                    for proof in self.steps()
+                ),
                 (f"\t{self.dst}",),
             )
         )

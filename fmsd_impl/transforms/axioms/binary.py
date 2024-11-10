@@ -35,7 +35,7 @@ axiom_base_or = Equals(Or(a, TRUE), TRUE)
 
 axiom_base_or_rev = Equals(Or(TRUE, a), TRUE)
 
-axiom_base_implies_true = Equals(Implies(a, TRUE), TRUE)
+axiom_base_implies_true = Implies(a, TRUE)
 
 axiom_base_implies_false = Implies(FALSE, a)
 
