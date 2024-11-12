@@ -4,7 +4,7 @@ from fmsd.ast_ext import Operator
 class List(Operator):
     N = 1
 
-    def print(self, depth: int = 0) -> str:
+    def print(self, depth: int) -> str:
         return "[{}]".format(self.nodes[0].print(depth + 1))
 
 
@@ -41,7 +41,7 @@ class ListDomain(Operator):
 class ListReplace(Operator):
     N = 3
 
-    def print(self, depth: int = 0) -> str:
+    def print(self, depth: int) -> str:
         return "{}→{}|{}".format(*[node.print(depth + 1) for node in self.nodes])
 
 

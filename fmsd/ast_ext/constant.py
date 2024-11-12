@@ -16,5 +16,5 @@ class Constant(Node, CopyOnConstruction):
             assert False, "`name` is required for argument"
         super().__init__(name=name)
 
-    def print(self, depth: int = 0) -> str:
+    def print(self, depth) -> str:
         return self.meta["name"]

@@ -106,10 +106,3 @@ def test_flatten():
 
     tree = Node(a, Node(b, Node1(a, b), a))
     assert tree.flatten() == [a, b, Node1(a, b), a]
-
-
-def test_validate():
-    a = VarNode("a")
-    b = VarNode("b")
-    tree = Node(Node(a, b), b)
-    assert tree.validate()

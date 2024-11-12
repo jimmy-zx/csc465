@@ -14,7 +14,7 @@ class NotEquals(Operator):
 class Ternary(Operator):
     N = 3
 
-    def print(self, depth: int = 0) -> str:
+    def print(self, depth: int) -> str:
         return (
             f"if {self.nodes[0].print(depth + 1)} "
             f"then {self.nodes[1].print(depth + 1)} "

@@ -16,8 +16,11 @@ class Variable(Node, CopyOnConstruction):
             assert False, "`name` is required for argument"
         super().__init__(name=name)
 
-    def print(self, depth: int = 0) -> str:
+    def print(self, depth: int) -> str:
         return self.meta["name"]
 
     def eval(self, vt: VarTable) -> "Node":
         return vt.get(self, self).copy()
+
+    def sym_refs(self) -> set["Node"]:
+        return {self}

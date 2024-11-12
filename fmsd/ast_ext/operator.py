@@ -10,7 +10,7 @@ class Operator(Node):
         if self.N is not None:
             assert len(self.nodes) == self.N, f"{len(self.nodes)} != {self.N}"
 
-    def print(self, depth: int = 0) -> str:
+    def print(self, depth: int) -> str:
         assert self.DELIM is not None
         if self.N == 1:
             return f"{self.DELIM}{self.nodes[0].print(depth + 1)}"

@@ -5,7 +5,7 @@ from fmsd_impl.operators.props import Associative, Commutative, Idempotent
 class Set(Operator):
     N = 1
 
-    def print(self, depth: int = 0) -> str:
+    def print(self, depth: int) -> str:
         return f"{{{self.nodes[0]}}}"
 
 

@@ -1,4 +1,4 @@
-from typing import Iterator, final
+from typing import Any, Final, Iterator, final
 
 from fmsd.ast.base import Base, CopyOnConstruction
 from fmsd.utils.config import config
@@ -12,8 +12,13 @@ class Node(Base["Node"]):
 
         assert all(isinstance(node, Node) and node.parent is None for node in nodes)
 
-        self.meta = meta
-        self.nodes = list(
+        if nodes:
+            decls = set.union(*(node.sym_decls() for node in nodes))
+            for node in nodes:
+                assert not decls.intersection(node.sym_refs() - node.sym_decls())
+
+        self.meta: Final[dict] = meta
+        self.nodes: Final[tuple[Node, ...]] = tuple(
             node if not node.copy_on_construction else node.copy() for node in nodes
         )
         self.parent: Node | None = None
@@ -23,6 +28,27 @@ class Node(Base["Node"]):
         for func in dir(self):
             if func.startswith("_init"):
                 getattr(self, func)()
+
+        self._cache: dict[str, Any] = {}
+
+    def __getattribute__(self, item: str):
+        attr = object.__getattribute__(self, item)
+        if item in (
+            "__hash__",
+            "__str__",
+            "variables",
+            "sym_decls",
+            "sym_refs",
+        ):
+
+            def wrapper():
+                if item in self._cache:
+                    return self._cache[item]
+                self._cache[item] = (res := attr())
+                return res
+
+            return wrapper
+        return attr
 
     @final
     def __eq__(self, other) -> bool:
@@ -38,7 +64,7 @@ class Node(Base["Node"]):
     def __str__(self) -> str:
         return self.print(depth=config.max_level + 1)
 
-    def print(self, depth: int = 0) -> str:
+    def print(self, depth) -> str:
         return "Node(" + ", ".join(node.print(depth + 1) for node in self.nodes) + ")"
 
     @final
@@ -134,14 +160,16 @@ class Node(Base["Node"]):
         return self.parent.context() if self.parent is not None else []
 
     @final
-    def validate(self) -> bool:
-        return all(node.parent == self and node.validate() for node in self.nodes)
-
-    @final
     def walk_preorder(self) -> Iterator["Node"]:
         yield self
         for node in self.nodes:
             yield from node.walk_preorder()
+
+    def sym_decls(self) -> set["Node"]:
+        return set().union(*(node.sym_decls() for node in self.nodes))
+
+    def sym_refs(self) -> set["Node"]:
+        return set().union(*(node.sym_refs() for node in self.nodes))
 
 
 @final
@@ -156,7 +184,7 @@ class VarNode(Node, CopyOnConstruction):
             assert False, "`name` is required for argument"
         super().__init__(name=name)
 
-    def print(self, depth: int = 0) -> str:
+    def print(self, depth: int) -> str:
         return self.meta["name"]
 
     def match(self, target: "Node", vt: VarTable) -> VarTable | None:
@@ -169,4 +197,7 @@ class VarNode(Node, CopyOnConstruction):
         return vt.get(self, self).copy()
 
     def variables(self) -> set[Node]:
+        return {self}
+
+    def sym_refs(self) -> set["Node"]:
         return {self}

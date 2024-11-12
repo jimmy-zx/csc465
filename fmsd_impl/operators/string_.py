@@ -30,7 +30,7 @@ class Star(Operator):
 class Replace(Operator):
     N = 3
 
-    def print(self, depth: int = 0) -> str:
+    def print(self, depth: int) -> str:
         return (
             f"{self.nodes[0].print(depth + 1)}"
             f"⊲{self.nodes[1].print(depth + 1)}⊳"
