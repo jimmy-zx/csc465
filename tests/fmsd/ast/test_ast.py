@@ -68,10 +68,8 @@ def test_set():
     a = VarNode("a")
     b = VarNode("b")
     tree = Node(a, b, Node(b))
-    assert tree.set([1], Node(a)) == b
-    assert tree.get([1]) == Node(a)
-    assert tree.set([1, 0], b) == a
-    assert tree.get([1]) == Node(b)
+    assert tree.replace([1], Node(a)) == Node(a, Node(a), Node(b))
+    assert tree.replace([2, 0], a) == Node(a, b, Node(a))
 
 
 def test_diff():

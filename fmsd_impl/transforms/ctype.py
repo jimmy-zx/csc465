@@ -7,13 +7,13 @@ from fmsd_impl.operators import Join, List
 def to_natural(node: Node) -> int | None:
     if not isinstance(node, Constant):
         return None
-    if not node.name:
+    if not node.meta["name"]:
         return None
-    if not set(node.name).issubset(set("0123456789")):
+    if not set(node.meta["name"]).issubset(set("0123456789")):
         return None
-    if node.name[0] == "0" and node.name != "0":
+    if node.meta["name"] == "0" and node.meta["name"] != "0":
         return None
-    return int(node.name)
+    return int(node.meta["name"])
 
 
 def to_bin(node: Node) -> bool | None:

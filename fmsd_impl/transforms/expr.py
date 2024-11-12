@@ -14,7 +14,7 @@ class ExpressionTransform(Transform):
         expr = self.expr
         cond = None
         if isinstance(expr, VTCondition):
-            cond = expr.cond
+            cond = expr.meta["cond"]
             expr = expr.nodes[0]
         if (m := self.verify_once(src, dst, expr, {})) is None:
             return False

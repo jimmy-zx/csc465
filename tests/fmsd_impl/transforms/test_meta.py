@@ -7,14 +7,16 @@ def test_vtcondition():
     a = VarNode("a")
     b = VarNode("b")
     c = VarNode("c")
-    trf = ExpressionTransform(VTCondition(Equals(a, b), lambda vt: vt[a] == vt[b]))
+    trf = ExpressionTransform(VTCondition(Equals(a, b), cond=lambda vt: vt[a] == vt[b]))
     assert isinstance(trf.expr, VTCondition)
     assert not trf.verify(a, b)
     assert trf.verify(a, a)
     assert trf.verify(c, c)
-    trf1 = ExpressionTransform(VTCondition(Equals(a, b), lambda vt: vt[a] == vt[b]))
-    trf2 = ExpressionTransform(VTCondition(Equals(b, c), trf.expr.cond))
-    trf3 = ExpressionTransform(VTCondition(Equals(a, b), trf.expr.cond))
+    trf1 = ExpressionTransform(
+        VTCondition(Equals(a, b), cond=lambda vt: vt[a] == vt[b])
+    )
+    trf2 = ExpressionTransform(VTCondition(Equals(b, c), cond=trf.expr.meta["cond"]))
+    trf3 = ExpressionTransform(VTCondition(Equals(a, b), cond=trf.expr.meta["cond"]))
     assert trf != trf1
     assert trf != trf2
     assert trf == trf3

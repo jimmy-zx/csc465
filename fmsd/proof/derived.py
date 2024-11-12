@@ -85,12 +85,7 @@ class DerivedStepProof(StepProof):
                     transform_manager,
                 )
             ) is not None:
-                if not idx:
-                    refined = dst
-                else:
-                    refined = src.copy()
-                    refined.set(idx, dst.get(idx).copy())
-                return res, refined, idx
+                return res, src.replace(idx, dst.get(idx).copy()), idx
 
             if len(idx) == len(end):
                 break
@@ -106,12 +101,7 @@ class DerivedStepProof(StepProof):
                     transform_manager,
                 )
             ) is not None:
-                if not idx:
-                    refined = dst
-                else:
-                    refined = src.copy()
-                    refined.set(idx, dst.get(idx).copy())
-                return res, refined, idx
+                return res, src.replace(idx, dst.get(idx).copy()), idx
             if not idx:
                 break
             idx.pop()

@@ -18,5 +18,4 @@ def test_get():
 
 def test_set():
     tree = (a | b) & c
-    tree.set([0, 0], b)
-    assert tree == (b | b) & c
+    assert tree.replace([0, 0], b) == (b | b) & c

@@ -23,23 +23,11 @@ class Context(Operator):
 
 @final
 class VTCondition(Node):
-    def __init__(self, node: Node, cond: Callable[[VarTable], bool]) -> None:
-        super().__init__(node)
-        self.cond = cond
-
-    def __eq__(self, other) -> bool:
-        if type(self) is not type(other):
-            return False
-        return self.nodes == other.nodes and self.cond == other.cond
-
-    def __hash__(self):
-        return hash((type(self), self.nodes[0], self.cond))
+    def __init__(self, node: Node, *, cond: Callable[[VarTable], bool]) -> None:
+        super().__init__(node, cond=cond)
 
     def print(self, depth: int = 0) -> str:
         return self.nodes[0].print(depth)
-
-    def copy(self, copy_on_construction: bool = True) -> "Node":
-        return type(self)(self.nodes[0], self.cond)
 
     def match(self, target: "Node", vt: VarTable) -> VarTable | None:
         raise TypeError()
