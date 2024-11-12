@@ -1,4 +1,4 @@
-from fmsd.ast import Node, Variable
+from fmsd.ast import Node, VarNode
 from fmsd.ast_ext import Constant
 from fmsd.proof import DerivedEquivChainProof
 from fmsd_impl.constants import INFINITY, NAT, NIL, ONE, TRUE, ZERO
@@ -523,8 +523,8 @@ def test_bunch_join():
 
 
 def test_star():
-    a = Variable("a")
-    b = Variable("b")
+    a = VarNode("a")
+    b = VarNode("b")
     s = Join(a, b).copy()
     two = Constant("2")
     assert DerivedEquivChainProof(

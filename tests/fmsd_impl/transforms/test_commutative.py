@@ -4,14 +4,14 @@ import fmsd_impl.operators.binary as binop
 import fmsd_impl.operators.generic as genop
 import fmsd_impl.operators.numeric as numop
 import fmsd_impl.patch.binary
-from fmsd.ast.node import Variable
+from fmsd.ast.node import VarNode
 from fmsd_impl.operators.props import Commutative
 from fmsd_impl.transforms.prop import t_commutative
 
 assert fmsd_impl.patch.binary
 
-a = Variable("a")
-b = Variable("b")
+a = VarNode("a")
+b = VarNode("b")
 
 
 @pytest.mark.parametrize(

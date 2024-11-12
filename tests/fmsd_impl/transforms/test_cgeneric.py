@@ -1,12 +1,12 @@
-from fmsd.ast import Variable
+from fmsd.ast import VarNode
 from fmsd.proof import DerivedEquivChainProof
 from fmsd_impl.constants import FALSE, TRUE
 from fmsd_impl.operators import Ternary
 
 
 def test_ternary():
-    x = Variable("x")
-    y = Variable("y")
+    x = VarNode("x")
+    y = VarNode("y")
     assert DerivedEquivChainProof(
         Ternary(TRUE, x, y),
         x,

@@ -1,6 +1,6 @@
 import pytest
 
-from fmsd.ast import Node, Variable
+from fmsd.ast import Node, VarNode
 from fmsd.ast_ext import Constant
 from fmsd.proof import DerivedEquivChainProof
 from fmsd_impl.constants import INFINITY, ONE, TRUE, ZERO
@@ -153,8 +153,8 @@ def test_list_index():
     ],
 )
 def test_op_length(op: type[Node]):
-    x = Variable("x")
-    y = Variable("y")
+    x = VarNode("x")
+    y = VarNode("y")
     assert DerivedEquivChainProof(
         (Equals(Length(x), ONE) & Equals(Length(y), ONE))
         >> Equals(Length(op(x, y)), ONE),

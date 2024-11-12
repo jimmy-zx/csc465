@@ -1,4 +1,4 @@
-from fmsd.ast.node import Variable
+from fmsd.ast.node import VarNode
 from fmsd_impl.constants.basic import FALSE as F
 from fmsd_impl.constants.basic import TRUE as T
 from fmsd_impl.operators.binary import And, Flip, ImpliedBy, Implies, Or
@@ -22,11 +22,11 @@ from fmsd_impl.transforms.axioms.binary import (
 from fmsd_impl.transforms.constant.cbinary import func_rule_table
 from fmsd_impl.transforms.expr import ExpressionTransform
 
-a = Variable("a")
-b = Variable("b")
-x = Variable("x")
-y = Variable("y")
-z = Variable("z")
+a = VarNode("a")
+b = VarNode("b")
+x = VarNode("x")
+y = VarNode("y")
+z = VarNode("z")
 
 
 def test_binary():

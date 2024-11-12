@@ -8,7 +8,7 @@ from fmsd_impl.transforms.axioms import (
     list_,
     numeric,
     set_,
-    string,
+    string_,
 )
 from fmsd_impl.transforms.expr import ExpressionTransform
 
@@ -20,7 +20,7 @@ modules = [
     numeric,
     generic,
     set_,
-    string,
+    string_,
     list_,
 ]
 

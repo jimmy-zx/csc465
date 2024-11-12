@@ -1,15 +1,15 @@
-from fmsd.ast.node import Node, Variable
+from fmsd.ast.node import Node, VarNode
 
 
 def test_eq():
-    a = Variable("a")
-    b = Variable("b")
+    a = VarNode("a")
+    b = VarNode("b")
     assert a != b
     assert a == a
 
     tree1 = Node(a, Node(a, b))
-    tree2 = Node(Variable("a"), Node(a, Variable("b")))
-    tree3 = Node(Variable("b"), Node(a, b))
+    tree2 = Node(VarNode("a"), Node(a, VarNode("b")))
+    tree3 = Node(VarNode("b"), Node(a, b))
     tree4 = Node()
     assert tree1 == tree1
     assert tree1 == tree2
@@ -19,10 +19,10 @@ def test_eq():
 
 
 def test_copy():
-    a = Variable("a")
+    a = VarNode("a")
     a_copy = a.copy()
     assert a is not a_copy
-    a = Variable("a")
+    a = VarNode("a")
     tree = Node(Node(a, a), Node(a))
     tree_copy = tree.copy()
     for lhs, rhs in zip(tree.walk_preorder(), tree_copy.walk_preorder()):
@@ -30,25 +30,25 @@ def test_copy():
 
 
 def test_variables():
-    tree = Node(Variable("a"), Variable("b"), Node(Variable("a")))
-    assert tree.variables() == {"a", "b"}
+    tree = Node(VarNode("a"), VarNode("b"), Node(VarNode("a")))
+    assert tree.variables() == {VarNode("a"), VarNode("b")}
 
 
 def test_eval():
-    a = Variable("a")
-    b = Variable("b")
+    a = VarNode("a")
+    b = VarNode("b")
     tree = Node(a, b, Node(a))
-    assert tree.eval({"a": b, "b": a}) == Node(b, a, Node(b))
+    assert tree.eval({a: b, b: a}) == Node(b, a, Node(b))
 
 
 def test_match():
-    a = Variable("a")
-    b = Variable("b")
+    a = VarNode("a")
+    b = VarNode("b")
     tree1 = Node(a, b, Node(a))
     tree2 = Node(b, a, Node(b))
-    assert tree1.match(tree2, {}) == {"a": b, "b": a}
+    assert tree1.match(tree2, {}) == {a: b, b: a}
     tree3 = Node(a, a, Node(a))
-    assert tree1.match(tree3, {}) == {"a": a, "b": a}
+    assert tree1.match(tree3, {}) == {a: a, b: a}
     tree4 = Node(a, Node(a))
     assert tree1.match(tree4, {}) is None
     tree5 = Node(a, b, Node(b))
@@ -56,8 +56,8 @@ def test_match():
 
 
 def test_get():
-    a = Variable("a")
-    b = Variable("b")
+    a = VarNode("a")
+    b = VarNode("b")
     tree = Node(a, b, Node(b))
     assert tree.get([]) == tree
     assert tree.get([0]) == a
@@ -65,8 +65,8 @@ def test_get():
 
 
 def test_set():
-    a = Variable("a")
-    b = Variable("b")
+    a = VarNode("a")
+    b = VarNode("b")
     tree = Node(a, b, Node(b))
     assert tree.set([1], Node(a)) == b
     assert tree.get([1]) == Node(a)
@@ -75,8 +75,8 @@ def test_set():
 
 
 def test_diff():
-    a = Variable("a")
-    b = Variable("b")
+    a = VarNode("a")
+    b = VarNode("b")
 
     tree1 = Node(Node(a, Node(a, b)))
     tree2 = Node(Node(a, Node(b, a)))
@@ -89,8 +89,8 @@ def test_diff():
 
 
 def test_weak_diff():
-    a = Variable("a")
-    b = Variable("b")
+    a = VarNode("a")
+    b = VarNode("b")
 
     tree1 = Node(Node(a, Node(a, b)))
     tree2 = Node(Node(a, Node(b, a)))
@@ -100,8 +100,8 @@ def test_weak_diff():
 
 
 def test_flatten():
-    a = Variable("a")
-    b = Variable("b")
+    a = VarNode("a")
+    b = VarNode("b")
 
     class Node1(Node):
         pass
@@ -111,7 +111,7 @@ def test_flatten():
 
 
 def test_validate():
-    a = Variable("a")
-    b = Variable("b")
+    a = VarNode("a")
+    b = VarNode("b")
     tree = Node(Node(a, b), b)
     assert tree.validate()

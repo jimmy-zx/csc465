@@ -1,7 +1,7 @@
 import pytest
 
 import fmsd_impl.patch.binary
-from fmsd.ast.node import Variable
+from fmsd.ast.node import VarNode
 from fmsd.proof.derived import (
     DerivedChainProof,
     DerivedEquivChainProof,
@@ -15,9 +15,9 @@ from fmsd_impl.patch.infix import EQ
 
 assert fmsd_impl.patch.binary
 
-a = Variable("a")
-b = Variable("b")
-c = Variable("c")
+a = VarNode("a")
+b = VarNode("b")
+c = VarNode("c")
 
 
 def test_simple():

@@ -1,6 +1,6 @@
 from typing import Callable
 
-from fmsd.ast import Variable
+from fmsd.ast import VarNode
 from fmsd.ast.node import Node
 from fmsd.transform.transform import SymmetricFunctionTransform
 from fmsd_impl.constants import INFINITY, NAT, ONE, TRUE
@@ -43,17 +43,17 @@ def t_natural_construction(src: Node, dst: Node) -> bool:
 def t_natural_limit(src: Node, dst: Node) -> bool:
     if src != TRUE:
         return False
-    x = Variable("x")
+    x = VarNode("x")
     if (vt := ((-INFINITY < x) & (x < INFINITY)).match(dst, {})) is not None:
-        if to_natural(vt["x"]) is None:
+        if to_natural(vt[x]) is None:
             return False
         return True
     if (vt := (-INFINITY < x).match(dst, {})) is not None:
-        if to_natural(vt["x"]) is None:
+        if to_natural(vt[x]) is None:
             return False
         return True
     if (vt := (x < INFINITY).match(dst, {})) is not None:
-        if to_natural(vt["x"]) is None:
+        if to_natural(vt[x]) is None:
             return False
         return True
     return False
@@ -63,26 +63,26 @@ def t_natural_limit(src: Node, dst: Node) -> bool:
 def t_natural(src: Node, dst: Node) -> bool:
     if src != TRUE:
         return False
-    x = Variable("x")
+    x = VarNode("x")
     if (vt := In(x, NAT).match(dst, {})) is None:
         return False
-    if to_natural(vt["x"]) is None:
+    if to_natural(vt[x]) is None:
         return False
     return True
 
 
 @SymmetricFunctionTransform
 def t_natural_range(src: Node, dst: Node) -> bool:
-    x = Variable("x")
-    l = Variable("l")
-    r = Variable("r")
+    x = VarNode("x")
+    l = VarNode("l")
+    r = VarNode("r")
     if (vt := In(x, BunchInterval(l, r)).match(dst, {})) is None:
         return False
-    if (xv := to_natural(vt["x"])) is None:
+    if (xv := to_natural(vt[x])) is None:
         return False
-    if (lv := to_natural(vt["l"])) is None:
+    if (lv := to_natural(vt[l])) is None:
         return False
-    if (rv := to_natural(vt["r"])) is None:
+    if (rv := to_natural(vt[r])) is None:
         return False
     return to_bin(src) == (lv <= xv < rv)
 
@@ -91,13 +91,13 @@ def map_natural_op(
     op: type[Node], func: Callable[[int, int, int], bool]
 ) -> Callable[[Node, Node], bool]:
     def wrapper(src: Node, dst: Node) -> bool:
-        l = Variable("l")
-        r = Variable("r")
+        l = VarNode("l")
+        r = VarNode("r")
         if (vt := op(l, r).match(src, {})) is None:
             return False
-        if (lv := to_natural(vt["l"])) is None:
+        if (lv := to_natural(vt[l])) is None:
             return False
-        if (rv := to_natural(vt["r"])) is None:
+        if (rv := to_natural(vt[r])) is None:
             return False
         if (res := to_natural(dst)) is None:
             return False
@@ -133,13 +133,13 @@ def map_natural_binop(
     op: type[Node], func: Callable[[int, int, bool], bool]
 ) -> Callable[[Node, Node], bool]:
     def wrapper(src: Node, dst: Node) -> bool:
-        l = Variable("l")
-        r = Variable("r")
+        l = VarNode("l")
+        r = VarNode("r")
         if (vt := op(l, r).match(src, {})) is None:
             return False
-        if (lv := to_natural(vt["l"])) is None:
+        if (lv := to_natural(vt[l])) is None:
             return False
-        if (rv := to_natural(vt["r"])) is None:
+        if (rv := to_natural(vt[r])) is None:
             return False
         if (res := to_bin(dst)) is None:
             return False

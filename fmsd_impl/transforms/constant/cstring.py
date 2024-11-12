@@ -1,4 +1,4 @@
-from fmsd.ast import Node, Variable
+from fmsd.ast import Node, VarNode
 from fmsd.transform.transform import SymmetricFunctionTransform
 from fmsd_impl.constants import NIL
 from fmsd_impl.operators import Join, Length, Replace, StringRange, Subscript
@@ -60,13 +60,13 @@ def t_length(src: Node, dst: Node) -> bool:
 
 @SymmetricFunctionTransform
 def t_range(src: Node, dst: Node) -> bool:
-    l = Variable("l")
-    r = Variable("r")
+    l = VarNode("l")
+    r = VarNode("r")
     if (vt := StringRange(l, r).match(src, {})) is None:
         return False
-    if not (lv := to_natural(vt["l"])):
+    if not (lv := to_natural(vt[l])):
         return False
-    if not (rv := to_natural(vt["r"])):
+    if not (rv := to_natural(vt[r])):
         return False
     if lv == rv:
         return dst == NIL

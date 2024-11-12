@@ -1,6 +1,6 @@
 import fmsd_impl.patch.binary
 import fmsd_impl.patch.numeric
-from fmsd.ast.node import Node, Variable
+from fmsd.ast.node import Node, VarNode
 from fmsd_impl.constants import INFINITY, NAT, NULL, ONE, XINT, XREAL, ZERO
 from fmsd_impl.operators import (
     BunchInterval,
@@ -17,13 +17,13 @@ from fmsd_impl.operators import (
 assert fmsd_impl.patch.binary
 assert fmsd_impl.patch.numeric
 
-x = Variable("x")
-y = Variable("y")
-z = Variable("z")
-A = Variable("A")
-B = Variable("B")
-C = Variable("C")
-D = Variable("D")
+x = VarNode("x")
+y = VarNode("y")
+z = VarNode("z")
+A = VarNode("A")
+B = VarNode("B")
+C = VarNode("C")
+D = VarNode("D")
 
 # axiom_elementary = Equals(In(x, y), Equals(x, y))
 axiom_elementary = Implies(Equals(x, y), In(x, y))

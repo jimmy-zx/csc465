@@ -4,7 +4,7 @@
 
 import fmsd_impl.patch.binary
 import fmsd_impl.patch.numeric
-from fmsd.ast.node import Variable
+from fmsd.ast.node import VarNode
 from fmsd_impl.constants import FALSE, TRUE
 from fmsd_impl.operators import Equals, Implies, Max, Min, Ternary
 from fmsd_impl.patch.infix import EQ, NEQ
@@ -12,10 +12,10 @@ from fmsd_impl.patch.infix import EQ, NEQ
 assert fmsd_impl.patch.numeric
 assert fmsd_impl.patch.binary
 
-x = Variable("x")
-y = Variable("y")
-z = Variable("z")
-a = Variable("a")
+x = VarNode("x")
+y = VarNode("y")
+z = VarNode("z")
+a = VarNode("a")
 
 axiom_reflexivity = Equals(x @ EQ @ x, TRUE)
 

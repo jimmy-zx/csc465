@@ -1,5 +1,5 @@
 import fmsd_impl.patch.binary
-from fmsd.ast.node import Variable
+from fmsd.ast.node import VarNode
 from fmsd.proof.chain import ChainProof
 from fmsd.proof.derived import DerivedStepProof
 from fmsd.proof.transform import TransformProof
@@ -16,9 +16,9 @@ assert fmsd_impl.patch.binary
 
 def test_intro():
     # declare a variable
-    x = Variable("x")
-    y = Variable("y")
-    z = Variable("z")
+    x = VarNode("x")
+    y = VarNode("y")
+    z = VarNode("z")
 
     # build AST directly
     Or(x, y)

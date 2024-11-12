@@ -1,4 +1,4 @@
-from fmsd.ast.node import Variable
+from fmsd.ast.node import VarNode
 from fmsd.proof.chain import ChainProof
 from fmsd.proof.transform import TransformProof
 from fmsd_impl.constants.basic import FALSE, TRUE
@@ -12,9 +12,9 @@ from fmsd_impl.transforms.axioms.binary import (
 )
 from fmsd_impl.transforms.expr import ExpressionTransform
 
-a = Variable("a")
-b = Variable("b")
-c = Variable("c")
+a = VarNode("a")
+b = VarNode("b")
+c = VarNode("c")
 
 
 def test_multi_step_proof():

@@ -1,5 +1,5 @@
 import fmsd_impl.patch
-from fmsd.ast import Variable
+from fmsd.ast import VarNode
 from fmsd.utils.config import config
 
 assert fmsd_impl.patch
@@ -14,5 +14,5 @@ def test_levels():
 
 
 def test_construction():
-    a = Variable("a")
+    a = VarNode("a")
     print(a & a & a & a & a & a & a & a & a & a & a & a & a & a)

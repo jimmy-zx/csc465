@@ -1,10 +1,10 @@
 import pytest
 
-from fmsd.ast.node import Variable
+from fmsd.ast.node import VarNode
 from fmsd_impl.operators.binary import Flip
 
-a = Variable("a")
-b = Variable("b")
+a = VarNode("a")
+b = VarNode("b")
 
 
 def test_op1():

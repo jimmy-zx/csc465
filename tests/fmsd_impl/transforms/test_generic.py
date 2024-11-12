@@ -1,4 +1,4 @@
-from fmsd.ast.node import Variable
+from fmsd.ast.node import VarNode
 from fmsd_impl.constants.basic import FALSE as F
 from fmsd_impl.constants.basic import TRUE as T
 from fmsd_impl.operators.binary import And, Flip
@@ -15,10 +15,10 @@ from fmsd_impl.transforms.axioms.generic import (
 )
 from fmsd_impl.transforms.expr import ExpressionTransform
 
-a = Variable("a")
-x = Variable("x")
-y = Variable("y")
-z = Variable("z")
+a = VarNode("a")
+x = VarNode("x")
+y = VarNode("y")
+z = VarNode("z")
 
 
 def test_reflexivity():

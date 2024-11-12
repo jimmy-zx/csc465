@@ -1,5 +1,5 @@
 import fmsd_impl.patch
-from fmsd.ast import Variable
+from fmsd.ast import VarNode
 from fmsd_impl.constants import INFINITY, NAT, NIL, NULL, ONE, ZERO
 from fmsd_impl.operators import (
     And,
@@ -22,19 +22,19 @@ from fmsd_impl.operators import (
 
 assert fmsd_impl.patch
 
-A = Variable("A")
-B = Variable("B")
-C = Variable("C")
-S = Variable("S")
-T = Variable("T")
-U = Variable("U")
-i = Variable("i")
-j = Variable("j")
-n = Variable("n")
-m = Variable("m")
-x = Variable("x")
-y = Variable("y")
-z = Variable("z")
+A = VarNode("A")
+B = VarNode("B")
+C = VarNode("C")
+S = VarNode("S")
+T = VarNode("T")
+U = VarNode("U")
+i = VarNode("i")
+j = VarNode("j")
+n = VarNode("n")
+m = VarNode("m")
+x = VarNode("x")
+y = VarNode("y")
+z = VarNode("z")
 
 axiom_nil_right = Equals(Join(S, NIL), S)
 axiom_nil_left = Equals(Join(NIL, S), S)

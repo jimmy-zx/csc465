@@ -1,4 +1,4 @@
-from fmsd.ast import Variable
+from fmsd.ast import VarNode
 from fmsd_impl.constants import NIL, NULL, ONE, ZERO
 from fmsd_impl.operators import (
     Count,
@@ -24,16 +24,16 @@ from fmsd_impl.operators import (
     Union,
 )
 
-A = Variable("A")
-B = Variable("B")
-S = Variable("S")
-T = Variable("T")
-L = Variable("L")
-i = Variable("i")
-n = Variable("n")
-m = Variable("m")
-M = Variable("M")
-N = Variable("N")
+A = VarNode("A")
+B = VarNode("B")
+S = VarNode("S")
+T = VarNode("T")
+L = VarNode("L")
+i = VarNode("i")
+n = VarNode("n")
+m = VarNode("m")
+M = VarNode("M")
+N = VarNode("N")
 
 axiom_list_structure = NotEquals(List(S), S)
 axiom_list_contents = Equals(S, ListContents(List(S)))

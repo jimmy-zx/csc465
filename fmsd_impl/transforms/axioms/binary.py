@@ -2,7 +2,7 @@
 11.3.1, FMSD
 """
 
-from fmsd.ast.node import Node, Variable
+from fmsd.ast.node import Node, VarNode
 from fmsd_impl.constants import FALSE, TRUE
 from fmsd_impl.operators import (
     And,
@@ -15,11 +15,11 @@ from fmsd_impl.operators import (
     Ternary,
 )
 
-a = Variable("a")
-b = Variable("b")
-c = Variable("c")
-d = Variable("d")
-e = Variable("e")
+a = VarNode("a")
+b = VarNode("b")
+c = VarNode("c")
+d = VarNode("d")
+e = VarNode("e")
 
 # Page 234
 

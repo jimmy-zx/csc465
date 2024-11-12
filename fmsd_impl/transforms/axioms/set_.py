@@ -1,4 +1,4 @@
-from fmsd.ast import Variable
+from fmsd.ast import VarNode
 from fmsd_impl.operators import (
     Contents,
     Count,
@@ -16,9 +16,9 @@ from fmsd_impl.operators import (
     Union,
 )
 
-S = Variable("S")
-A = Variable("A")
-B = Variable("B")
+S = VarNode("S")
+A = VarNode("A")
+B = VarNode("B")
 
 axiom_structure = NotEquals(Set(A), A)
 axiom_formation = Equals(Set(Contents(S)), S)

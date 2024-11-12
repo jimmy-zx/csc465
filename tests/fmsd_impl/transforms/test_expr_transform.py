@@ -1,6 +1,6 @@
 import pytest
 
-from fmsd.ast import Variable
+from fmsd.ast import VarNode
 from fmsd_impl.constants import INFINITY, ZERO
 from fmsd_impl.operators import Context
 from fmsd_impl.operators.binary import Implies
@@ -25,7 +25,7 @@ def test_match_rule_transform(transform):
 
 
 def test_implied_context():
-    x = Variable("x")
+    x = VarNode("x")
     assert ExpressionTransform(axiom_inverse).verify(
         Context(x - x, (-INFINITY < x) & (x < INFINITY)),
         Context(ZERO, (-INFINITY < x) & (x < INFINITY)),

@@ -4,7 +4,7 @@
 
 import fmsd_impl.patch.binary
 import fmsd_impl.patch.numeric
-from fmsd.ast.node import Node, Variable
+from fmsd.ast.node import Node, VarNode
 from fmsd_impl.constants import INFINITY, ONE, TRUE, ZERO
 from fmsd_impl.operators import Equals, Implies, Max, Min
 from fmsd_impl.patch.infix import EQ, NEQ
@@ -12,9 +12,9 @@ from fmsd_impl.patch.infix import EQ, NEQ
 assert fmsd_impl.patch.binary
 assert fmsd_impl.patch.numeric
 
-x = Variable("x")
-y = Variable("y")
-z = Variable("z")
+x = VarNode("x")
+y = VarNode("y")
+z = VarNode("z")
 
 axiom_identity_add = Equals(x + ZERO, x)
 axiom_symmetry_add = Equals(x + y, y + x)

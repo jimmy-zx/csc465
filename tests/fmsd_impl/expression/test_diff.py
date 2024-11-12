@@ -1,13 +1,13 @@
 import pytest
 
 import fmsd_impl.patch.binary
-from fmsd.ast.node import Node, Variable
+from fmsd.ast.node import Node, VarNode
 
 assert fmsd_impl.patch.binary
 
-a = Variable("a")
-b = Variable("b")
-c = Variable("c")
+a = VarNode("a")
+b = VarNode("b")
+c = VarNode("c")
 
 
 @pytest.mark.parametrize(

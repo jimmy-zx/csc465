@@ -3,7 +3,7 @@ from typing import Iterator, final
 from fmsd.ast.base import Base, CopyOnConstruction
 from fmsd.utils.config import config
 
-VarTable = dict[str, "Node"]
+VarTable = dict["Node", "Node"]
 
 
 class Node(Base["Node"]):
@@ -43,7 +43,7 @@ class Node(Base["Node"]):
         res.copy_on_construction = res.copy_on_construction or copy_on_construction
         return res
 
-    def variables(self) -> set[str]:
+    def variables(self) -> set["Node"]:
         return set().union(*(node.variables() for node in self.nodes))
 
     def eval(self, vt: VarTable) -> "Node":
@@ -135,7 +135,7 @@ class Node(Base["Node"]):
             yield from node.walk_preorder()
 
 
-class Variable(Node, CopyOnConstruction):
+class VarNode(Node, CopyOnConstruction):
     def __init__(self, name: str) -> None:
         super().__init__()
         self.name = name
@@ -155,13 +155,13 @@ class Variable(Node, CopyOnConstruction):
         return type(self)(self.name)
 
     def match(self, target: "Node", vt: VarTable) -> VarTable | None:
-        if vt.get(self.name, target) != target:
+        if vt.get(self, target) != target:
             return None
-        vt[self.name] = target
+        vt[self] = target
         return vt
 
     def eval(self, vt: VarTable) -> "Node":
-        return vt.get(self.name, self).copy()
+        return vt.get(self, self).copy()
 
-    def variables(self) -> set[str]:
-        return {self.name}
+    def variables(self) -> set[Node]:
+        return {self}

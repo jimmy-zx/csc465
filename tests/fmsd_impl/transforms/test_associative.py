@@ -3,14 +3,14 @@ import pytest
 import fmsd_impl.operators.binary as binop
 import fmsd_impl.operators.generic as genop
 import fmsd_impl.operators.numeric as numop
-from fmsd.ast.node import Variable
+from fmsd.ast.node import VarNode
 from fmsd_impl.operators.props import Associative, Commutative
 from fmsd_impl.transforms.prop import t_associative
 
-a = Variable("a")
-b = Variable("b")
-c = Variable("c")
-d = Variable("d")
+a = VarNode("a")
+b = VarNode("b")
+c = VarNode("c")
+d = VarNode("d")
 
 
 @pytest.mark.parametrize(

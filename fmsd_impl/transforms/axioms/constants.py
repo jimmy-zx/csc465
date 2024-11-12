@@ -1,15 +1,15 @@
 import fmsd_impl.patch.binary
 import fmsd_impl.patch.numeric
-from fmsd.ast.node import Variable
+from fmsd.ast.node import VarNode
 from fmsd_impl.constants import INFINITY, NAT, ONE, ZERO
 from fmsd_impl.operators import Equals, Implies, In, Union
 
 assert fmsd_impl.patch.binary
 assert fmsd_impl.patch.numeric
 
-x = Variable("x")
-y = Variable("y")
-B = Variable("B")
+x = VarNode("x")
+y = VarNode("y")
+B = VarNode("B")
 axiom_nat_0 = In(ZERO, NAT)
 axiom_nat_1 = In(NAT + ONE, NAT)
 axiom_nat_2 = Implies(In(Union(ZERO, B + ONE), B), In(NAT, B))

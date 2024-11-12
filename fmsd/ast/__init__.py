@@ -1,8 +1,8 @@
 from fmsd.ast.base import CopyOnConstruction
-from fmsd.ast.node import Node, Variable
+from fmsd.ast.node import Node, VarNode
 
 __all__ = [
     "Node",
-    "Variable",
+    "VarNode",
     "CopyOnConstruction",
 ]

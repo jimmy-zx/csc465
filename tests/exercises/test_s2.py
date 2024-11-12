@@ -1,5 +1,5 @@
 import fmsd_impl.patch.binary
-from fmsd.ast.node import Variable
+from fmsd.ast.node import VarNode
 from fmsd.proof.derived import DerivedChainProof, DerivedEquivChainProof
 from fmsd_impl.constants.basic import TRUE
 from fmsd_impl.operators.generic import Ternary
@@ -11,11 +11,11 @@ def test_7c():
     """
     Exercise 7c
     """
-    b = Variable("b")
-    c = Variable("c")
+    b = VarNode("b")
+    c = VarNode("c")
     # pylint: disable=invalid-name
-    P = Variable("P")
-    Q = Variable("Q")
+    P = VarNode("P")
+    Q = VarNode("Q")
     # pylint: enable=invalid-name
 
     src = Ternary(b, Ternary(c, P, Q), Q)
@@ -50,9 +50,9 @@ def test_22a():
     """
     Exercise 22a
     """
-    p = Variable("p")  # play tennis
-    w = Variable("w")  # watch tennis
-    r = Variable("r")  # read tennis
+    p = VarNode("p")  # play tennis
+    w = VarNode("w")  # watch tennis
+    r = VarNode("r")  # read tennis
     stmt1 = (~p) >> w  # If I'm not playing tennis, I'm watching tennis.
     stmt2 = (~w) >> r  # I'm not watching tennis, I'm reading about tennis
     # speaker cannot do more than one of these activities at a time

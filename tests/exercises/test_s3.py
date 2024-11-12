@@ -1,12 +1,12 @@
-from fmsd.ast.node import Variable
+from fmsd.ast.node import VarNode
 from fmsd.ast_ext import Constant
 from fmsd.proof.derived import DerivedChainProof
 from fmsd.utils.config import config
 from fmsd_impl.constants.basic import INFINITY, NAT, NULL, ONE, TRUE, ZERO
 from fmsd_impl.operators import Count, Intersect
 from fmsd_impl.operators.bunch import In, Union
-from fmsd_impl.operators.context import Context
 from fmsd_impl.operators.generic import Equals
+from fmsd_impl.operators.meta import Context
 from fmsd_impl.operators.set_ import Contents, Set, SetIn, Size
 
 
@@ -27,7 +27,7 @@ def test_42():
 
 
 def test_49a():
-    n = Variable("n")
+    n = VarNode("n")
     config.trace = True
     proof = DerivedChainProof(
         In(n, NAT),
@@ -64,7 +64,7 @@ def test_49a():
 
 
 def test_49b():
-    m = Variable("m")
+    m = VarNode("m")
     proof = DerivedChainProof(
         # adding a local context here
         Context(In(m, ZERO * NAT), Equals(ZERO, ZERO * NAT)),
@@ -80,7 +80,7 @@ def test_49b():
 
 
 def test_49d():
-    m = Variable("m")
+    m = VarNode("m")
     proof = DerivedChainProof(
         Context(In(m, ONE * NAT), Equals(ONE * NAT, NAT)),
         In(m, NAT),
@@ -94,7 +94,7 @@ def test_49d():
 
 
 def test_55a():
-    S = Variable("S")
+    S = VarNode("S")
     proof = DerivedChainProof(
         TRUE,
         Equals(Size(S), Count(Contents(S))),
@@ -108,8 +108,8 @@ def test_55a():
 
 
 def test_55b():
-    A = Variable("A")
-    S = Variable("S")
+    A = VarNode("A")
+    S = VarNode("S")
     proof = DerivedChainProof(
         SetIn(A, S),
         In(A, Contents(S)),

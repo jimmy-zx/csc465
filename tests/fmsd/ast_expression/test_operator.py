@@ -1,12 +1,12 @@
 import pytest
 
-from fmsd.ast.node import Variable
+from fmsd.ast.node import VarNode
 from fmsd.ast_ext.operator import Operator
 
 
 def test_init():
-    a = Variable("a")
-    b = Variable("b")
+    a = VarNode("a")
+    b = VarNode("b")
 
     class Op2(Operator):
         N = 2
