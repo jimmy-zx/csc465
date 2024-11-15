@@ -1,11 +1,10 @@
 from typing import final
 
-from fmsd.ast.base import CopyOnConstruction
 from fmsd.ast.node import Node, VarTable
 
 
 @final
-class Variable(Node, CopyOnConstruction):
+class Variable(Node):
     def __init__(self, *args, **kwargs) -> None:
         if "name" in kwargs:
             assert len(kwargs) == 1
@@ -20,7 +19,7 @@ class Variable(Node, CopyOnConstruction):
         return self.meta["name"]
 
     def eval(self, vt: VarTable) -> "Node":
-        return vt.get(self, self).copy()
+        return vt.get(self, self)
 
     def sym_refs(self) -> set["Node"]:
         return {self}

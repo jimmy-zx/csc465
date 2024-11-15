@@ -1,6 +1,6 @@
 from typing import Any, Final, Iterator, final
 
-from fmsd.ast.base import Base, CopyOnConstruction
+from fmsd.ast.base import Base
 from fmsd.utils.config import config
 
 VarTable = dict["Node", "Node"]
@@ -10,20 +10,15 @@ class Node(Base["Node"]):
     def __init__(self, *nodes: "Node", **meta) -> None:
         super().__init__()
 
-        assert all(isinstance(node, Node) and node.parent is None for node in nodes)
+        assert all(isinstance(node, Node) for node in nodes)
 
-        if nodes:
+        if nodes and not meta.get("bypass_decl_check", False):
             decls = set.union(*(node.sym_decls() for node in nodes))
             for node in nodes:
-                assert not decls.intersection(node.sym_refs() - node.sym_decls())
+                assert not decls.intersection(node.sym_refs())
 
         self.meta: Final[dict] = meta
-        self.nodes: Final[tuple[Node, ...]] = tuple(
-            node if not node.copy_on_construction else node.copy() for node in nodes
-        )
-        self.parent: Node | None = None
-        for node in self.nodes:
-            node.parent = self
+        self.nodes: Final[tuple[Node, ...]] = tuple(nodes)
 
         for func in dir(self):
             if func.startswith("_init"):
@@ -67,14 +62,8 @@ class Node(Base["Node"]):
     def print(self, depth) -> str:
         return "Node(" + ", ".join(node.print(depth + 1) for node in self.nodes) + ")"
 
-    @final
-    def copy(self, copy_on_construction: bool = True) -> "Node":
-        res = type(self)(*(node.copy() for node in self.nodes), **self.meta)
-        res.copy_on_construction = res.copy_on_construction or copy_on_construction
-        return res
-
-    def variables(self) -> set["Node"]:
-        return set().union(*(node.variables() for node in self.nodes))
+    def varnodes(self) -> set["Node"]:
+        return set().union(*(node.varnodes() for node in self.nodes))
 
     def eval(self, vt: VarTable) -> "Node":
         return type(self)(*(node.eval(vt) for node in self.nodes), **self.meta)
@@ -101,8 +90,8 @@ class Node(Base["Node"]):
     @final
     def replace(self, index: list[int], value: "Node") -> "Node":
         if not index:
-            return value.copy() if value.copy_on_construction else value
-        nodes = [node.copy() for node in self.nodes]
+            return value
+        nodes = list(self.nodes)
         nodes[index[0]] = nodes[index[0]].replace(index[1:], value)
         return type(self)(*nodes, **self.meta)
 
@@ -156,8 +145,10 @@ class Node(Base["Node"]):
                 nodes.append(node)
         return nodes
 
-    def context(self) -> list["Node"]:
-        return self.parent.context() if self.parent is not None else []
+    def context(self, idx: list[int]) -> list["Node"]:
+        if not idx:
+            return []
+        return self.nodes[idx[0]].context(idx[1:])
 
     @final
     def walk_preorder(self) -> Iterator["Node"]:
@@ -169,11 +160,11 @@ class Node(Base["Node"]):
         return set().union(*(node.sym_decls() for node in self.nodes))
 
     def sym_refs(self) -> set["Node"]:
-        return set().union(*(node.sym_refs() for node in self.nodes))
+        return set().union(*(node.sym_refs() for node in self.nodes)) - self.sym_decls()
 
 
 @final
-class VarNode(Node, CopyOnConstruction):
+class VarNode(Node):
     def __init__(self, *args, **kwargs) -> None:
         if "name" in kwargs:
             assert len(kwargs) == 1
@@ -194,9 +185,9 @@ class VarNode(Node, CopyOnConstruction):
         return vt
 
     def eval(self, vt: VarTable) -> "Node":
-        return vt.get(self, self).copy()
+        return vt.get(self, self)
 
-    def variables(self) -> set[Node]:
+    def varnodes(self) -> set[Node]:
         return {self}
 
     def sym_refs(self) -> set["Node"]:

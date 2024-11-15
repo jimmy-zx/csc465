@@ -85,10 +85,10 @@ def test_list_index():
     ).verify()
 
     two = Constant("2")
-    left = Join(a, b).copy()
-    s = Join(Join(left, c), d).copy()
-    length = Equals(Length(left), two).copy()
-    s_two = Subscript(s, two).copy()
+    left = Join(a, b)
+    s = Join(Join(left, c), d)
+    length = Equals(Length(left), two)
+    s_two = Subscript(s, two)
     assert DerivedEquivChainProof(
         Context(s_two, length),
         Context(c, length),

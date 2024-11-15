@@ -15,7 +15,7 @@ class TransformProof(StepProof):
         assert self.transform.verify(self.src.get(self.index), self.dst.get(self.index))
         if not self.index:
             return True
-        src = self.src.replace(self.index, self.dst.get(self.index).copy())
+        src = self.src.replace(self.index, self.dst.get(self.index))
         assert src == self.dst
         return True
 

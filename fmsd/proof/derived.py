@@ -81,11 +81,11 @@ class DerivedStepProof(StepProof):
                 res := DerivedStepProof.verify_transforms(
                     src.get(idx),
                     dst.get(idx),
-                    src.get(idx).context(),
+                    src.context(idx),
                     transform_manager,
                 )
             ) is not None:
-                return res, src.replace(idx, dst.get(idx).copy()), idx
+                return res, src.replace(idx, dst.get(idx)), idx
 
             if len(idx) == len(end):
                 break
@@ -97,11 +97,11 @@ class DerivedStepProof(StepProof):
                 res := DerivedStepProof.verify_transforms(
                     src.get(idx),
                     dst.get(idx),
-                    src.get(idx).context(),
+                    src.context(idx),
                     transform_manager,
                 )
             ) is not None:
-                return res, src.replace(idx, dst.get(idx).copy()), idx
+                return res, src.replace(idx, dst.get(idx)), idx
             if not idx:
                 break
             idx.pop()

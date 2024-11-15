@@ -4,9 +4,11 @@ from fmsd_impl.transforms.axioms import (
     bunch,
     constants,
     context,
+    function,
     generic,
     list_,
     numeric,
+    quantifier,
     set_,
     string_,
 )
@@ -22,6 +24,8 @@ modules = [
     set_,
     string_,
     list_,
+    function,
+    quantifier,
 ]
 
 t_all: dict[str, Transform] = {}

@@ -18,20 +18,9 @@ def test_eq():
     assert tree4 == tree4
 
 
-def test_copy():
-    a = VarNode("a")
-    a_copy = a.copy()
-    assert a is not a_copy
-    a = VarNode("a")
-    tree = Node(Node(a, a), Node(a))
-    tree_copy = tree.copy()
-    for lhs, rhs in zip(tree.walk_preorder(), tree_copy.walk_preorder()):
-        assert lhs is not rhs
-
-
 def test_variables():
     tree = Node(VarNode("a"), VarNode("b"), Node(VarNode("a")))
-    assert tree.variables() == {VarNode("a"), VarNode("b")}
+    assert tree.varnodes() == {VarNode("a"), VarNode("b")}
 
 
 def test_eval():

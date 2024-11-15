@@ -23,8 +23,8 @@ from fmsd_impl.operators import (
 def test_list_bunch():
     two = Constant("2")
     ten = Constant("10")
-    s1 = Join.bin_list(ZERO, ONE, two).copy()
-    s2 = Join.bin_list(NAT, ONE, StringRange(ZERO, ten)).copy()
+    s1 = Join.bin_list(ZERO, ONE, two)
+    s2 = Join.bin_list(NAT, ONE, StringRange(ZERO, ten))
     assert DerivedEquivChainProof(
         Context(In(List(s1), List(s2)), In(s1, s2)),
         Context(TRUE, In(s1, s2)),
@@ -54,7 +54,7 @@ def test_length():
     b = Constant("5")
     c = Constant("7")
     d = Constant("4")
-    s = Join.bin_list(a, b, c, d).copy()
+    s = Join.bin_list(a, b, c, d)
     assert DerivedEquivChainProof(
         Context(ListLength(List(s)), Equals(Length(s), d)),
         Context(d, Equals(Length(s), d)),
@@ -71,7 +71,7 @@ def test_compose_element():
     b = Constant("5")
     c = Constant("7")
     d = Constant("4")
-    s = Join.bin_list(a, b, c, d).copy()
+    s = Join.bin_list(a, b, c, d)
     two = Constant("2")
     assert DerivedEquivChainProof(
         Context(ListCompose(List(s), two), Equals(Subscript(s, two), c)),
@@ -90,9 +90,9 @@ def test_compose_list():
     c = Constant("7")
     d = Constant("4")
     two = Constant("2")
-    s = Join.bin_list(a, b, c, d).copy()
-    i = Join.bin_list(two, ONE, two).copy()
-    r = Join.bin_list(c, b, c).copy()
+    s = Join.bin_list(a, b, c, d)
+    i = Join.bin_list(two, ONE, two)
+    r = Join.bin_list(c, b, c)
     assert DerivedEquivChainProof(
         Context(ListCompose(List(s), List(i)), Equals(Subscript(s, i), r)),
         Context(List(r), Equals(Subscript(s, i), r)),
@@ -109,7 +109,7 @@ def test_compose_mult():
     b = Constant("11")
     c = Constant("12")
     two = Constant("2")
-    s = Join.bin_list(a, b, c).copy()
+    s = Join.bin_list(a, b, c)
     assert DerivedEquivChainProof(
         Subscript(
             s,
@@ -223,9 +223,9 @@ def test_at():
     d = Constant("5")
     e = Constant("6")
     f = Constant("7")
-    l1 = List(Join(a, b)).copy()
-    l2 = List(Join(e, f)).copy()
-    l3 = List(Join(d, l2)).copy()
+    l1 = List(Join(a, b))
+    l2 = List(Join(e, f))
+    l3 = List(Join(d, l2))
     idx = Join(a, Join(ONE, ZERO))
     z = DynamicProofFactory()
     z.s(ListAt(List(Join.bin_list(l1, c, l3)), idx))
@@ -297,9 +297,9 @@ def test_replace_multi():
     c = Constant("4")
     d = Constant("5")
     e = Constant("6")
-    l1 = List(Join.bin_list(ZERO, ONE, a)).copy()
-    l2 = List(Join.bin_list(b, c, d)).copy()
-    l3 = List(Join(l1, l2)).copy()
+    l1 = List(Join.bin_list(ZERO, ONE, a))
+    l2 = List(Join.bin_list(b, c, d))
+    l3 = List(Join(l1, l2))
     idx = Join(ZERO, ONE)
     z = DynamicProofFactory()
     z.s(ListReplace(idx, e, l3))

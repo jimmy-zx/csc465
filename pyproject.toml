@@ -25,6 +25,11 @@ include = [
     "fmsd_impl*"
 ]
 
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
+
 [tool.pylint."messages control"]
 disable = [
     "raw-checker-failed",

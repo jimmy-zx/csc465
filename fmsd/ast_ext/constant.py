@@ -1,11 +1,10 @@
 from typing import final
 
-from fmsd.ast.base import CopyOnConstruction
 from fmsd.ast.node import Node
 
 
 @final
-class Constant(Node, CopyOnConstruction):
+class Constant(Node):
     def __init__(self, *args, **kwargs) -> None:
         if "name" in kwargs:
             assert len(kwargs) == 1

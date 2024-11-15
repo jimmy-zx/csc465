@@ -3,7 +3,7 @@ from typing import Callable
 from fmsd.ast import VarNode
 from fmsd.ast.node import Node
 from fmsd.transform.transform import SymmetricFunctionTransform
-from fmsd_impl.constants import INFINITY, NAT, ONE, TRUE
+from fmsd_impl.constants import INFINITY, INT, NAT, ONE, RAT, REAL, TRUE, XINT, XREAL
 from fmsd_impl.operators import (
     BunchInterval,
     DividedBy,
@@ -64,9 +64,19 @@ def t_natural(src: Node, dst: Node) -> bool:
     if src != TRUE:
         return False
     x = VarNode("x")
-    if (vt := In(x, NAT).match(dst, {})) is None:
+    y = VarNode("y")
+    if (vt := In(x, y).match(dst, {})) is None:
         return False
     if to_natural(vt[x]) is None:
+        return False
+    if vt[y] not in (
+        NAT,
+        INT,
+        RAT,
+        REAL,
+        XINT,
+        XREAL,
+    ):
         return False
     return True
 

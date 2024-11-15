@@ -7,4 +7,4 @@ def test_context():
     b = VarNode("b")
     c = VarNode("c")
     tree = Node(a, Context(Node(b, Context(a, c)), b))
-    assert tree.get([1, 0, 1, 0]).context() == [c, b]
+    assert tree.context([1, 0, 1, 0]) == [b, c]

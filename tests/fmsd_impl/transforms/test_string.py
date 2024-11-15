@@ -118,10 +118,10 @@ def test_replace():
     nine = Constant("9")
     eight = Constant("8")
     two = Constant("2")
-    left = Join(three, five).copy()
-    cond_eight = Equals(Length(eight), ONE).copy()
-    cond_nine = Equals(Length(nine), ONE).copy()
-    cond_two = (Length(left) < INFINITY).copy()
+    left = Join(three, five)
+    cond_eight = Equals(Length(eight), ONE)
+    cond_nine = Equals(Length(nine), ONE)
+    cond_two = Length(left) < INFINITY
     assert DerivedEquivChainProof(
         Replace(Join(Join(left, eight), NIL), Length(left), nine),
         Join(Join(left, nine), NIL),
@@ -525,7 +525,7 @@ def test_bunch_join():
 def test_star():
     a = VarNode("a")
     b = VarNode("b")
-    s = Join(a, b).copy()
+    s = Join(a, b)
     two = Constant("2")
     assert DerivedEquivChainProof(
         In(Join(s, s), Star(s)),

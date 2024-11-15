@@ -10,6 +10,9 @@ INFINITY = Constant("∞")
 NULL = Constant("null")
 
 NAT = Constant("nat")
+INT = Constant("int")
+RAT = Constant("rat")
+REAL = Constant("real")
 XINT = Constant("xint")
 XREAL = Constant("xreal")
 
@@ -23,6 +26,9 @@ __all__ = [
     "INFINITY",
     "NULL",
     "NAT",
+    "INT",
+    "RAT",
+    "REAL",
     "XINT",
     "XREAL",
     "NIL",

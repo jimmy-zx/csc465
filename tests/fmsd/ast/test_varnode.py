@@ -11,7 +11,6 @@ def test_meta():
     assert a == c
     assert hash(a) != hash(b)
     assert hash(a) == hash(c)
-    assert a == a.copy()
     with pytest.raises(AssertionError):
         VarNode()
     with pytest.raises(AssertionError):

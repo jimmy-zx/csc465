@@ -95,14 +95,3 @@ class Base(Generic[T]):
 
     def __matmul__(self, other):
         return NotImplemented
-
-    def copy(self, copy_on_construction: bool = True) -> T:
-        raise NotImplementedError()
-
-
-class CopyOnConstruction:
-    def __init__(self) -> None:
-        self.copy_on_construction = False
-
-    def _init_copy_on_construction(self):
-        self.copy_on_construction = True

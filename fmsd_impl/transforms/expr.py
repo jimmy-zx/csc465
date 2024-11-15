@@ -77,7 +77,7 @@ class ExpressionTransform(Transform):
         """
         if isinstance(expr, (Equals, Implies)):
             if (m := expr.nodes[0].match(src, vt.copy())) is not None:
-                if expr.nodes[1].match(dst, m) == m:
+                if expr.nodes[1].match(dst, m) is not None:
                     return m
         return None
 
@@ -91,7 +91,7 @@ class ExpressionTransform(Transform):
         """
         if isinstance(expr, (Equals, ImpliedBy)):
             if (m := expr.nodes[1].match(src, vt.copy())) is not None:
-                if expr.nodes[0].match(dst, m) == m:
+                if expr.nodes[0].match(dst, m) is not None:
                     return m
         return None
 

@@ -15,12 +15,12 @@ def test_match_rule_transform(transform):
     if not isinstance(transform, ExpressionTransform):
         pytest.skip()
     if isinstance(transform.expr, (Equals, Implies)):
-        src = transform.expr.nodes[0].copy()
-        dst = transform.expr.nodes[1].copy()
+        src = transform.expr.nodes[0]
+        dst = transform.expr.nodes[1]
         assert transform.verify(src, dst)
     if isinstance(transform.expr, Equals):
-        src = transform.expr.nodes[1].copy()
-        dst = transform.expr.nodes[0].copy()
+        src = transform.expr.nodes[1]
+        dst = transform.expr.nodes[0]
         assert transform.verify(src, dst)
 
 

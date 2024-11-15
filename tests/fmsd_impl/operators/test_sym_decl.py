@@ -9,7 +9,7 @@ def test_decl():
     y = VarNode("y")
     tree = SymbolDeclaration(x, Node(y))
     assert tree.sym_decls() == {x}
-    assert tree.sym_refs() == {x, y}
+    assert tree.sym_refs() == {y}
 
 
 def test_construction():

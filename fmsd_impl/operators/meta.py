@@ -1,4 +1,4 @@
-from typing import Callable, final
+from typing import final
 
 from fmsd.ast.node import Node, VarTable
 from fmsd.ast_ext.operator import Operator
@@ -12,13 +12,13 @@ class Context(Operator):
     def print(self, depth: int) -> str:
         return f"Context({self.nodes[0].print(depth + 1)},{self.nodes[1].print(depth + 1)})"
 
-    def context(self) -> list["Node"]:
+    def context(self, idx: list[int]) -> list["Node"]:
         theorems = [self.nodes[1]]
         if isinstance(self.nodes[1], And):
             theorems.extend(self.nodes[1].flatten())
-        if self.parent is not None:
-            theorems.extend(self.parent.context())
-        return theorems
+        if not idx:
+            return theorems
+        return theorems + self.nodes[idx[0]].context(idx[1:])
 
 
 @final
@@ -37,7 +37,15 @@ class SymbolDeclaration(Node):
 
 @final
 class VTCondition(Node):
-    def __init__(self, node: Node, *, cond: Callable[[VarTable], bool]) -> None:
+    def __init__(self, *args, **kwargs) -> None:
+        node = args[0]
+        if "cond" in kwargs:
+            assert len(kwargs) == 1
+            cond = kwargs["cond"]
+        elif len(args) == 2:
+            cond = args[1]
+        else:
+            assert False, "`cond` is required for argument"
         super().__init__(node, cond=cond)
 
     def print(self, depth: int) -> str:
