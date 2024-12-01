@@ -1,9 +1,5 @@
 from fmsd.ast_ext.operator import Operator
-
-
-class Equals(Operator):
-    N = 2
-    DELIM = "="
+from fmsd.impl.operators import Equals
 
 
 class NotEquals(Operator):

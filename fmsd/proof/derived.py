@@ -1,4 +1,6 @@
 from fmsd.ast.node import Node
+from fmsd.impl.operators import Context
+from fmsd.impl.transforms import ExpressionTransform
 from fmsd.proof.chain import ChainProof
 from fmsd.proof.proof import EquivProof, Proof, ProofException, StepProof
 from fmsd.proof.transform import TransformProof
@@ -81,7 +83,7 @@ class DerivedStepProof(StepProof):
                 res := DerivedStepProof.verify_transforms(
                     src.get(idx),
                     dst.get(idx),
-                    src.context(idx),
+                    Context.context(src, idx),
                     transform_manager,
                 )
             ) is not None:
@@ -97,7 +99,7 @@ class DerivedStepProof(StepProof):
                 res := DerivedStepProof.verify_transforms(
                     src.get(idx),
                     dst.get(idx),
-                    src.context(idx),
+                    Context.context(src, idx),
                     transform_manager,
                 )
             ) is not None:
@@ -117,7 +119,7 @@ class DerivedStepProof(StepProof):
                 transform_manager.hit(trf, i)
                 return trf
         for ctx in context:
-            trf = impl.node_to_transform(ctx)
+            trf = ExpressionTransform(ctx)
             trf.name = "context"
             if trf.verify(src, dst):
                 return trf

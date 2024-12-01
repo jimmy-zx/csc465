@@ -1,5 +1,5 @@
 import fmsd_impl.transforms.axioms
-from fmsd_impl.transforms.expr import ExpressionTransform
+from fmsd.impl.transforms import ExpressionTransform
 
 
 def test_duplicate_axiom():

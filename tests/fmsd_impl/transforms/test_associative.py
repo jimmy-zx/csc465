@@ -37,17 +37,17 @@ d = VarNode("d")
 )
 def test_associative(op):
     trf = t_associative
-    assert trf.verify(op(a, op(b, c)), op(op(a, b), c)) == issubclass(op, Associative)
-    assert trf.verify(op(op(a, b), c), op(a, op(b, c))) == issubclass(op, Associative)
-    assert trf.verify(op(a, op(b, op(c, d))), op(op(a, b), op(c, d))) == issubclass(
-        op, Associative
-    )
-    assert trf.verify(op(a, op(b, op(c, d))), op(op(op(a, b), c), d)) == issubclass(
-        op, Associative
-    )
+    assert trf.verify(op(a, op(b, c)), op(op(a, b), c)) == Associative.has_prop(op)
+    assert trf.verify(op(op(a, b), c), op(a, op(b, c))) == Associative.has_prop(op)
+    assert trf.verify(
+        op(a, op(b, op(c, d))), op(op(a, b), op(c, d))
+    ) == Associative.has_prop(op)
+    assert trf.verify(
+        op(a, op(b, op(c, d))), op(op(op(a, b), c), d)
+    ) == Associative.has_prop(op)
     assert trf.verify(op(a, op(b, op(c, d))), op(op(b, a), op(c, d))) == (
-        issubclass(op, Associative) and issubclass(op, Commutative)
+        Associative.has_prop(op) and Commutative.has_prop(op)
     )
     assert trf.verify(op(a, op(b, op(c, d))), op(op(op(b, a), c), d)) == (
-        issubclass(op, Associative) and issubclass(op, Commutative)
+        Associative.has_prop(op) and Commutative.has_prop(op)
     )

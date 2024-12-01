@@ -115,7 +115,7 @@ def test_natural_set():
     ],
 )
 def test_natural_op(op: type[Node], func: Callable[[int, int], int]):
-    r = random.randint(0, 2**8)
+    r = random.randint(1, 2**8)
     l = r * random.randint(1, 2**8)
     assert DerivedEquivChainProof(
         op(Constant(str(l)), Constant(str(r))),

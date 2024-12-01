@@ -1,3 +1,4 @@
+from fmsd.impl.transforms import ExpressionTransform
 from fmsd.transform.transform import Transform
 from fmsd_impl.transforms.axioms import (
     binary,
@@ -12,7 +13,6 @@ from fmsd_impl.transforms.axioms import (
     set_,
     string_,
 )
-from fmsd_impl.transforms.expr import ExpressionTransform
 
 modules = [
     binary,

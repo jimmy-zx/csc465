@@ -1,6 +1,6 @@
 from fmsd.ast import VarNode
+from fmsd.impl.transforms import ExpressionTransform
 from fmsd_impl.operators import Equals, VTCondition
-from fmsd_impl.transforms.expr import ExpressionTransform
 
 
 def test_vtcondition():

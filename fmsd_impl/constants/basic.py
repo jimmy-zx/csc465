@@ -1,7 +1,5 @@
 from fmsd.ast_ext.constant import Constant
-
-TRUE = Constant("⊤")
-FALSE = Constant("⊥")
+from fmsd.impl.constants import FALSE, TRUE
 
 ZERO = Constant("0")
 ONE = Constant("1")

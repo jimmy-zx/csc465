@@ -2,6 +2,7 @@ import pytest
 
 from fmsd.ast import VarNode
 from fmsd.ast_ext import Constant, Variable
+from fmsd.impl.transforms import ExpressionTransform
 from fmsd.proof import DerivedEquivChainProof, DynamicProofFactory
 from fmsd_impl.constants import NAT, ONE, RAT, TRUE
 from fmsd_impl.operators import (
@@ -15,7 +16,6 @@ from fmsd_impl.operators import (
     In,
 )
 from fmsd_impl.transforms.axioms.function import axiom_extension
-from fmsd_impl.transforms.expr import ExpressionTransform
 from fmsd_impl.transforms.function import t_rename
 
 

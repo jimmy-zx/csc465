@@ -9,11 +9,11 @@ from fmsd_impl.operators import Associative, Commutative, Idempotent
 def t_associative(src: Node, dst: Node) -> bool:
     if type(src) is not type(dst):
         return False
-    if not isinstance(src, Associative):
+    if not Associative.has_prop(type(src)):
         return False
-    if not isinstance(src, Commutative):
+    if not Commutative.has_prop(type(src)):
         return src.flatten() == dst.flatten()
-    if not isinstance(src, Idempotent):
+    if not Idempotent.has_prop(type(src)):
         return Counter(src.flatten()) == Counter(dst.flatten())
     return set(src.flatten()) == set(dst.flatten())
 
@@ -22,14 +22,14 @@ def t_associative(src: Node, dst: Node) -> bool:
 def t_commutative(src: Node, dst: Node) -> bool:
     if type(src) is not type(dst):
         return False
-    if not isinstance(src, Commutative):
+    if not Commutative.has_prop(type(src)):
         return False
     return src.nodes[1] == dst.nodes[0] and dst.nodes[1] == src.nodes[0]
 
 
 @SymmetricFunctionTransform
 def t_idempotent(src: Node, dst: Node) -> bool:
-    if not isinstance(src, Idempotent):
+    if not Idempotent.has_prop(type(src)):
         return False
     elem = set(src.flatten())
     if len(elem) != 1:

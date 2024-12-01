@@ -1,5 +1,6 @@
 from typing import final
 
+from fmsd.ast import VarNode
 from fmsd.ast.node import Node, VarTable
 
 
@@ -21,5 +22,20 @@ class Variable(Node):
     def eval(self, vt: VarTable) -> "Node":
         return vt.get(self, self)
 
-    def sym_refs(self) -> set["Node"]:
-        return {self}
+    @staticmethod
+    def sym_refs(node: Node) -> set[Node]:
+        if isinstance(node, (VarNode, Variable)):
+            return {node}
+        return (
+            set().union(*(Variable.sym_refs(node) for node in node.nodes))
+            - node.sym_decls()
+        )
+
+
+def func_init_symbols(self: Node) -> None:
+    decls = set().union(*(node.sym_decls() for node in self.nodes))
+    for node in self.nodes:
+        assert not decls.intersection(Variable.sym_refs(node))
+
+
+Node._init_symbols = func_init_symbols  # pylint: disable=protected-access

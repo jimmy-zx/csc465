@@ -1,7 +1,7 @@
 from fmsd.ast.node import Node, VarTable
+from fmsd.impl.constants import TRUE
+from fmsd.impl.operators import Context, Equals, Implies, VTCondition
 from fmsd.transform.transform import Transform
-from fmsd_impl.constants import TRUE
-from fmsd_impl.operators import Context, Equals, ImpliedBy, Implies, VTCondition
 
 
 class ExpressionTransform(Transform):
@@ -89,7 +89,7 @@ class ExpressionTransform(Transform):
         axiom = (left) << (right)
         right >>> left
         """
-        if isinstance(expr, (Equals, ImpliedBy)):
+        if isinstance(expr, Equals):
             if (m := expr.nodes[1].match(src, vt.copy())) is not None:
                 if expr.nodes[0].match(dst, m) is not None:
                     return m

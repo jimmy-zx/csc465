@@ -1,6 +1,7 @@
 import pytest
 
 from fmsd.ast import Node, VarNode
+from fmsd.ast_ext import Variable
 from fmsd_impl.operators import SymbolDeclaration
 
 
@@ -9,7 +10,7 @@ def test_decl():
     y = VarNode("y")
     tree = SymbolDeclaration(x, Node(y))
     assert tree.sym_decls() == {x}
-    assert tree.sym_refs() == {y}
+    assert Variable.sym_refs(tree) == {y}
 
 
 def test_construction():

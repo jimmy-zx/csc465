@@ -1,4 +1,5 @@
 from fmsd.ast.node import VarNode
+from fmsd.impl.transforms import ExpressionTransform
 from fmsd.proof.chain import ChainProof
 from fmsd.proof.transform import TransformProof
 from fmsd_impl.operators.binary import And, Flip, Implies
@@ -8,7 +9,6 @@ from fmsd_impl.transforms.axioms.binary import (
     axiom_specialization,
 )
 from fmsd_impl.transforms.axioms.generic import axiom_symmetry
-from fmsd_impl.transforms.expr import ExpressionTransform
 
 a = VarNode("a")
 b = VarNode("b")

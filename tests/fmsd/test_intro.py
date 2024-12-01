@@ -1,5 +1,6 @@
 import fmsd_impl.patch.binary
 from fmsd.ast.node import VarNode
+from fmsd.impl.transforms import ExpressionTransform
 from fmsd.proof.chain import ChainProof
 from fmsd.proof.derived import DerivedStepProof
 from fmsd.proof.transform import TransformProof
@@ -8,7 +9,6 @@ from fmsd_impl.operators.binary import Or
 from fmsd_impl.operators.generic import Equals, NotEquals
 from fmsd_impl.patch.infix import EQ, NEQ
 from fmsd_impl.transforms.axioms.binary import axiom_base_and
-from fmsd_impl.transforms.expr import ExpressionTransform
 from fmsd_impl.transforms.prop import t_associative
 
 assert fmsd_impl.patch.binary

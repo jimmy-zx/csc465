@@ -1,13 +1,13 @@
 import pytest
 
 from fmsd.ast import VarNode
+from fmsd.impl.transforms import ExpressionTransform
 from fmsd_impl.constants import INFINITY, ZERO
 from fmsd_impl.operators import Context
 from fmsd_impl.operators.binary import Implies
 from fmsd_impl.operators.generic import Equals
 from fmsd_impl.transforms.axioms import t_all
 from fmsd_impl.transforms.axioms.numeric import axiom_inverse
-from fmsd_impl.transforms.expr import ExpressionTransform
 
 
 @pytest.mark.parametrize("transform", t_all.values(), ids=lambda t: t.name)

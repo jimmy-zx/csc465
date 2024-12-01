@@ -20,7 +20,7 @@ def test_eq():
 
 def test_variables():
     tree = Node(VarNode("a"), VarNode("b"), Node(VarNode("a")))
-    assert tree.varnodes() == {VarNode("a"), VarNode("b")}
+    assert VarNode.varnodes(tree) == {VarNode("a"), VarNode("b")}
 
 
 def test_eval():

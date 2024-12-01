@@ -1,4 +1,5 @@
 from fmsd.ast.node import VarNode
+from fmsd.impl.transforms import ExpressionTransform
 from fmsd_impl.constants.basic import FALSE as F
 from fmsd_impl.constants.basic import TRUE as T
 from fmsd_impl.operators.binary import And, Flip
@@ -13,7 +14,6 @@ from fmsd_impl.transforms.axioms.generic import (
     axiom_transitivity,
     axiom_unequality,
 )
-from fmsd_impl.transforms.expr import ExpressionTransform
 
 a = VarNode("a")
 x = VarNode("x")

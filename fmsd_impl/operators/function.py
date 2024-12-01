@@ -1,17 +1,13 @@
 from fmsd.ast import Node
-from fmsd.ast_ext import Operator
+from fmsd.ast_ext import Operator, Variable
 
 
 class Function(Operator):
     N = 3
 
-    def __init__(self, *args, bypass_decl_check: bool = True, **kwargs) -> None:
-        assert bypass_decl_check
-        super().__init__(*args, bypass_decl_check=bypass_decl_check, **kwargs)
-
     def _init_function(self) -> None:
         assert self.nodes[0] not in self.nodes[1].sym_decls()
-        assert self.nodes[0] not in self.nodes[1].sym_refs()
+        assert self.nodes[0] not in Variable.sym_refs(self.nodes[1])
         assert self.nodes[0] not in self.nodes[2].sym_decls()
 
     def print(self, depth: int = 0) -> str:

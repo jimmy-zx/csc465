@@ -1,4 +1,5 @@
 from fmsd.ast.node import VarNode
+from fmsd.impl.transforms import ExpressionTransform
 from fmsd_impl.constants.basic import FALSE as F
 from fmsd_impl.constants.basic import TRUE as T
 from fmsd_impl.operators.binary import And, Flip, ImpliedBy, Implies, Or
@@ -20,7 +21,6 @@ from fmsd_impl.transforms.axioms.binary import (
     axiom_noncontradiction,
 )
 from fmsd_impl.transforms.constant.cbinary import func_rule_table
-from fmsd_impl.transforms.expr import ExpressionTransform
 
 a = VarNode("a")
 b = VarNode("b")

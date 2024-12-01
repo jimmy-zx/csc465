@@ -1,4 +1,4 @@
-from typing import Any, Final, Iterator, final
+from typing import Callable, Final, Iterator, final
 
 from fmsd.ast.base import Base
 from fmsd.utils.config import config
@@ -7,15 +7,13 @@ VarTable = dict["Node", "Node"]
 
 
 class Node(Base["Node"]):
+    # Defined in fmsd.ast_ext.variable
+    _init_symbols: Callable[["Node"], None] | None = None
+
     def __init__(self, *nodes: "Node", **meta) -> None:
         super().__init__()
 
         assert all(isinstance(node, Node) for node in nodes)
-
-        if nodes and not meta.get("bypass_decl_check", False):
-            decls = set.union(*(node.sym_decls() for node in nodes))
-            for node in nodes:
-                assert not decls.intersection(node.sym_refs())
 
         self.meta: Final[dict] = meta
         self.nodes: Final[tuple[Node, ...]] = tuple(nodes)
@@ -24,26 +22,7 @@ class Node(Base["Node"]):
             if func.startswith("_init"):
                 getattr(self, func)()
 
-        self._cache: dict[str, Any] = {}
-
-    def __getattribute__(self, item: str):
-        attr = object.__getattribute__(self, item)
-        if item in (
-            "__hash__",
-            "__str__",
-            "variables",
-            "sym_decls",
-            "sym_refs",
-        ):
-
-            def wrapper():
-                if item in self._cache:
-                    return self._cache[item]
-                self._cache[item] = (res := attr())
-                return res
-
-            return wrapper
-        return attr
+        self._hash_cache: int = self._hash()
 
     @final
     def __eq__(self, other) -> bool:
@@ -52,8 +31,12 @@ class Node(Base["Node"]):
         return self.nodes == other.nodes and self.meta == other.meta
 
     @final
-    def __hash__(self):
+    def _hash(self) -> int:
         return hash((type(self), tuple(self.nodes), tuple(sorted(self.meta.items()))))
+
+    @final
+    def __hash__(self):
+        return self._hash_cache
 
     @final
     def __str__(self) -> str:
@@ -61,9 +44,6 @@ class Node(Base["Node"]):
 
     def print(self, depth) -> str:
         return "Node(" + ", ".join(node.print(depth + 1) for node in self.nodes) + ")"
-
-    def varnodes(self) -> set["Node"]:
-        return set().union(*(node.varnodes() for node in self.nodes))
 
     def eval(self, vt: VarTable) -> "Node":
         return type(self)(*(node.eval(vt) for node in self.nodes), **self.meta)
@@ -145,11 +125,6 @@ class Node(Base["Node"]):
                 nodes.append(node)
         return nodes
 
-    def context(self, idx: list[int]) -> list["Node"]:
-        if not idx:
-            return []
-        return self.nodes[idx[0]].context(idx[1:])
-
     @final
     def walk_preorder(self) -> Iterator["Node"]:
         yield self
@@ -158,9 +133,6 @@ class Node(Base["Node"]):
 
     def sym_decls(self) -> set["Node"]:
         return set().union(*(node.sym_decls() for node in self.nodes))
-
-    def sym_refs(self) -> set["Node"]:
-        return set().union(*(node.sym_refs() for node in self.nodes)) - self.sym_decls()
 
 
 @final
@@ -187,8 +159,8 @@ class VarNode(Node):
     def eval(self, vt: VarTable) -> "Node":
         return vt.get(self, self)
 
-    def varnodes(self) -> set[Node]:
-        return {self}
-
-    def sym_refs(self) -> set["Node"]:
-        return {self}
+    @staticmethod
+    def varnodes(node: Node) -> set[Node]:
+        if isinstance(node, VarNode):
+            return {node}
+        return set().union(*(VarNode.varnodes(node) for node in node.nodes))

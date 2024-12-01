@@ -38,4 +38,4 @@ b = VarNode("b")
 )
 def test_commutative(op):
     trf = t_commutative
-    assert trf.verify(op(a, b), op(b, a)) == issubclass(op, Commutative)
+    assert trf.verify(op(a, b), op(b, a)) == Commutative.has_prop(op)
