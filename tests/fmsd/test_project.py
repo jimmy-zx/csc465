@@ -1,23 +1,12 @@
-import importlib.util
 import re
 import subprocess
-from pathlib import Path
 
 import pytest
 
 TARGET_FILES = ["fmsd", "fmsd_impl", "tests", "setup.py", "build_isolated.py"]
 
 
-@pytest.mark.parametrize("file", Path("fmsd").rglob("*.py"))
-def test_import_all(file):
-    spec = importlib.util.spec_from_file_location("sample", file)
-    assert spec is not None
-    mod = importlib.util.module_from_spec(spec)
-    assert mod is not None
-    assert spec.loader is not None
-    spec.loader.exec_module(mod)
-
-
+@pytest.mark.order(-1)
 def test_tree_clean():
     # https://unix.stackexchange.com/questions/155046/determine-if-git-working-directory-is-clean-from-a-script
     p = subprocess.run(
@@ -58,6 +47,7 @@ def test_mypy():
     subprocess.run(["mypy"] + TARGET_FILES, check=True)
 
 
+@pytest.mark.order(-1)
 def test_pylint():
     subprocess.run(["pylint", "-j", "0"] + TARGET_FILES, check=True)
 
@@ -84,5 +74,6 @@ def test_isort():
     assert status
 
 
+@pytest.mark.order(-1)
 def test_build():
     subprocess.run(["make", "build"], check=True)

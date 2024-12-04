@@ -76,7 +76,7 @@ class SymbolDeclaration(Node):
         return self.nodes[1].print(depth)
 
     def sym_decls(self) -> set["Node"]:
-        return super().sym_decls().union({self.nodes[0]})
+        return {self.nodes[0]}
 
 
 @final

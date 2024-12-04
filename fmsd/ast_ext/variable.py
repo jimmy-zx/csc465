@@ -31,11 +31,26 @@ class Variable(Node):
             - node.sym_decls()
         )
 
+    @staticmethod
+    def sym_decl_all(node: Node, include_self: bool = True) -> set[Node]:
+        base = set()
+        if include_self:
+            base = node.sym_decls()
+        return base.union(*(Variable.sym_decl_all(node, True) for node in node.nodes))
+
+    @staticmethod
+    def sym_avail(node: Node, idx: list[int]) -> set[Node]:
+        syms = node.sym_decls()
+        if idx:
+            syms = syms.union(Variable.sym_avail(node.nodes[idx[0]], idx[1:]))
+        return syms
+
 
 def func_init_symbols(self: Node) -> None:
-    decls = set().union(*(node.sym_decls() for node in self.nodes))
+    decls = Variable.sym_decl_all(self, include_self=False)
     for node in self.nodes:
-        assert not decls.intersection(Variable.sym_refs(node))
+        res = decls.intersection(Variable.sym_refs(node))
+        assert not res
 
 
 Node._init_symbols = func_init_symbols  # pylint: disable=protected-access

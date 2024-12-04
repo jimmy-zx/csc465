@@ -13,16 +13,16 @@ class Node(Base["Node"]):
     def __init__(self, *nodes: "Node", **meta) -> None:
         super().__init__()
 
-        assert all(isinstance(node, Node) for node in nodes)
-
         self.meta: Final[dict] = meta
         self.nodes: Final[tuple[Node, ...]] = tuple(nodes)
+        self._hash_cache: int = self._hash()
+
+        assert self._init_symbols is not None
+        assert all(isinstance(node, Node) for node in nodes)
 
         for func in dir(self):
             if func.startswith("_init"):
                 getattr(self, func)()
-
-        self._hash_cache: int = self._hash()
 
     @final
     def __eq__(self, other) -> bool:
@@ -132,7 +132,7 @@ class Node(Base["Node"]):
             yield from node.walk_preorder()
 
     def sym_decls(self) -> set["Node"]:
-        return set().union(*(node.sym_decls() for node in self.nodes))
+        return set()
 
 
 @final

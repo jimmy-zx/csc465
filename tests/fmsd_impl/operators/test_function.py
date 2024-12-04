@@ -14,8 +14,8 @@ def test_func_vars():
     f1 = Function(x, D, x)
     assert f1.sym_decls() == {x}
     f2 = Function(y, D, FunctionCompose(f1, y))
-    assert f2.sym_decls() == {x, y}
-    assert f2.nodes[2].sym_decls() == {x}
+    assert Variable.sym_decl_all(f2) == {x, y}
+    assert Variable.sym_decl_all(f2.nodes[2]) == {x}
 
 
 def test_func_init():

@@ -14,7 +14,7 @@ class Function(Operator):
         return "<{}:{}·{}>".format(*(node.print(depth + 1) for node in self.nodes))
 
     def sym_decls(self) -> set["Node"]:
-        return super().sym_decls().union({self.nodes[0]})
+        return {self.nodes[0]}
 
 
 class FunctionDomain(Operator):

@@ -40,6 +40,7 @@ class SetUnion(Operator, Commutative, Associative, Idempotent):
 
 
 class SetIntersect(Operator, Commutative, Associative, Idempotent):
+    N = 2
     DELIM = "∩"
 
 
