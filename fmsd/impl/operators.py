@@ -2,6 +2,7 @@ from typing import final
 
 from fmsd.ast import Node
 from fmsd.ast.node import VarTable
+from fmsd.ast_ext import Variable
 from fmsd.ast_ext.operator import Operator
 
 
@@ -62,3 +63,28 @@ class VTCondition(Node):
 
     def eval(self, vt: VarTable) -> "Node":
         raise TypeError()
+
+
+@final
+class SymbolDeclaration(Node):
+    N = 2
+
+    def _init_sym_decl(self) -> None:
+        assert self.nodes[0] not in self.nodes[1].sym_decls()
+
+    def print(self, depth: int) -> str:
+        return self.nodes[1].print(depth)
+
+    def sym_decls(self) -> set["Node"]:
+        return super().sym_decls().union({self.nodes[0]})
+
+
+@final
+class Top(Operator):
+    N = 1
+
+    def _init_top(self) -> None:
+        assert not Variable.sym_refs(self.nodes[0])
+
+    def print(self, depth: int) -> str:
+        return self.nodes[0].print(depth + 1)
